@@ -1,20 +1,28 @@
 package br.com.senac.integrador.escola.modelos;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
 import br.com.senac.integrador.modelos.enums.EstadoCivil;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * Definicação da classe Pessoa
  * @author Felipe Godinho Dal Molin
  */
-public class Pessoa {
+public class Pessoa implements SQLInfo {
+    
+    private Identificador identificador;
     
     private String nome;
     private String cpf;
     private String rg;
     private String telefone;
     private String email;
+    
     private String deficiencia;
     private String nacionalidade;
     private EstadoCivil estadoCivil;
@@ -70,4 +78,15 @@ public class Pessoa {
     public CorRaca getCorRaca() {
         return cor;
     }   
+
+    @Override
+    public int getIDPessoa() {
+        try {
+            return SQLManager.getIDPessoa(this);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            return -1;
+        }
+    }
 }
