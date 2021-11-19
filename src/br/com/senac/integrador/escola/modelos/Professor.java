@@ -15,6 +15,12 @@ public class Professor extends Pessoa {
     private String formacao;
     private String historicoProfissional;
     
+    /**
+     * Definição do construtor da classe Professor
+     * @param pessoa
+     * @param formacao
+     * @param historicoProfissional 
+     */
     public Professor(Pessoa pessoa, String formacao, String historicoProfissional) {
         super(
             pessoa.getNome(),pessoa.getCpf(), 

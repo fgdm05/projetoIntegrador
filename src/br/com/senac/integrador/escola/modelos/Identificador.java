@@ -11,6 +11,14 @@ public class Identificador {
     private String telefone;
     private String email;
 
+    /**
+     * 
+     * @param nome
+     * @param cpf
+     * @param rg
+     * @param telefone
+     * @param email 
+     */
     public Identificador(String nome, String cpf, String rg, String telefone, String email) {
         this.nome = nome;
         this.cpf = cpf;

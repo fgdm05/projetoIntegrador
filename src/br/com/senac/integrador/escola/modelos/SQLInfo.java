@@ -1,10 +1,8 @@
 package br.com.senac.integrador.escola.modelos;
 
-import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
-
 /**
  *
- * @author Amanda
+ * @author Felipe Godinho Dal Molin
  */
 interface SQLInfo {
     int getIDPessoa();

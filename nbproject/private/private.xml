@@ -5,8 +5,10 @@
         <group>
             <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/auxiliares/SQLManager.java</file>
             <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/Pessoa.java</file>
-            <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/Professor.java</file>
+            <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/auxiliares/Tags.java</file>
+            <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/auxiliares/Manager.java</file>
             <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/telas/CadastroProfessor.java</file>
+            <file>file:/F:/Importante/Programação/Jovem%20Programador/Projeto%20Integrador/projetoGithub/src/br/com/senac/integrador/escola/modelos/telas/TelaAdministrador.java</file>
         </group>
     </open-files>
 </project-private>

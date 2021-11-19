@@ -6,5 +6,14 @@ package br.com.senac.integrador.escola.modelos.auxiliares;
  */
 public enum Tags {
     idPessoa, idProfessor, idAluno, idEndereco, idLogin, 
-    NOME, EMAIL, CPF, RG, TELEFONE, ID, Nome, Telefone, Email;
+    NOME, EMAIL, CPF, RG, TELEFONE, ID, Nome, Telefone, Email,
+    URL, USERNAME, PASSWORD, DEFICIENCIA, NACIONALIDADE,
+    
+    ESTADO, CIDADE, BAIRRO, NUMERO, ENDERECO,
+    ESTADOCIVIL, GENERO, COR;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

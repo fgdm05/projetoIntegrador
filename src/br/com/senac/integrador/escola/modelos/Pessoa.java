@@ -3,7 +3,7 @@ package br.com.senac.integrador.escola.modelos;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
-import br.com.senac.integrador.modelos.enums.EstadoCivil;
+import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +44,26 @@ public class Pessoa implements SQLInfo {
         this.genero = genero;
         this.cor = cor;
     }
-
+    /**
+     * 
+     * @param identificador
+     * @param deficiencia
+     * @param nacionalidade
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca 
+     */
+    public Pessoa(Identificador identificador, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca corRaca) {
+        this.identificador = identificador;
+        this.deficiencia = deficiencia;
+        this.nacionalidade = nacionalidade;
+        this.estadoCivil = estadoCivil;
+        this.endereco = endereco;
+        this.genero = genero;
+        this.cor = corRaca;
+    }
+        
     public String getNome() {
         return nome;
     }

@@ -175,7 +175,7 @@ public class CadastroAlunoJFrame extends JFrame {
         
         
         try {
-            SQLManager.cadastrarAluno(aluno);
+            SQLManager.cadastrar(aluno);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroAlunoJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

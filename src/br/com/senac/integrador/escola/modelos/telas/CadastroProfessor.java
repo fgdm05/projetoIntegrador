@@ -1,7 +1,7 @@
 package br.com.senac.integrador.escola.modelos.telas;
 
 import br.com.senac.integrador.escola.modelos.Endereco;
-import br.com.senac.integrador.modelos.enums.EstadoCivil;
+import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
 import br.com.senac.integrador.escola.modelos.auxiliares.Manager;
 import br.com.senac.integrador.escola.modelos.Pessoa;
 import br.com.senac.integrador.escola.modelos.Professor;
@@ -31,6 +31,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
      */
     public CadastroProfessor() {
         initComponents();
+        SQLManager.initConnection();
     }
 
     /**
@@ -831,7 +832,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
         Professor professor = new Professor(pessoa, formacao, historicoProfissional);
         
         try {
-            SQLManager.cadastrarProfessor(professor);
+            SQLManager.cadastrar(professor);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProfessor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -897,7 +898,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarProfessorMouseExited
 
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
-        JFrameManager.changeJFrame(this, new TelaAdministrador());
+        JFrameManager.changeJFrame(this, new ProfessoresCadastrados());
     }//GEN-LAST:event_verProfessoresMouseClicked
 
     private void verProfessoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseEntered

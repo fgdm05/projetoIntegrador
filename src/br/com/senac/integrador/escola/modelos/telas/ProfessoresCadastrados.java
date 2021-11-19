@@ -3,27 +3,29 @@ package br.com.senac.integrador.escola.modelos.telas;
 import br.com.senac.integrador.escola.modelos.Professor;
 import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
+import br.com.senac.integrador.escola.modelos.enums.Fator;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Definição da tela de professores cadastrados
  * @author Felipe Godinho Dal Molin
  */
-public class TelaAdministrador extends javax.swing.JFrame {
+public class ProfessoresCadastrados extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAdministrador
      */
     
-    public TelaAdministrador() {
+    public ProfessoresCadastrados() {
         initComponents();
+        SQLManager.initConnection();
         try {
             SQLManager.initTable(tabelaGeral);
         } catch (SQLException ex) {
-            Logger.getLogger(TelaAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
@@ -212,18 +214,18 @@ public class TelaAdministrador extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabelaGeral);
 
-        content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 480, 160));
+        content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 580, 160));
 
         comboBoxPesquisa.setBackground(new java.awt.Color(10, 23, 82));
         comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "E-mail", "CPF", "RG", "Telefone" }));
-        content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 100, 30));
-        content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 68, 120, 30));
+        content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 100, 30));
+        content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 120, 30));
 
         labelTituloDescricao.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         labelTituloDescricao.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloDescricao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTituloDescricao.setText("Descrição do professor");
-        content.add(labelTituloDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, -1, -1));
+        content.add(labelTituloDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, -1, -1));
 
         botaoObterDescricao.setBackground(new java.awt.Color(10, 23, 82));
         botaoObterDescricao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -234,7 +236,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 botaoObterDescricaoActionPerformed(evt);
             }
         });
-        content.add(botaoObterDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, -1, -1));
+        content.add(botaoObterDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(10, 23, 82));
         jPanel1.setBorder(null);
@@ -294,7 +296,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        content.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 110));
+        content.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, 110));
 
         jPanel3.setBackground(new java.awt.Color(10, 23, 82));
         jPanel3.setBorder(null);
@@ -368,7 +370,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                     .addComponent(labelDeficiencia)))
         );
 
-        content.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 290, -1, -1));
+        content.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(10, 23, 82));
         jPanel4.setBorder(null);
@@ -443,7 +445,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        content.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, -1, -1));
+        content.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(10, 23, 82));
         jPanel5.setBorder(null);
@@ -451,6 +453,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
         campoFormacao.setColumns(20);
         campoFormacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoFormacao.setRows(5);
+        campoFormacao.setEnabled(false);
         jScrollPane1.setViewportView(campoFormacao);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -473,7 +476,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
         );
 
-        content.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 470, 320, 180));
+        content.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, 320, 180));
 
         jPanel6.setBackground(new java.awt.Color(10, 23, 82));
         jPanel6.setBorder(null);
@@ -481,6 +484,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
         campoHistoricoProfissional.setColumns(20);
         campoHistoricoProfissional.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoHistoricoProfissional.setRows(5);
+        campoHistoricoProfissional.setEnabled(false);
         jScrollPane3.setViewportView(campoHistoricoProfissional);
 
         labelTituloHistoricoProfissional.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -503,7 +507,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
         );
 
-        content.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 470, 330, 180));
+        content.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 330, 180));
 
         title.setBackground(new java.awt.Color(10, 23, 82));
 
@@ -547,7 +551,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 854, Short.MAX_VALUE))
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -597,13 +601,13 @@ public class TelaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarProfessorMouseClicked
 
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
-        JFrameManager.changeJFrame(this, new TelaAdministrador());
+        JFrameManager.changeJFrame(this, new ProfessoresCadastrados());
     }//GEN-LAST:event_verProfessoresMouseClicked
 
     private void botaoObterDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObterDescricaoActionPerformed
-        String pesquisa = campoPesquisa.getText();
+        String valor = campoPesquisa.getText();
         String fator = ((String) comboBoxPesquisa.getSelectedItem()).toUpperCase();
-        System.out.println("Pesquisa: " + pesquisa);
+        System.out.println("Pesquisa: " + valor);
         System.out.println("Fator: " + fator);
         
         boolean comboBoxErrado = !"ID".equals(fator) && !"NOME".equals(fator) && !"E-MAIL".equals(fator) && !"CPF".equals(fator) && !"RG".equals(fator) && !"TELEFONE".equals(fator);
@@ -614,10 +618,37 @@ public class TelaAdministrador extends javax.swing.JFrame {
         } catch(RuntimeException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        Professor professor = SQLManager.buscarProfessor(fator);
+        
+        Professor professor = null;
+        
+        Fator fatora = getByName(fator);
+        
+        try {
+            professor = SQLManager.buscarProfessor(fatora, valor);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
         setCampos(professor);
     }//GEN-LAST:event_botaoObterDescricaoActionPerformed
-
+    
+    private Fator getByName(String fator) {
+        if(Fator.NOME.name().equals(fator)) {
+            return Fator.NOME;
+        } else if(Fator.CPF.name().equals(fator)) {
+            return Fator.CPF;
+        } else if(Fator.RG.name().equals(fator)) {
+            return Fator.RG;
+        } else if(Fator.EMAIL.name().equals(fator)) {
+            return Fator.EMAIL;
+        } else if(Fator.TELEFONE.name().equals(fator)) {
+            return Fator.TELEFONE;
+        } else {
+            throw new IllegalArgumentException("Valor não registrado.");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -635,20 +666,21 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProfessoresCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProfessoresCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProfessoresCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProfessoresCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaAdministrador().setVisible(true);
+                new ProfessoresCadastrados().setVisible(true);
             }
         });
     }

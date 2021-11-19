@@ -11,6 +11,14 @@ public class Endereco {
     private int numero;
     private String endereco;
 
+    /**
+     * 
+     * @param estado
+     * @param cidade
+     * @param bairro
+     * @param numero
+     * @param endereco 
+     */
     public Endereco(String estado, String cidade, String bairro, int numero, String endereco) {
         this.estado = estado;
         this.cidade = cidade;
