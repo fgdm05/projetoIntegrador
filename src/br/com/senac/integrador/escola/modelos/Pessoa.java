@@ -15,35 +15,15 @@ import javax.swing.JOptionPane;
  */
 public class Pessoa implements SQLInfo {
     
-    private Identificador identificador;
+    protected Identificador identificador;
     
-    private String nome;
-    private String cpf;
-    private String rg;
-    private String telefone;
-    private String email;
+    protected String deficiencia;
+    protected String nacionalidade;
+    protected EstadoCivil estadoCivil;
+    protected Endereco endereco;
+    protected Genero genero;
+    protected CorRaca corRaca;
     
-    private String deficiencia;
-    private String nacionalidade;
-    private EstadoCivil estadoCivil;
-    private Endereco endereco;
-    private Genero genero;
-    private CorRaca cor;
-    
-    public Pessoa
-        (String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca cor) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.telefone = telefone;
-        this.email = email;
-        this.deficiencia = deficiencia;
-        this.nacionalidade = nacionalidade;
-        this.estadoCivil = estadoCivil;
-        this.endereco = endereco;
-        this.genero = genero;
-        this.cor = cor;
-    }
     /**
      * 
      * @param identificador
@@ -61,30 +41,32 @@ public class Pessoa implements SQLInfo {
         this.estadoCivil = estadoCivil;
         this.endereco = endereco;
         this.genero = genero;
-        this.cor = corRaca;
+        this.corRaca = corRaca;
     }
         
     public String getNome() {
-        return nome;
+        return identificador.getNome();
     }
-    public String getCpf() {
-        return cpf;
+    public String getCPF() {
+        return identificador.getCpf();
     }
-    public String getRg() {
-        return rg;
+    public String getRG() {
+        return identificador.getRg();
     }
     public String getTelefone() {
-        return telefone;
+        return identificador.getTelefone();
     }
     public String getEmail() {
-        return email;
+        return identificador.getEmail();
     }
+    
     public String getDeficiencia() {
         return deficiencia;
     }
     public String getNacionalidade() {
         return nacionalidade;
     }
+    
     public EstadoCivil getEstadoCivil() {
         return estadoCivil;
     }
@@ -95,8 +77,12 @@ public class Pessoa implements SQLInfo {
         return genero;
     }
     public CorRaca getCorRaca() {
-        return cor;
-    }   
+        return corRaca;
+    }
+    public Identificador getIdentificador() {
+        return identificador;
+    }
+    
 
     @Override
     public int getIDPessoa() {

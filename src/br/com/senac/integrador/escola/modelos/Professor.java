@@ -12,23 +12,24 @@ import javax.swing.JOptionPane;
  */
 public class Professor extends Pessoa {
     
-    private String formacao;
-    private String historicoProfissional;
+    protected String formacao;
+    protected String historicoProfissional;
     
-    /**
-     * Definição do construtor da classe Professor
-     * @param pessoa
-     * @param formacao
-     * @param historicoProfissional 
-     */
+    
     public Professor(Pessoa pessoa, String formacao, String historicoProfissional) {
-        super(
-            pessoa.getNome(),pessoa.getCpf(), 
-            pessoa.getRg(), pessoa.getTelefone(), 
-            pessoa.getEmail(), pessoa.getDeficiencia(),
-            pessoa.getNacionalidade(),
-            pessoa.getEstadoCivil(), pessoa.getEndereco(), 
-            pessoa.getGenero(), pessoa.getCorRaca());
+        super(pessoa.getIdentificador(), pessoa.getDeficiencia(), pessoa.getNacionalidade(), pessoa.getEstadoCivil(), pessoa.getEndereco(), pessoa.getGenero(), pessoa.getCorRaca());
+        
+        this.identificador = pessoa.getIdentificador();
+        
+        deficiencia = pessoa.getDeficiencia();
+        nacionalidade = pessoa.getNacionalidade();
+        estadoCivil = pessoa.getEstadoCivil();
+        
+        this.endereco = pessoa.getEndereco();
+        genero = pessoa.getGenero();
+        this.corRaca = pessoa.getCorRaca();
+        this.deficiencia = pessoa.getDeficiencia();
+        
         this.formacao = formacao;
         this.historicoProfissional = historicoProfissional;
     }

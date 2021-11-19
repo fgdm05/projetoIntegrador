@@ -37,6 +37,7 @@ import javax.swing.table.DefaultTableModel;
 public abstract class SQLManager {
     private static boolean isSQLSet = false;
     private static Connection connection;
+    private static final File file = new File("databaseConfig.csv");
     
     public static void cadastrar(Aluno aluno) throws SQLException {
         Statement statement = connection.createStatement();
@@ -80,7 +81,7 @@ public abstract class SQLManager {
                 "INSERT INTO pessoa " +
                 "(idEndereco, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, genero, estadoCivil, cor) VALUES " +
                 "(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                idEndereco, pessoa.getNome(), pessoa.getCpf(), pessoa.getRg(), pessoa.getTelefone(), pessoa.getEmail(), pessoa.getDeficiencia(),
+                idEndereco, pessoa.getNome(), pessoa.getCPF(), pessoa.getRG(), pessoa.getTelefone(), pessoa.getEmail(), pessoa.getDeficiencia(),
                 pessoa.getNacionalidade(),
                 pessoa.getGenero().name(), pessoa.getEstadoCivil().name(), pessoa.getCorRaca().name()
         );
@@ -99,19 +100,21 @@ public abstract class SQLManager {
         statement.execute(sqlState);
     }
     public static void cadastrar(Professor professor) throws SQLException {
-        SQLManager.cadastrar(professor);
+        SQLManager.cadastrar((Pessoa) professor);
         Statement statement = connection.createStatement();
         
-        int idPessoa = -1, idLogin = 999;
+        int idPessoa = -1; //idLogin = 999;
         
         ResultSet resultPessoa = statement.executeQuery("SELECT idPessoa FROM pessoa");
         while(resultPessoa.next()){
             idPessoa = resultPessoa.getInt(Tags.idPessoa.name());
         }
+        /*
         ResultSet resultLogin = statement.executeQuery("SELECT idLogin FROM login WHERE tipoLogin='PROFESSOR'");
         while(resultLogin.next()) {
             idLogin = resultLogin.getInt(Tags.idLogin.name());
         }
+        */
         
         try {
             if(idPessoa == -1) {
@@ -136,7 +139,7 @@ public abstract class SQLManager {
         String sqlState = String.format(
                 "SELECT idPessoa FROM pessoa WHERE " +
                 "nome='%s' AND cpf='%s' AND email='%s' AND rg='%s' AND telefone='%s'",
-                p.getNome(), p.getCpf(), p.getEmail(), p.getRg(), p.getTelefone());
+                p.getNome(), p.getCPF(), p.getEmail(), p.getRG(), p.getTelefone());
         ResultSet result = statement.executeQuery(sqlState);
         int id = -1;
         while(result.next()) {
@@ -199,8 +202,11 @@ public abstract class SQLManager {
         });
     }
     
+    /**
+     * Configura a conexão com base no arquivo databaseConfig.csv
+     * Necessário ser executado em todo construtor de cada tela
+     */
     public static void initConnection() {
-        File file = new File("databaseConfig.csv");
         FileReader fr;
         BufferedReader br;
         Properties properties;
@@ -231,17 +237,23 @@ public abstract class SQLManager {
         }
     }
     
-    private static void writeFileProperties(Properties properties, File file) {
+    /**
+     * Reescreve o arquivo databeseConfig.csv
+     * Usar createPropetiesInterface() para passar as informações
+     * @param properties
+     * @param file 
+     */
+    private static void writeFileProperties(Properties properties) {
         FileWriter fw;
         BufferedWriter bw;
         try {
             fw = new FileWriter(file, false);
             bw = new BufferedWriter(fw);
-            bw.write("URL: " + properties.getProperty("URL"));
+            bw.write("URL: " + properties.getProperty(Tags.URL.name()));
             bw.newLine();
-            bw.write("USERNAME: " + properties.getProperty("USERNAME"));
+            bw.write("USERNAME: " + properties.getProperty(Tags.USERNAME.name()));
             bw.newLine();
-            bw.write("PASSWORD: " + properties.getProperty("PASSWORD"));
+            bw.write("PASSWORD: " + properties.getProperty(Tags.PASSWORD.name()));
             bw.close();
             fw.close();
         } catch(IOException e) {
@@ -249,6 +261,10 @@ public abstract class SQLManager {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+    /**
+     * 
+     * @return 
+     */
     private static Properties createPropertiesInterface() {
         Properties properties = new Properties();
         properties.setProperty(Tags.URL.name(), "jdbc:mysql://localhost/appescola");
@@ -283,6 +299,9 @@ public abstract class SQLManager {
             
             pessoa = new Pessoa(identificador, deficiencia, nacionalidade, estado, endereco, genero, corRaca);
         }
+        if(pessoa == null) {
+            throw new NullPointerException();
+        }
         return pessoa;
     }
     public static Identificador buscarIdentificador(Fator fator, String valor) throws SQLException {
@@ -300,6 +319,9 @@ public abstract class SQLManager {
                     r.getString(Tags.RG.name()), 
                     r.getString(Tags.TELEFONE.name()), 
                     r.getString(Tags.EMAIL.name()));
+        }
+        if(identificador==null) {
+            throw new NullPointerException();
         }
         return identificador;
     }
@@ -322,12 +344,29 @@ public abstract class SQLManager {
                     result.getInt(Tags.NUMERO.name()), 
                     result.getString(Tags.ENDERECO.name()));
         }
+        if(endereco == null) {
+            throw new NullPointerException();
+        }
         return endereco;
     }
     public static Professor buscarProfessor(Fator fator, String valor) throws SQLException {
         Pessoa pessoa = buscarPessoa(fator, valor);
-        throw new UnsupportedOperationException("Not supported yet.");
+        String sql = String.format(
+                "SELECT formacao, historicoProfissional " +
+                "FROM pessoa pe, professor pr " +
+                "WHERE pe.%s='%s' AND pe.idPessoa=pr.idPessoa",fator.name(), valor);
+        
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        Professor professor = null;
+        while(result.next()) {
+            professor = new Professor(pessoa,
+                    result.getString(Tags.FORMACAO.name()), 
+                    result.getString(Tags.HISTORICOPROFISSIONAL.name()));
+        }
+        if(professor == null) {
+            throw new NullPointerException();
+        } 
+        return professor;
     }
-    
-    
 }

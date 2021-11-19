@@ -1,6 +1,7 @@
 package br.com.senac.integrador.escola.modelos.telas;
 
 import br.com.senac.integrador.escola.modelos.Endereco;
+import br.com.senac.integrador.escola.modelos.Identificador;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
 import br.com.senac.integrador.escola.modelos.auxiliares.Manager;
 import br.com.senac.integrador.escola.modelos.Pessoa;
@@ -828,7 +829,9 @@ public class CadastroProfessor extends javax.swing.JFrame {
         Genero genero = Genero.values()[indexGenero];
         CorRaca corRaca = CorRaca.values()[indexCorRaca];
         
-        Pessoa pessoa = new Pessoa(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, estadoCivil, ender, genero, corRaca);
+        Identificador identificador = new Identificador(nome, cpf, rg, telefone, email);
+        
+        Pessoa pessoa = new Pessoa(identificador, deficiencia, nacionalidade, estadoCivil, ender, genero, corRaca);
         Professor professor = new Professor(pessoa, formacao, historicoProfissional);
         
         try {

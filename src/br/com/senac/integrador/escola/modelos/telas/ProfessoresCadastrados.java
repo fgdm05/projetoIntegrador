@@ -18,7 +18,6 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     /**
      * Creates new form TelaAdministrador
      */
-    
     public ProfessoresCadastrados() {
         initComponents();
         SQLManager.initConnection();
@@ -26,6 +25,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
             SQLManager.initTable(tabelaGeral);
         } catch (SQLException ex) {
             Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     /**
@@ -620,16 +620,20 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         }
         
         Professor professor = null;
-        
         Fator fatora = getByName(fator);
         
         try {
             professor = SQLManager.buscarProfessor(fatora, valor);
+            if(professor == null) {
+                throw new NullPointerException("DATABASE vazia.");
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
         setCampos(professor);
     }//GEN-LAST:event_botaoObterDescricaoActionPerformed
     
@@ -745,13 +749,14 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         campoNacionalidade.setText(professor.getNacionalidade());
         
         campoEmail.setText(professor.getEmail());
-        campoCPF.setText(professor.getCpf());
-        campoRG.setText(professor.getRg());
+        campoCPF.setText(professor.getCPF());
+        campoRG.setText(professor.getRG());
         campoTelefone.setText(professor.getTelefone());
         
         campoGenero.setText(professor.getGenero().name());
         campoEstadoCivil.setText(professor.getEstadoCivil().name());
         campoCorRaca.setText(professor.getCorRaca().name());
+        campoDeficiencia.setText(professor.getDeficiencia());
         
         campoFormacao.setText(professor.getFormacao());
         campoHistoricoProfissional.setText(professor.getHistoricoProfissional());
