@@ -23,6 +23,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,25 +174,39 @@ public abstract class SQLManager {
         // converter idPessoa -> Pessoa
         // pegar informações da Pessoa
         
-        ResultSet informacoesPessoa = statement.executeQuery(
-                "SELECT nome, email, cpf, rg, telefone " +
-                "FROM pessoa, professor " +
-                "WHERE pessoa.idPessoa=professor.idPessoa");
-
-        var identificadores = new ArrayList<Identificador>();
-        while(informacoesPessoa.next()) {
-            String nome = informacoesPessoa.getString(Tags.Nome.name());
-            String email = informacoesPessoa.getString(Tags.Email.name());
-            String cpf = informacoesPessoa.getString(Tags.CPF.name());
-            String rg = informacoesPessoa.getString(Tags.RG.name());
-            String telefone = informacoesPessoa.getString(Tags.Telefone.name());
-            identificadores.add(new Identificador(nome, cpf, rg, telefone, email));
+        ResultSet result = statement.executeQuery(
+                "SELECT * " +
+                "FROM pessoa pe, professor pr " +
+                "WHERE pe.idPessoa=pr.idPessoa");
+        
+        var professores = new ArrayList<Professor>();
+        
+        while(result.next()) {
+            Identificador identificador = new Identificador(
+                    result.getString(Tags.NOME.name()), 
+                    result.getString(Tags.CPF.name()), 
+                    result.getString(Tags.RG.name()), 
+                    result.getString(Tags.TELEFONE.name()), 
+                    result.getString(Tags.EMAIL.name()));
+            Pessoa pessoa = new Pessoa(identificador, null, null, null, null, null, null);
+            professores.add(new Professor(pessoa, null, null));
         }
+        
+        /*var identificadores = new ArrayList<Identificador>();
+        while(result.next()) {
+            String nome = result.getString(Tags.Nome.name());
+            String email = result.getString(Tags.Email.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.Telefone.name());
+            identificadores.add(new Identificador(nome, cpf, rg, telefone, email));
+        }*/
+        
         
         DefaultTableModel model = (DefaultTableModel) tabelaGeral.getModel();
         model.setNumRows(0);
         
-        identificadores.forEach((identificador) -> {
+        /*identificadores.forEach((identificador) -> {
             model.addRow(new Object[] {
                 identificador.getNome(),
                 identificador.getEmail(),
@@ -200,6 +215,23 @@ public abstract class SQLManager {
                 identificador.getTelefone()
             });
         });
+        
+        for(int i = 0; i < professores.size(); i++) {
+            model.addRow(new Object[] {
+                professores.get(i).getIDProfessor(),
+                professores.get(i).
+            });
+        }*/
+        for(Professor professor : professores) {
+            model.addRow(new Object[] {
+                professor.getIDProfessor(),
+                professor.getNome(),
+                professor.getEmail(),
+                professor.getCPF(),
+                professor.getRG(),
+                professor.getTelefone()
+            });
+        }
     }
     
     /**
@@ -274,25 +306,29 @@ public abstract class SQLManager {
     }
     
     public static Pessoa buscarPessoa(Fator fator, String valor) throws SQLException {
+        // Retorna sempre o valor máximo -> consertar while: se valor=idProfessor, mas o professor está correto
+        
         Identificador identificador = buscarIdentificador(fator, valor);
         Endereco endereco = buscarEndereco(fator, valor);
         
         String sql = String.format(
-            "SELECT * FROM pessoa WHERE %s='%s'", fator.name(), valor);
+            "SELECT * FROM pessoa, professor WHERE %s='%s'", fator.name(), valor);
         
         Statement s = connection.createStatement();
         ResultSet r = s.executeQuery(sql);
         
         Pessoa pessoa = null;
         EstadoCivil estado; Genero genero; CorRaca corRaca;
+        
         while(r.next()) {
+            
             String nomeEstadoCivil = r.getString(Tags.ESTADOCIVIL.name());
             String nomeGenero = r.getString(Tags.GENERO.name());
             String nomeCorRaca = r.getString(Tags.COR.name());
-            
-            estado = EstadoCivil.getByName(nomeEstadoCivil);
-            genero = Genero.getByName(nomeGenero);
-            corRaca = CorRaca.getByName(nomeCorRaca);
+                      
+            estado = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            genero = Enum.valueOf(Genero.class, nomeGenero);
+            corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
             
             String deficiencia = r.getString(Tags.DEFICIENCIA.name());
             String nacionalidade = r.getString(Tags.NACIONALIDADE.name());
@@ -306,7 +342,7 @@ public abstract class SQLManager {
     }
     public static Identificador buscarIdentificador(Fator fator, String valor) throws SQLException {
         String sql = String.format(
-                "SELECT nome, cpf, rg, telefone, email FROM pessoa " +
+                "SELECT pr.idProfessor, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email FROM pessoa pe, professor pr " +
                 "WHERE %s='%s'", fator.name(), valor);
         Statement s = connection.createStatement();
         ResultSet r = s.executeQuery(sql);
@@ -326,13 +362,18 @@ public abstract class SQLManager {
         return identificador;
     }
     public static Endereco buscarEndereco(Fator fator, String valor) throws SQLException {
-        String sql = String.format(
+        String sql = 
             "SELECT "+
             "e.estado, e.cidade, e.bairro, e.numero, e.endereco "+
-            "FROM endereco e, pessoa p " +
-            "WHERE e.idEndereco=p.idEndereco AND " +
-            "%s='%s'", fator.name(), valor);
-
+            "FROM endereco e, pessoa p, professor pr " +
+            "WHERE e.idEndereco=p.idEndereco AND ";
+        
+        if(fator.equals(Fator.IDPROFESSOR)) {
+            sql += String.format("(pr.%s='%s')", fator.name(), valor);
+        } else {
+            sql += String.format("(p.%s='%s')", fator.name(), valor);
+        }
+        
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
         Endereco endereco = null;
@@ -354,7 +395,7 @@ public abstract class SQLManager {
         String sql = String.format(
                 "SELECT formacao, historicoProfissional " +
                 "FROM pessoa pe, professor pr " +
-                "WHERE pe.%s='%s' AND pe.idPessoa=pr.idPessoa",fator.name(), valor);
+                "WHERE %s='%s'",fator.name(), valor);
         
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);

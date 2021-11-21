@@ -104,11 +104,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
         campoHistoricoProfissional = new javax.swing.JTextArea();
         title = new javax.swing.JPanel();
         titleMain = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        sidePanel = new javax.swing.JPanel();
-        cadastrarProfessor = new javax.swing.JPanel();
-        icon = new javax.swing.JLabel();
-        labelSection = new javax.swing.JLabel();
+        sidePanel3 = new javax.swing.JPanel();
+        cadastrarProfessor3 = new javax.swing.JPanel();
+        icon4 = new javax.swing.JLabel();
+        labelSection4 = new javax.swing.JLabel();
         verProfessores = new javax.swing.JPanel();
         icon1 = new javax.swing.JLabel();
         labelSection1 = new javax.swing.JLabel();
@@ -117,7 +116,6 @@ public class CadastroProfessor extends javax.swing.JFrame {
         setTitle("Cadastrar Professor");
 
         background.setBackground(new java.awt.Color(255, 255, 255));
-        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         content.setBackground(new java.awt.Color(75, 97, 148));
         content.setAutoscrolls(true);
@@ -615,8 +613,6 @@ public class CadastroProfessor extends javax.swing.JFrame {
 
         content.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 340, 160));
 
-        background.add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 888, 500));
-
         title.setBackground(new java.awt.Color(10, 23, 82));
 
         titleMain.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -635,66 +631,45 @@ public class CadastroProfessor extends javax.swing.JFrame {
             .addComponent(titleMain, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
 
-        background.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 888, -1));
+        sidePanel3.setBackground(new java.awt.Color(19, 16, 89));
 
-        jPanel2.setBackground(new java.awt.Color(255, 153, 0));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
-
-        background.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        sidePanel.setBackground(new java.awt.Color(19, 16, 89));
-        sidePanel.setBorder(null);
-        sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cadastrarProfessor.setBackground(new java.awt.Color(19, 16, 89));
-        cadastrarProfessor.addMouseListener(new java.awt.event.MouseAdapter() {
+        cadastrarProfessor3.setBackground(new java.awt.Color(19, 16, 89));
+        cadastrarProfessor3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cadastrarProfessorMouseClicked(evt);
+                cadastrarProfessor3MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cadastrarProfessorMouseEntered(evt);
+                cadastrarProfessor3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                cadastrarProfessorMouseExited(evt);
+                cadastrarProfessor3MouseExited(evt);
             }
         });
 
-        icon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        icon.setForeground(new java.awt.Color(255, 255, 255));
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/outline_account_circle_white_24dp.png"))); // NOI18N
+        icon4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        icon4.setForeground(new java.awt.Color(255, 255, 255));
+        icon4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
 
-        labelSection.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        labelSection.setForeground(new java.awt.Color(255, 255, 255));
-        labelSection.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSection.setText("Cadastrar Professor");
+        labelSection4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSection4.setForeground(new java.awt.Color(255, 255, 255));
+        labelSection4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSection4.setText("Cadastrar Professor");
 
-        javax.swing.GroupLayout cadastrarProfessorLayout = new javax.swing.GroupLayout(cadastrarProfessor);
-        cadastrarProfessor.setLayout(cadastrarProfessorLayout);
-        cadastrarProfessorLayout.setHorizontalGroup(
-            cadastrarProfessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cadastrarProfessorLayout.createSequentialGroup()
-                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(labelSection, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout cadastrarProfessor3Layout = new javax.swing.GroupLayout(cadastrarProfessor3);
+        cadastrarProfessor3.setLayout(cadastrarProfessor3Layout);
+        cadastrarProfessor3Layout.setHorizontalGroup(
+            cadastrarProfessor3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarProfessor3Layout.createSequentialGroup()
+                .addComponent(icon4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelSection4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
         );
-        cadastrarProfessorLayout.setVerticalGroup(
-            cadastrarProfessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(labelSection, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+        cadastrarProfessor3Layout.setVerticalGroup(
+            cadastrarProfessor3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(icon4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelSection4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        sidePanel.add(cadastrarProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, -1));
 
         verProfessores.setBackground(new java.awt.Color(19, 16, 89));
         verProfessores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -712,7 +687,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
         icon1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         icon1.setForeground(new java.awt.Color(255, 255, 255));
         icon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/outline_account_circle_white_24dp.png"))); // NOI18N
+        icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/ver_cadastros_professor_75px.png"))); // NOI18N
 
         labelSection1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelSection1.setForeground(new java.awt.Color(255, 255, 255));
@@ -723,20 +698,51 @@ public class CadastroProfessor extends javax.swing.JFrame {
         verProfessores.setLayout(verProfessoresLayout);
         verProfessoresLayout.setHorizontalGroup(
             verProfessoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(verProfessoresLayout.createSequentialGroup()
-                .addComponent(icon1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(labelSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, verProfessoresLayout.createSequentialGroup()
+                .addComponent(icon1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelSection1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
         );
         verProfessoresLayout.setVerticalGroup(
             verProfessoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(icon1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(labelSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(icon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelSection1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        sidePanel.add(verProfessores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+        javax.swing.GroupLayout sidePanel3Layout = new javax.swing.GroupLayout(sidePanel3);
+        sidePanel3.setLayout(sidePanel3Layout);
+        sidePanel3Layout.setHorizontalGroup(
+            sidePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cadastrarProfessor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(verProfessores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        sidePanel3Layout.setVerticalGroup(
+            sidePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanel3Layout.createSequentialGroup()
+                .addComponent(cadastrarProfessor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(verProfessores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
 
-        background.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, 500));
+        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addComponent(sidePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE))
+            .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sidePanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -888,30 +894,31 @@ public class CadastroProfessor extends javax.swing.JFrame {
         campoFocusLost(evt, campoEstado, Placeholder.ESTADO);
     }//GEN-LAST:event_campoEstadoFocusLost
 
-    private void cadastrarProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseClicked
-        JFrameManager.changeJFrame(this, new CadastroProfessor());
-    }//GEN-LAST:event_cadastrarProfessorMouseClicked
+    private void cadastrarProfessor3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroProfessor());
+    }//GEN-LAST:event_cadastrarProfessor3MouseClicked
 
-    private void cadastrarProfessorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseEntered
-        JFrameManager.sectionMouseEntered(evt, cadastrarProfessor);
-    }//GEN-LAST:event_cadastrarProfessorMouseEntered
+    private void cadastrarProfessor3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_cadastrarProfessor3MouseEntered
 
-    private void cadastrarProfessorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseExited
-        JFrameManager.sectionMouseExited(evt, cadastrarProfessor);
-    }//GEN-LAST:event_cadastrarProfessorMouseExited
+    private void cadastrarProfessor3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_cadastrarProfessor3MouseExited
 
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
-        JFrameManager.changeJFrame(this, new ProfessoresCadastrados());
+        JFrameManager.changeJFrame(evt, new ProfessoresCadastrados());
     }//GEN-LAST:event_verProfessoresMouseClicked
 
     private void verProfessoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseEntered
-        JFrameManager.sectionMouseEntered(evt, verProfessores);
+        JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_verProfessoresMouseEntered
 
     private void verProfessoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseExited
-        JFrameManager.sectionMouseExited(evt, verProfessores);
+        JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_verProfessoresMouseExited
     
+        
     /**
      * @param args the command line arguments
      */
@@ -963,7 +970,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JRadioButton botaoPardo;
     private javax.swing.JRadioButton botaoSolteiro;
     private javax.swing.JRadioButton botaoViuvo;
-    private javax.swing.JPanel cadastrarProfessor;
+    private javax.swing.JPanel cadastrarProfessor3;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoCidade;
@@ -982,10 +989,9 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grupoBotoesCorRaca;
     private javax.swing.ButtonGroup grupoBotoesEstadoCivil;
     private javax.swing.ButtonGroup grupoBotoesGenero;
-    private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
+    private javax.swing.JLabel icon4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCorRaca;
     private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JPanel jPanelEstadoCivil;
@@ -1005,10 +1011,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
     private javax.swing.JLabel labelRG;
-    private javax.swing.JLabel labelSection;
     private javax.swing.JLabel labelSection1;
+    private javax.swing.JLabel labelSection4;
     private javax.swing.JLabel labelTelefone;
-    private javax.swing.JPanel sidePanel;
+    private javax.swing.JPanel sidePanel3;
     private javax.swing.JPanel title;
     private javax.swing.JLabel titleCorRaca;
     private javax.swing.JLabel titleEstadoCivil;
