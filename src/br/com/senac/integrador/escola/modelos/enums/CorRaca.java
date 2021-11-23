@@ -7,4 +7,6 @@ package br.com.senac.integrador.escola.modelos.enums;
  */
 public enum CorRaca {
     BRANCO, PARDO, NEGRO, AMARELO, INDIGENA;
+
+    
 }

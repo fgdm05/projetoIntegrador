@@ -1,4 +1,4 @@
-package br.com.senac.integrador.modelos.enums;
+package br.com.senac.integrador.escola.modelos.enums;
 
 /**
  * Definição do enum EstadoCivil
