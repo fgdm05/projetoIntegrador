@@ -1,21 +1,23 @@
 package br.com.senac.integrador.escola.modelos;
 
-import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
+import br.com.senac.integrador.escola.modelos.auxiliares.Regex;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  * Definicação da classe Pessoa
  * @author Felipe Godinho Dal Molin
  */
-public class Pessoa implements SQLInfo {
+public class Pessoa {
     
-    protected Identificador identificador;
+    protected int idPessoa;
+    protected String nome;
+    protected String cpf;
+    protected String rg;
+    protected String telefone;
+    protected String email;
     
     protected String deficiencia;
     protected String nacionalidade;
@@ -24,9 +26,25 @@ public class Pessoa implements SQLInfo {
     protected Genero genero;
     protected CorRaca corRaca;
     
+    private void regexRules(){
+        if(!cpf.matches(Regex.CPF)) {
+            throw new IllegalArgumentException("CPF formatado incorretamente.");
+        } else if(!telefone.matches(Regex.TELEFONE)) {
+            throw new IllegalArgumentException("Telefone formatado incorretamente.");
+        } else if(!rg.matches(Regex.RG)) {
+            throw new IllegalArgumentException("RG formatado incorretamente.");
+        } else if(!(email.contains("@"))) {
+            throw new IllegalArgumentException("Email formatado incorretamente.");
+        }
+    }
+    
     /**
      * 
-     * @param identificador
+     * @param nome
+     * @param cpf
+     * @param rg
+     * @param telefone
+     * @param email
      * @param deficiencia
      * @param nacionalidade
      * @param estadoCivil
@@ -34,30 +52,79 @@ public class Pessoa implements SQLInfo {
      * @param genero
      * @param corRaca 
      */
-    public Pessoa(Identificador identificador, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca corRaca) {
-        this.identificador = identificador;
+    public Pessoa(String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.telefone = telefone;
+        this.email = email;
         this.deficiencia = deficiencia;
         this.nacionalidade = nacionalidade;
         this.estadoCivil = estadoCivil;
         this.endereco = endereco;
         this.genero = genero;
         this.corRaca = corRaca;
+        
+        try{
+            regexRules();
+        } catch(IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
+
+    /**
+     * 
+     * @param idPessoa
+     * @param nome
+     * @param cpf
+     * @param rg
+     * @param telefone
+     * @param email
+     * @param deficiencia
+     * @param nacionalidade
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca 
+     */
+    public Pessoa(int idPessoa, String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca corRaca) {
+        
+        this.idPessoa = idPessoa;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.telefone = telefone;
+        this.email = email;
+        this.deficiencia = deficiencia;
+        this.nacionalidade = nacionalidade;
+        this.estadoCivil = estadoCivil;
+        this.endereco = endereco;
+        this.genero = genero;
+        this.corRaca = corRaca;
+        
+        try{
+            regexRules();
+        } catch(IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
+    
         
     public String getNome() {
-        return identificador.getNome();
+        return nome;
     }
     public String getCPF() {
-        return identificador.getCpf();
+        return cpf;
     }
     public String getRG() {
-        return identificador.getRg();
+        return rg;
     }
     public String getTelefone() {
-        return identificador.getTelefone();
+        return telefone;
     }
     public String getEmail() {
-        return identificador.getEmail();
+        return email;
     }
     
     public String getDeficiencia() {
@@ -78,20 +145,5 @@ public class Pessoa implements SQLInfo {
     }
     public CorRaca getCorRaca() {
         return corRaca;
-    }
-    public Identificador getIdentificador() {
-        return identificador;
-    }
-    
-
-    @Override
-    public int getIDPessoa() {
-        try {
-            return SQLManager.getIDPessoa(this);
-        } catch (SQLException ex) {
-            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            return -1;
-        }
     }
 }

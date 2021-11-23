@@ -1,10 +1,8 @@
 package br.com.senac.integrador.escola.modelos;
 
-import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import br.com.senac.integrador.escola.modelos.enums.CorRaca;
+import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
+import br.com.senac.integrador.escola.modelos.enums.Genero;
 
 /**
  * Definicação da classe Professor
@@ -12,28 +10,42 @@ import javax.swing.JOptionPane;
  */
 public class Professor extends Pessoa {
     
+    private int idProfessor;
     protected String formacao;
     protected String historicoProfissional;
-    
-    
-    public Professor(Pessoa pessoa, String formacao, String historicoProfissional) {
-        super(pessoa.getIdentificador(), pessoa.getDeficiencia(), pessoa.getNacionalidade(), pessoa.getEstadoCivil(), pessoa.getEndereco(), pessoa.getGenero(), pessoa.getCorRaca());
-        
-        this.identificador = pessoa.getIdentificador();
-        
-        deficiencia = pessoa.getDeficiencia();
-        nacionalidade = pessoa.getNacionalidade();
-        estadoCivil = pessoa.getEstadoCivil();
-        
-        this.endereco = pessoa.getEndereco();
-        genero = pessoa.getGenero();
-        this.corRaca = pessoa.getCorRaca();
-        this.deficiencia = pessoa.getDeficiencia();
-        
+
+    /**
+     * 
+     * @param nome
+     * @param cpf
+     * @param rg
+     * @param telefone
+     * @param email
+     * @param deficiencia
+     * @param nacionalidade
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca
+     * @param formacao
+     * @param historicoProfissional 
+     */
+    public Professor(String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
+        super(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, endereco, estadoCivil, genero, corRaca);
         this.formacao = formacao;
         this.historicoProfissional = historicoProfissional;
     }
 
+    public Professor(int idPessoa, int idProfessor, String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
+        super(idPessoa, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, estadoCivil, endereco, genero, corRaca);
+        this.idProfessor = idProfessor;
+        this.formacao = formacao;
+        this.historicoProfissional = historicoProfissional;
+    }
+    
+    
+    
+    
     public String getFormacao() {
         return formacao;
     }
@@ -41,17 +53,12 @@ public class Professor extends Pessoa {
         return historicoProfissional;
     }
 
-    @Override
-    public int getIDPessoa() {
-        return super.getIDPessoa();
+    public int getIdProfessor() {
+        return idProfessor;
     }
-    public int getIDProfessor() {
-        try {
-            return SQLManager.getIDProfessor(this);
-        } catch (SQLException ex) {
-            Logger.getLogger(Professor.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            return -1;
-        }
+
+    public int getIdPessoa() {
+        return idPessoa;
     }
+    
 }

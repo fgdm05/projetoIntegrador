@@ -1,10 +1,8 @@
 package br.com.senac.integrador.escola.modelos.telas;
 
 import br.com.senac.integrador.escola.modelos.Endereco;
-import br.com.senac.integrador.escola.modelos.Identificador;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
 import br.com.senac.integrador.escola.modelos.auxiliares.Manager;
-import br.com.senac.integrador.escola.modelos.Pessoa;
 import br.com.senac.integrador.escola.modelos.Professor;
 import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
 import br.com.senac.integrador.escola.modelos.auxiliares.Placeholder;
@@ -788,22 +786,6 @@ public class CadastroProfessor extends javax.swing.JFrame {
         String formacao = campoFormacao.getText();
         String historicoProfissional = campoHistoricoProfissional.getText();
         
-        
-        try {
-            if(!cpf.matches(Regex.CPF)) {
-                throw new IllegalArgumentException("CPF formatado incorretamente.");
-            } else if(!telefone.matches(Regex.TELEFONE)) {
-                throw new IllegalArgumentException("Telefone formatado incorretamente.");
-            } else if(!rg.matches(Regex.RG)) {
-                throw new IllegalArgumentException("RG formatado incorretamente.");
-            } else if(!(estado.length() == 2)) {
-                throw new IllegalArgumentException("Estado formatado incorretamente.");
-            }
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            return;
-        }
-        
         boolean camposInvalidos = 
                 nome.isBlank() ||
                 cpf.isBlank() ||
@@ -835,10 +817,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
         Genero genero = Genero.values()[indexGenero];
         CorRaca corRaca = CorRaca.values()[indexCorRaca];
         
-        Identificador identificador = new Identificador(nome, cpf, rg, telefone, email);
-        
-        Pessoa pessoa = new Pessoa(identificador, deficiencia, nacionalidade, estadoCivil, ender, genero, corRaca);
-        Professor professor = new Professor(pessoa, formacao, historicoProfissional);
+        Professor professor = new Professor(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, ender, estadoCivil, genero, corRaca, formacao, historicoProfissional);
         
         try {
             SQLManager.cadastrar(professor);

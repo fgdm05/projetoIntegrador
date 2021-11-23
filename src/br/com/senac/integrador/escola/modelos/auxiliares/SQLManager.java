@@ -5,7 +5,6 @@ import br.com.senac.integrador.escola.modelos.Aluno;
 import br.com.senac.integrador.escola.modelos.Endereco;
 import br.com.senac.integrador.escola.modelos.Pessoa;
 import br.com.senac.integrador.escola.modelos.Professor;
-import br.com.senac.integrador.escola.modelos.Identificador;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
 import br.com.senac.integrador.escola.modelos.enums.Fator;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
@@ -36,9 +35,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Felipe Godinho Dal Molin
  */
 public abstract class SQLManager {
-    private static boolean isSQLSet = false;
     private static Connection connection;
-    private static final File file = new File("databaseConfig.csv");
+    private static final File FILE = new File("databaseConfig.csv");
     
     public static void cadastrar(Aluno aluno) throws SQLException {
         Statement statement = connection.createStatement();
@@ -134,104 +132,48 @@ public abstract class SQLManager {
         statement.execute(sqlState);
     }
 
-    public static int getIDPessoa(Pessoa p) throws SQLException {
+    public static void initTableProfessoresCadastrados(JTable tabelaGeral) throws SQLException {
         Statement statement = connection.createStatement();
-        
-        String sqlState = String.format(
-                "SELECT idPessoa FROM pessoa WHERE " +
-                "nome='%s' AND cpf='%s' AND email='%s' AND rg='%s' AND telefone='%s'",
-                p.getNome(), p.getCPF(), p.getEmail(), p.getRG(), p.getTelefone());
-        ResultSet result = statement.executeQuery(sqlState);
-        int id = -1;
-        while(result.next()) {
-            id = result.getInt(Tags.idPessoa.name());
-        }
-        return id;
-    }
-    public static int getIDProfessor(Professor p) throws SQLException {
-        Statement statement = connection.createStatement();
-        
-        int idPessoa = getIDPessoa(p);
-        String sqlState = String.format(
-                "SELECT idProfessor FROM professor WHERE idPessoa=%d",
-                idPessoa
-        );
-        ResultSet result = statement.executeQuery(sqlState);
-        int idProfessor = -1;
-        while(result.next()) {
-            idProfessor = result.getInt(Tags.idProfessor.name());
-        }
-        return idProfessor;
-    }
-    public static void initTable(JTable tabelaGeral) throws SQLException {
-        Statement statement = connection.createStatement();
-        
-        ResultSet resultIdPessoa = statement.executeQuery("SELECT idPessoa FROM pessoa");
-        ArrayList<Integer> listIdPessoa = new ArrayList<>();
-        while(resultIdPessoa.next()) {
-            listIdPessoa.add(resultIdPessoa.getInt(Tags.idPessoa.name()));
-        }
-        // converter idPessoa -> Pessoa
-        // pegar informações da Pessoa
         
         ResultSet result = statement.executeQuery(
-                "SELECT * " +
-                "FROM pessoa pe, professor pr " +
+                "SELECT DISTINCT pr.idPessoa, pr.idProfessor, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email, e.estado " +
+                "FROM pessoa pe, professor pr, endereco e " +
                 "WHERE pe.idPessoa=pr.idPessoa");
         
         var professores = new ArrayList<Professor>();
         
         while(result.next()) {
-            Identificador identificador = new Identificador(
-                    result.getString(Tags.NOME.name()), 
-                    result.getString(Tags.CPF.name()), 
-                    result.getString(Tags.RG.name()), 
-                    result.getString(Tags.TELEFONE.name()), 
-                    result.getString(Tags.EMAIL.name()));
-            Pessoa pessoa = new Pessoa(identificador, null, null, null, null, null, null);
-            professores.add(new Professor(pessoa, null, null));
-        }
-        
-        /*var identificadores = new ArrayList<Identificador>();
-        while(result.next()) {
-            String nome = result.getString(Tags.Nome.name());
-            String email = result.getString(Tags.Email.name());
+            int idPessoa = result.getInt(Tags.idPessoa.name());
+            int idProfessor = result.getInt(Tags.idProfessor.name());
+            String nome = result.getString(Tags.NOME.name());
             String cpf = result.getString(Tags.CPF.name());
             String rg = result.getString(Tags.RG.name());
-            String telefone = result.getString(Tags.Telefone.name());
-            identificadores.add(new Identificador(nome, cpf, rg, telefone, email));
-        }*/
-        
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            
+            String estado = result.getString(Tags.ESTADO.name());
+            
+            Endereco endereco = new Endereco(estado, null, null, -1, null);
+            
+            Professor professor = new Professor
+                (idPessoa, idProfessor, nome, cpf, rg, telefone, email, 
+                    null, null, null, endereco, null, null, null, null);
+            professores.add(professor);
+        }
         
         DefaultTableModel model = (DefaultTableModel) tabelaGeral.getModel();
         model.setNumRows(0);
         
-        /*identificadores.forEach((identificador) -> {
+        professores.forEach(professor -> {
             model.addRow(new Object[] {
-                identificador.getNome(),
-                identificador.getEmail(),
-                identificador.getCpf(),
-                identificador.getRg(),
-                identificador.getTelefone()
-            });
-        });
-        
-        for(int i = 0; i < professores.size(); i++) {
-            model.addRow(new Object[] {
-                professores.get(i).getIDProfessor(),
-                professores.get(i).
-            });
-        }*/
-        for(Professor professor : professores) {
-            model.addRow(new Object[] {
-                professor.getIDProfessor(),
+                professor.getIdProfessor(),
                 professor.getNome(),
                 professor.getEmail(),
                 professor.getCPF(),
                 professor.getRG(),
                 professor.getTelefone()
             });
-        }
+        });
     }
     
     /**
@@ -244,7 +186,7 @@ public abstract class SQLManager {
         Properties properties;
         String url = null, username = null, password = null;
         try {
-            fr = new FileReader(file);
+            fr = new FileReader(FILE);
             br = new BufferedReader(fr);
             url = br.readLine().substring(5);
             username = br.readLine().substring(10);
@@ -279,7 +221,7 @@ public abstract class SQLManager {
         FileWriter fw;
         BufferedWriter bw;
         try {
-            fw = new FileWriter(file, false);
+            fw = new FileWriter(FILE, false);
             bw = new BufferedWriter(fw);
             bw.write("URL: " + properties.getProperty(Tags.URL.name()));
             bw.newLine();
@@ -306,9 +248,6 @@ public abstract class SQLManager {
     }
     
     public static Pessoa buscarPessoa(Fator fator, String valor) throws SQLException {
-        // Retorna sempre o valor máximo -> consertar while: se valor=idProfessor, mas o professor está correto
-        
-        Identificador identificador = buscarIdentificador(fator, valor);
         Endereco endereco = buscarEndereco(fator, valor);
         
         String sql = String.format(
@@ -318,48 +257,32 @@ public abstract class SQLManager {
         ResultSet r = s.executeQuery(sql);
         
         Pessoa pessoa = null;
-        EstadoCivil estado; Genero genero; CorRaca corRaca;
         
         while(r.next()) {
+            
+            String nome = r.getString(Tags.NOME.name());
+            String cpf = r.getString(Tags.CPF.name());
+            String rg = r.getString(Tags.RG.name());
+            String telefone = r.getString(Tags.TELEFONE.name());
+            String email = r.getString(Tags.EMAIL.name());
             
             String nomeEstadoCivil = r.getString(Tags.ESTADOCIVIL.name());
             String nomeGenero = r.getString(Tags.GENERO.name());
             String nomeCorRaca = r.getString(Tags.COR.name());
                       
-            estado = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
-            genero = Enum.valueOf(Genero.class, nomeGenero);
-            corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
+            EstadoCivil estadoCivil = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            Genero genero = Enum.valueOf(Genero.class, nomeGenero);
+            CorRaca corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
             
             String deficiencia = r.getString(Tags.DEFICIENCIA.name());
             String nacionalidade = r.getString(Tags.NACIONALIDADE.name());
             
-            pessoa = new Pessoa(identificador, deficiencia, nacionalidade, estado, endereco, genero, corRaca);
+            pessoa = new Pessoa(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, endereco, estadoCivil, genero, corRaca);
         }
         if(pessoa == null) {
             throw new NullPointerException();
         }
         return pessoa;
-    }
-    public static Identificador buscarIdentificador(Fator fator, String valor) throws SQLException {
-        String sql = String.format(
-                "SELECT pr.idProfessor, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email FROM pessoa pe, professor pr " +
-                "WHERE %s='%s'", fator.name(), valor);
-        Statement s = connection.createStatement();
-        ResultSet r = s.executeQuery(sql);
-        
-        Identificador identificador = null;
-        while(r.next()) {
-            identificador = new Identificador(
-                    r.getString(Tags.NOME.name()), 
-                    r.getString(Tags.CPF.name()), 
-                    r.getString(Tags.RG.name()), 
-                    r.getString(Tags.TELEFONE.name()), 
-                    r.getString(Tags.EMAIL.name()));
-        }
-        if(identificador==null) {
-            throw new NullPointerException();
-        }
-        return identificador;
     }
     public static Endereco buscarEndereco(Fator fator, String valor) throws SQLException {
         String sql = 
@@ -391,22 +314,46 @@ public abstract class SQLManager {
         return endereco;
     }
     public static Professor buscarProfessor(Fator fator, String valor) throws SQLException {
-        Pessoa pessoa = buscarPessoa(fator, valor);
+        Endereco endereco = buscarEndereco(fator, valor);
+        
         String sql = String.format(
-                "SELECT formacao, historicoProfissional " +
-                "FROM pessoa pe, professor pr " +
-                "WHERE %s='%s'",fator.name(), valor);
+                "SELECT * " +
+                "FROM pessoa pe JOIN professor pr " +
+                "ON pe.idPessoa=pr.idPessoa " +
+                "WHERE %s='%s' ORDER BY idProfessor ASC", fator.name(), valor
+        );
         
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
         Professor professor = null;
         while(result.next()) {
-            professor = new Professor(pessoa,
-                    result.getString(Tags.FORMACAO.name()), 
-                    result.getString(Tags.HISTORICOPROFISSIONAL.name()));
+            int idPessoa = result.getInt(Tags.idPessoa.name());
+            int idProfessor = result.getInt(Tags.idProfessor.name());
+            
+            String nome = result.getString(Tags.NOME.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            String deficiencia = result.getString(Tags.DEFICIENCIA.name());
+            String nacionalidade = result.getString(Tags.NACIONALIDADE.name());
+            String nomeEstadoCivil = result.getString(Tags.ESTADOCIVIL.name());
+            
+            String nomeGenero = result.getString(Tags.GENERO.name());
+            String nomeCorRaca = result.getString(Tags.COR.name());
+            
+            EstadoCivil estadoCivil = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            Genero genero = Enum.valueOf(Genero.class, nomeGenero);
+            CorRaca corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
+            
+            String formacao = result.getString(Tags.FORMACAO.name());
+            String historicoProfissional = result.getString(Tags.HISTORICOPROFISSIONAL.name());
+            
+            professor = new Professor( idPessoa, idProfessor,
+                    nome, cpf, rg, telefone, email, deficiencia, nacionalidade, estadoCivil, endereco, genero, corRaca, formacao, historicoProfissional);
         }
         if(professor == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("DATABASE vazia.");
         } 
         return professor;
     }

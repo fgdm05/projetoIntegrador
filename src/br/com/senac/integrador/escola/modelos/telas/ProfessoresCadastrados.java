@@ -5,8 +5,6 @@ import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
 import br.com.senac.integrador.escola.modelos.enums.Fator;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,8 +22,8 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         initComponents();
         SQLManager.initConnection();
         try {
-            SQLManager.initTable(tabelaGeral);
-        } catch (SQLException ex) {
+            SQLManager.initTableProfessoresCadastrados(tabelaGeral);
+        } catch (Exception ex) {
             Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -600,18 +598,12 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         whiteCampos();
         String valor = campoPesquisa.getText();
         String fator = ((String) comboBoxPesquisa.getSelectedItem()).toUpperCase();
-        System.out.println("Pesquisa: " + valor);
-        System.out.println("Fator: " + fator);
          
         Professor professor = null;
         Fator fatora = Fator.valueOf(Fator.class, fator);
         
         try {
             professor = SQLManager.buscarProfessor(fatora, valor);
-            if(professor == null) {
-                throw new NullPointerException("DATABASE vazia.");
-            }
-            
         } catch (SQLException ex) {
             Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -713,7 +705,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
 
     private void setCampos(Professor professor) {
         try {
-            campoID.setText(Integer.toString(professor.getIDProfessor()));
+            campoID.setText(Integer.toString(professor.getIdProfessor()));
             campoNome.setText(professor.getNome());
             campoNacionalidade.setText(professor.getNacionalidade());
 
