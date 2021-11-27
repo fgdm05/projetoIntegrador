@@ -1,6 +1,7 @@
 package br.com.senac.integrador.escola.modelos.auxiliares;
 
 import java.awt.Component;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,8 @@ import javax.swing.JTextField;
  * @author Felipe Godinho Dal Molin
  */
 public abstract class Manager {
-
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
     public static int getIndexOfButtonSelectByList(ArrayList<AbstractButton> buttonsPeriodo) {
         for(AbstractButton button : buttonsPeriodo) {
             if(button.isSelected()){

@@ -4,14 +4,15 @@ import br.com.senac.integrador.escola.modelos.Endereco;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
 import br.com.senac.integrador.escola.modelos.auxiliares.Manager;
 import br.com.senac.integrador.escola.modelos.Professor;
+import br.com.senac.integrador.escola.modelos.Titular;
 import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
 import br.com.senac.integrador.escola.modelos.auxiliares.Placeholder;
-import br.com.senac.integrador.escola.modelos.auxiliares.Regex;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
-import java.awt.Color;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -66,6 +67,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
         labelBairro = new javax.swing.JLabel();
         campoNacionalidade = new javax.swing.JTextField();
         labelNacionalidade = new javax.swing.JLabel();
+        labelDataNascimento = new javax.swing.JLabel();
+        campoDataNascimento = new javax.swing.JTextField();
         jPanelPessoa = new javax.swing.JPanel();
         campoTelefone = new javax.swing.JTextField();
         campoEmail = new javax.swing.JTextField();
@@ -102,13 +105,22 @@ public class CadastroProfessor extends javax.swing.JFrame {
         campoHistoricoProfissional = new javax.swing.JTextArea();
         title = new javax.swing.JPanel();
         titleMain = new javax.swing.JLabel();
-        sidePanel3 = new javax.swing.JPanel();
-        cadastrarProfessor3 = new javax.swing.JPanel();
-        icon4 = new javax.swing.JLabel();
-        labelSection4 = new javax.swing.JLabel();
+        sidePanel = new javax.swing.JPanel();
+        cadastrarProfessor = new javax.swing.JPanel();
+        icon = new javax.swing.JLabel();
+        labelSection = new javax.swing.JLabel();
         verProfessores = new javax.swing.JPanel();
         icon1 = new javax.swing.JLabel();
         labelSection1 = new javax.swing.JLabel();
+        cadastrarEstudante = new javax.swing.JPanel();
+        iconEstudante = new javax.swing.JLabel();
+        labelSectionEstudante = new javax.swing.JLabel();
+        verEstudantes = new javax.swing.JPanel();
+        icon2 = new javax.swing.JLabel();
+        labelVerEstudantes = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        labelVerEstudantes1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastrar Professor");
@@ -234,6 +246,22 @@ public class CadastroProfessor extends javax.swing.JFrame {
         labelNacionalidade.setForeground(new java.awt.Color(255, 255, 255));
         labelNacionalidade.setText("Nacionalidade:");
 
+        labelDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelDataNascimento.setForeground(new java.awt.Color(255, 255, 255));
+        labelDataNascimento.setText("Nascimento:");
+
+        campoDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoDataNascimento.setForeground(new java.awt.Color(153, 153, 153));
+        campoDataNascimento.setText("DD/MM/AAAA");
+        campoDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                campoDataNascimentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                campoDataNascimentoFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEnderecoLayout = new javax.swing.GroupLayout(jPanelEndereco);
         jPanelEndereco.setLayout(jPanelEnderecoLayout);
         jPanelEnderecoLayout.setHorizontalGroup(
@@ -264,6 +292,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
                 .addComponent(labelNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
+                .addComponent(labelDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelEnderecoLayout.setVerticalGroup(
             jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,7 +322,11 @@ public class CadastroProfessor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(campoNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         content.add(jPanelEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, -1));
@@ -629,44 +665,44 @@ public class CadastroProfessor extends javax.swing.JFrame {
             .addComponent(titleMain, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
 
-        sidePanel3.setBackground(new java.awt.Color(19, 16, 89));
+        sidePanel.setBackground(new java.awt.Color(19, 16, 89));
 
-        cadastrarProfessor3.setBackground(new java.awt.Color(19, 16, 89));
-        cadastrarProfessor3.addMouseListener(new java.awt.event.MouseAdapter() {
+        cadastrarProfessor.setBackground(new java.awt.Color(19, 16, 89));
+        cadastrarProfessor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cadastrarProfessor3MouseClicked(evt);
+                cadastrarProfessorMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cadastrarProfessor3MouseEntered(evt);
+                cadastrarProfessorMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                cadastrarProfessor3MouseExited(evt);
+                cadastrarProfessorMouseExited(evt);
             }
         });
 
-        icon4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        icon4.setForeground(new java.awt.Color(255, 255, 255));
-        icon4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
+        icon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        icon.setForeground(new java.awt.Color(255, 255, 255));
+        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
 
-        labelSection4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        labelSection4.setForeground(new java.awt.Color(255, 255, 255));
-        labelSection4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSection4.setText("Cadastrar Professor");
+        labelSection.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSection.setForeground(new java.awt.Color(255, 255, 255));
+        labelSection.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSection.setText("Cadastrar Professor");
 
-        javax.swing.GroupLayout cadastrarProfessor3Layout = new javax.swing.GroupLayout(cadastrarProfessor3);
-        cadastrarProfessor3.setLayout(cadastrarProfessor3Layout);
-        cadastrarProfessor3Layout.setHorizontalGroup(
-            cadastrarProfessor3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cadastrarProfessor3Layout.createSequentialGroup()
-                .addComponent(icon4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout cadastrarProfessorLayout = new javax.swing.GroupLayout(cadastrarProfessor);
+        cadastrarProfessor.setLayout(cadastrarProfessorLayout);
+        cadastrarProfessorLayout.setHorizontalGroup(
+            cadastrarProfessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarProfessorLayout.createSequentialGroup()
+                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(labelSection4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                .addComponent(labelSection, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
         );
-        cadastrarProfessor3Layout.setVerticalGroup(
-            cadastrarProfessor3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(icon4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(labelSection4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        cadastrarProfessorLayout.setVerticalGroup(
+            cadastrarProfessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         verProfessores.setBackground(new java.awt.Color(19, 16, 89));
@@ -707,20 +743,131 @@ public class CadastroProfessor extends javax.swing.JFrame {
             .addComponent(labelSection1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout sidePanel3Layout = new javax.swing.GroupLayout(sidePanel3);
-        sidePanel3.setLayout(sidePanel3Layout);
-        sidePanel3Layout.setHorizontalGroup(
-            sidePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cadastrarProfessor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(verProfessores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        cadastrarEstudante.setBackground(new java.awt.Color(19, 16, 89));
+        cadastrarEstudante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseExited(evt);
+            }
+        });
+
+        iconEstudante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconEstudante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
+
+        labelSectionEstudante.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSectionEstudante.setForeground(new java.awt.Color(255, 255, 255));
+        labelSectionEstudante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSectionEstudante.setText("Cadastrar Estudante");
+
+        javax.swing.GroupLayout cadastrarEstudanteLayout = new javax.swing.GroupLayout(cadastrarEstudante);
+        cadastrarEstudante.setLayout(cadastrarEstudanteLayout);
+        cadastrarEstudanteLayout.setHorizontalGroup(
+            cadastrarEstudanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarEstudanteLayout.createSequentialGroup()
+                .addComponent(iconEstudante, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelSectionEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        sidePanel3Layout.setVerticalGroup(
-            sidePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidePanel3Layout.createSequentialGroup()
-                .addComponent(cadastrarProfessor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        cadastrarEstudanteLayout.setVerticalGroup(
+            cadastrarEstudanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelSectionEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        verEstudantes.setBackground(new java.awt.Color(19, 16, 89));
+        verEstudantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseExited(evt);
+            }
+        });
+
+        icon2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/ver_cadastros_professor_75px.png"))); // NOI18N
+
+        labelVerEstudantes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelVerEstudantes.setForeground(new java.awt.Color(255, 255, 255));
+        labelVerEstudantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelVerEstudantes.setText("Ver Estudantes");
+
+        javax.swing.GroupLayout verEstudantesLayout = new javax.swing.GroupLayout(verEstudantes);
+        verEstudantes.setLayout(verEstudantesLayout);
+        verEstudantesLayout.setHorizontalGroup(
+            verEstudantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(verEstudantesLayout.createSequentialGroup()
+                .addComponent(icon2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelVerEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        verEstudantesLayout.setVerticalGroup(
+            verEstudantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(icon2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelVerEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(19, 16, 89));
+
+        labelVerEstudantes1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelVerEstudantes1.setForeground(new java.awt.Color(255, 255, 255));
+        labelVerEstudantes1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelVerEstudantes1.setText("Cadastrar Login");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
+        jLabel7.setText("jLabel7");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelVerEstudantes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelVerEstudantes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
+        sidePanel.setLayout(sidePanelLayout);
+        sidePanelLayout.setHorizontalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cadastrarEstudante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(verEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verProfessores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadastrarProfessor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        sidePanelLayout.setVerticalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addComponent(cadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(verProfessores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, 0)
+                .addComponent(cadastrarEstudante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(verEstudantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -728,7 +875,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(sidePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE))
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -737,9 +884,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sidePanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -785,6 +933,9 @@ public class CadastroProfessor extends javax.swing.JFrame {
         
         String formacao = campoFormacao.getText();
         String historicoProfissional = campoHistoricoProfissional.getText();
+        String dataNascimentoTexto = campoDataNascimento.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataNascimento = LocalDate.parse(dataNascimentoTexto, formatter);
         
         boolean camposInvalidos = 
                 nome.isBlank() ||
@@ -817,73 +968,61 @@ public class CadastroProfessor extends javax.swing.JFrame {
         Genero genero = Genero.values()[indexGenero];
         CorRaca corRaca = CorRaca.values()[indexCorRaca];
         
-        Professor professor = new Professor(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, ender, estadoCivil, genero, corRaca, formacao, historicoProfissional);
+        Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, dataNascimento);
+        Professor professor = new Professor(titular, ender, estadoCivil, genero, corRaca, formacao, historicoProfissional);
         
         try {
             SQLManager.cadastrar(professor);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProfessor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        JOptionPane.showMessageDialog(null, "Professor cadastrado.");
     }//GEN-LAST:event_botaoCadastrarActionPerformed
-    private void campoFocusGained(java.awt.event.FocusEvent evt, javax.swing.JTextField textField, String placeholder) {
-        if(textField.getText().equals(placeholder)) {
-            textField.setText("");
-        }
-        textField.setForeground(Color.BLACK);
-    }
-    private void campoFocusLost(java.awt.event.FocusEvent evt, javax.swing.JTextField textField, String placeholder) {
-        if(textField.getText().isBlank()) {
-            textField.setText(placeholder);
-            textField.setForeground(new Color(153,153,153));
-            return;
-        }
-        textField.setForeground(Color.BLACK);
-    }
     
    
     private void campoTelefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoTelefoneFocusGained
-        campoFocusGained(evt, campoTelefone, Placeholder.TELEFONE);
+        JFrameManager.campoFocusGained(evt, campoTelefone, Placeholder.TELEFONE);
     }//GEN-LAST:event_campoTelefoneFocusGained
 
     private void campoTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoTelefoneFocusLost
-        campoFocusLost(evt, campoTelefone, Placeholder.TELEFONE);
+        JFrameManager.campoFocusLost(evt, campoTelefone, Placeholder.TELEFONE);
     }//GEN-LAST:event_campoTelefoneFocusLost
 
     private void campoCPFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCPFFocusGained
-        campoFocusGained(evt, campoCPF, Placeholder.CPF);
+        JFrameManager.campoFocusGained(evt, campoCPF, Placeholder.CPF);
     }//GEN-LAST:event_campoCPFFocusGained
 
     private void campoCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCPFFocusLost
-        campoFocusLost(evt, campoCPF, Placeholder.CPF);
+        JFrameManager.campoFocusLost(evt, campoCPF, Placeholder.CPF);
     }//GEN-LAST:event_campoCPFFocusLost
 
     private void campoRGFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoRGFocusGained
-        campoFocusGained(evt, campoRG, Placeholder.RG);
+        JFrameManager.campoFocusGained(evt, campoRG, Placeholder.RG);
     }//GEN-LAST:event_campoRGFocusGained
 
     private void campoRGFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoRGFocusLost
-        campoFocusLost(evt, campoRG, Placeholder.RG);
+        JFrameManager.campoFocusLost(evt, campoRG, Placeholder.RG);
     }//GEN-LAST:event_campoRGFocusLost
 
     private void campoEstadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoEstadoFocusGained
-        campoFocusGained(evt, campoEstado, Placeholder.ESTADO);
+        JFrameManager.campoFocusGained(evt, campoEstado, Placeholder.ESTADO);
     }//GEN-LAST:event_campoEstadoFocusGained
 
     private void campoEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoEstadoFocusLost
-        campoFocusLost(evt, campoEstado, Placeholder.ESTADO);
+        JFrameManager.campoFocusLost(evt, campoEstado, Placeholder.ESTADO);
     }//GEN-LAST:event_campoEstadoFocusLost
 
-    private void cadastrarProfessor3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseClicked
-        JFrameManager.changeJFrame(evt, new CadastroProfessor());
-    }//GEN-LAST:event_cadastrarProfessor3MouseClicked
+    private void cadastrarProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroEstudante());
+    }//GEN-LAST:event_cadastrarProfessorMouseClicked
 
-    private void cadastrarProfessor3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseEntered
+    private void cadastrarProfessorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseEntered
         JFrameManager.sectionMouseEntered(evt);
-    }//GEN-LAST:event_cadastrarProfessor3MouseEntered
+    }//GEN-LAST:event_cadastrarProfessorMouseEntered
 
-    private void cadastrarProfessor3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessor3MouseExited
+    private void cadastrarProfessorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseExited
         JFrameManager.sectionMouseExited(evt);
-    }//GEN-LAST:event_cadastrarProfessor3MouseExited
+    }//GEN-LAST:event_cadastrarProfessorMouseExited
 
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
         JFrameManager.changeJFrame(evt, new ProfessoresCadastrados());
@@ -896,6 +1035,38 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private void verProfessoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_verProfessoresMouseExited
+
+    private void cadastrarEstudanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroEstudante());
+    }//GEN-LAST:event_cadastrarEstudanteMouseClicked
+
+    private void cadastrarEstudanteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_cadastrarEstudanteMouseEntered
+
+    private void cadastrarEstudanteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_cadastrarEstudanteMouseExited
+
+    private void verEstudantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseClicked
+        JFrameManager.changeJFrame(evt, new EstudantesCadastrados());
+    }//GEN-LAST:event_verEstudantesMouseClicked
+
+    private void verEstudantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_verEstudantesMouseEntered
+
+    private void verEstudantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_verEstudantesMouseExited
+
+    private void campoDataNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoDataNascimentoFocusGained
+        JFrameManager.campoFocusGained(evt, campoDataNascimento, Placeholder.DATANASCIMENTO);
+    }//GEN-LAST:event_campoDataNascimentoFocusGained
+
+    private void campoDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoDataNascimentoFocusLost
+        JFrameManager.campoFocusLost(evt, campoDataNascimento, Placeholder.DATANASCIMENTO);
+    }//GEN-LAST:event_campoDataNascimentoFocusLost
     
         
     /**
@@ -949,10 +1120,12 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JRadioButton botaoPardo;
     private javax.swing.JRadioButton botaoSolteiro;
     private javax.swing.JRadioButton botaoViuvo;
-    private javax.swing.JPanel cadastrarProfessor3;
+    private javax.swing.JPanel cadastrarEstudante;
+    private javax.swing.JPanel cadastrarProfessor;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoCidade;
+    private javax.swing.JTextField campoDataNascimento;
     private javax.swing.JTextField campoDeficiencia;
     private javax.swing.JTextField campoEmail;
     private javax.swing.JTextField campoEndereco;
@@ -968,9 +1141,13 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grupoBotoesCorRaca;
     private javax.swing.ButtonGroup grupoBotoesEstadoCivil;
     private javax.swing.ButtonGroup grupoBotoesGenero;
+    private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
-    private javax.swing.JLabel icon4;
+    private javax.swing.JLabel icon2;
+    private javax.swing.JLabel iconEstudante;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCorRaca;
     private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JPanel jPanelEstadoCivil;
@@ -983,6 +1160,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelCidade;
     private javax.swing.JLabel labelCidade1;
+    private javax.swing.JLabel labelDataNascimento;
     private javax.swing.JLabel labelDeficiencia;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelEndereco;
@@ -990,10 +1168,13 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
     private javax.swing.JLabel labelRG;
+    private javax.swing.JLabel labelSection;
     private javax.swing.JLabel labelSection1;
-    private javax.swing.JLabel labelSection4;
+    private javax.swing.JLabel labelSectionEstudante;
     private javax.swing.JLabel labelTelefone;
-    private javax.swing.JPanel sidePanel3;
+    private javax.swing.JLabel labelVerEstudantes;
+    private javax.swing.JLabel labelVerEstudantes1;
+    private javax.swing.JPanel sidePanel;
     private javax.swing.JPanel title;
     private javax.swing.JLabel titleCorRaca;
     private javax.swing.JLabel titleEstadoCivil;
@@ -1001,6 +1182,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel titleGenero;
     private javax.swing.JLabel titleHistoricoProfissional;
     private javax.swing.JLabel titleMain;
+    private javax.swing.JPanel verEstudantes;
     private javax.swing.JPanel verProfessores;
     // End of variables declaration//GEN-END:variables
 }

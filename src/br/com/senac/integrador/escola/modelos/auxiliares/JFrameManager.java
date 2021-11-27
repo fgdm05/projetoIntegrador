@@ -24,4 +24,18 @@ public abstract class JFrameManager {
     public static void sectionMouseExited(MouseEvent evt) {
         evt.getComponent().setBackground(colorNormal);
     }
+    public static void campoFocusGained(java.awt.event.FocusEvent evt, javax.swing.JTextField textField, String placeholder) {
+        if(textField.getText().equals(placeholder)) {
+            textField.setText("");
+        }
+        textField.setForeground(Color.BLACK);
+    }
+    public static void campoFocusLost(java.awt.event.FocusEvent evt, javax.swing.JTextField textField, String placeholder) {
+        if(textField.getText().isBlank()) {
+            textField.setText(placeholder);
+            textField.setForeground(new Color(153,153,153));
+            return;
+        }
+        textField.setForeground(Color.BLACK);
+    }
 }

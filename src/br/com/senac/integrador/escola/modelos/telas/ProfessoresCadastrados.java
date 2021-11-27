@@ -1,7 +1,9 @@
 package br.com.senac.integrador.escola.modelos.telas;
 
 import br.com.senac.integrador.escola.modelos.Professor;
+import br.com.senac.integrador.escola.modelos.Titular;
 import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
+import br.com.senac.integrador.escola.modelos.auxiliares.Manager;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
 import br.com.senac.integrador.escola.modelos.enums.Fator;
 import java.sql.SQLException;
@@ -15,9 +17,6 @@ import javax.swing.JOptionPane;
  */
 public class ProfessoresCadastrados extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaAdministrador
-     */
     public ProfessoresCadastrados() {
         initComponents();
         SQLManager.initConnection();
@@ -37,6 +36,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
         background = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         cadastrarProfessor = new javax.swing.JPanel();
@@ -45,6 +45,15 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         verProfessores = new javax.swing.JPanel();
         icon1 = new javax.swing.JLabel();
         labelSection1 = new javax.swing.JLabel();
+        cadastrarEstudante = new javax.swing.JPanel();
+        iconEstudante = new javax.swing.JLabel();
+        labelSectionEstudante = new javax.swing.JLabel();
+        verEstudantes = new javax.swing.JPanel();
+        icon2 = new javax.swing.JLabel();
+        labelVerEstudantes = new javax.swing.JLabel();
+        cadastrarLogin = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaGeral = new javax.swing.JTable();
@@ -59,6 +68,8 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         campoNome = new javax.swing.JTextField();
         labelNacionalidade = new javax.swing.JLabel();
         campoNacionalidade = new javax.swing.JTextField();
+        campoDataNascimento = new javax.swing.JTextField();
+        labelDataNascimento = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         campoGenero = new javax.swing.JTextField();
@@ -85,10 +96,24 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         campoHistoricoProfissional = new javax.swing.JTextArea();
         labelTituloHistoricoProfissional = new javax.swing.JLabel();
+        jPanelEndereco = new javax.swing.JPanel();
+        campoBairro = new javax.swing.JTextField();
+        labelNumero = new javax.swing.JLabel();
+        campoNumero = new javax.swing.JTextField();
+        labelEndereco = new javax.swing.JLabel();
+        campoEndereco = new javax.swing.JTextField();
+        labelCidade = new javax.swing.JLabel();
+        campoCidade = new javax.swing.JTextField();
+        labelCidade1 = new javax.swing.JLabel();
+        campoEstado = new javax.swing.JTextField();
+        labelBairro = new javax.swing.JLabel();
         title = new javax.swing.JPanel();
         titleMain = new javax.swing.JLabel();
 
+        jLabel3.setText("jLabel3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Professores Cadastrados");
 
         background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -170,12 +195,126 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
             .addComponent(labelSection1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        cadastrarEstudante.setBackground(new java.awt.Color(19, 16, 89));
+        cadastrarEstudante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cadastrarEstudanteMouseExited(evt);
+            }
+        });
+
+        iconEstudante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconEstudante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
+
+        labelSectionEstudante.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSectionEstudante.setForeground(new java.awt.Color(255, 255, 255));
+        labelSectionEstudante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSectionEstudante.setText("Cadastrar Estudante");
+
+        javax.swing.GroupLayout cadastrarEstudanteLayout = new javax.swing.GroupLayout(cadastrarEstudante);
+        cadastrarEstudante.setLayout(cadastrarEstudanteLayout);
+        cadastrarEstudanteLayout.setHorizontalGroup(
+            cadastrarEstudanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarEstudanteLayout.createSequentialGroup()
+                .addComponent(iconEstudante, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelSectionEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        cadastrarEstudanteLayout.setVerticalGroup(
+            cadastrarEstudanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelSectionEstudante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        verEstudantes.setBackground(new java.awt.Color(19, 16, 89));
+        verEstudantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                verEstudantesMouseExited(evt);
+            }
+        });
+
+        icon2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/ver_cadastros_professor_75px.png"))); // NOI18N
+
+        labelVerEstudantes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelVerEstudantes.setForeground(new java.awt.Color(255, 255, 255));
+        labelVerEstudantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelVerEstudantes.setText("Ver Estudantes");
+
+        javax.swing.GroupLayout verEstudantesLayout = new javax.swing.GroupLayout(verEstudantes);
+        verEstudantes.setLayout(verEstudantesLayout);
+        verEstudantesLayout.setHorizontalGroup(
+            verEstudantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(verEstudantesLayout.createSequentialGroup()
+                .addComponent(icon2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelVerEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        verEstudantesLayout.setVerticalGroup(
+            verEstudantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(icon2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelVerEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        cadastrarLogin.setBackground(new java.awt.Color(19, 16, 89));
+        cadastrarLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarLoginMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cadastrarLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cadastrarLoginMouseExited(evt);
+            }
+        });
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/75px/Adicionar_Cadastro75px.png"))); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Cadastrar Login");
+
+        javax.swing.GroupLayout cadastrarLoginLayout = new javax.swing.GroupLayout(cadastrarLogin);
+        cadastrarLogin.setLayout(cadastrarLoginLayout);
+        cadastrarLoginLayout.setHorizontalGroup(
+            cadastrarLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarLoginLayout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        cadastrarLoginLayout.setVerticalGroup(
+            cadastrarLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(verProfessores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(cadastrarProfessor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(cadastrarEstudante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(verEstudantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verProfessores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadastrarProfessor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(cadastrarLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +322,13 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
                 .addComponent(cadastrarProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(verProfessores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, 0)
+                .addComponent(cadastrarEstudante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(verEstudantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(cadastrarLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(289, Short.MAX_VALUE))
         );
 
         content.setBackground(new java.awt.Color(75, 97, 148));
@@ -224,12 +369,12 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabelaGeral);
 
-        content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 580, 160));
+        content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 580, 160));
 
         comboBoxPesquisa.setBackground(new java.awt.Color(10, 23, 82));
         comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDProfessor", "Nome", "Email", "CPF", "RG", "Telefone" }));
-        content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 100, 30));
-        content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 120, 30));
+        content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 70, 100, 30));
+        content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 120, 30));
 
         labelTituloDescricao.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         labelTituloDescricao.setForeground(new java.awt.Color(255, 255, 255));
@@ -246,7 +391,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
                 botaoObterDescricaoActionPerformed(evt);
             }
         });
-        content.add(botaoObterDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, -1, -1));
+        content.add(botaoObterDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 170, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(10, 23, 82));
         jPanel1.setBorder(null);
@@ -272,6 +417,13 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         campoNacionalidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoNacionalidade.setEnabled(false);
 
+        campoDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoDataNascimento.setEnabled(false);
+
+        labelDataNascimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelDataNascimento.setForeground(new java.awt.Color(255, 255, 255));
+        labelDataNascimento.setText("Nascimento:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -285,9 +437,13 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(labelNacionalidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelNacionalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(labelDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,10 +459,13 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNacionalidade))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDataNascimento)))
         );
 
-        content.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, 110));
+        content.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, 150));
 
         jPanel3.setBackground(new java.awt.Color(10, 23, 82));
         jPanel3.setBorder(null);
@@ -455,7 +614,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        content.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, -1));
+        content.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(10, 23, 82));
         jPanel5.setBorder(null);
@@ -519,12 +678,108 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
 
         content.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 330, 180));
 
+        jPanelEndereco.setBackground(new java.awt.Color(10, 23, 82));
+
+        campoBairro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoBairro.setForeground(new java.awt.Color(0, 0, 0));
+        campoBairro.setEnabled(false);
+
+        labelNumero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelNumero.setForeground(new java.awt.Color(255, 255, 255));
+        labelNumero.setText("Número:");
+
+        campoNumero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoNumero.setForeground(new java.awt.Color(0, 0, 0));
+        campoNumero.setEnabled(false);
+
+        labelEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelEndereco.setForeground(new java.awt.Color(255, 255, 255));
+        labelEndereco.setText("Endereço:");
+
+        campoEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoEndereco.setForeground(new java.awt.Color(0, 0, 0));
+        campoEndereco.setEnabled(false);
+
+        labelCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelCidade.setForeground(new java.awt.Color(255, 255, 255));
+        labelCidade.setText("Cidade:");
+
+        campoCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoCidade.setForeground(new java.awt.Color(0, 0, 0));
+        campoCidade.setEnabled(false);
+
+        labelCidade1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelCidade1.setForeground(new java.awt.Color(255, 255, 255));
+        labelCidade1.setText("Estado:");
+
+        campoEstado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoEstado.setForeground(new java.awt.Color(255, 255, 255));
+        campoEstado.setEnabled(false);
+
+        labelBairro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelBairro.setForeground(new java.awt.Color(255, 255, 255));
+        labelBairro.setText("Bairro:");
+
+        javax.swing.GroupLayout jPanelEnderecoLayout = new javax.swing.GroupLayout(jPanelEndereco);
+        jPanelEndereco.setLayout(jPanelEnderecoLayout);
+        jPanelEnderecoLayout.setHorizontalGroup(
+            jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                    .addComponent(labelCidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addComponent(labelCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addComponent(labelBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addComponent(labelNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
+                .addComponent(labelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelEnderecoLayout.setVerticalGroup(
+            jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
+        );
+
+        content.add(jPanelEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 390, -1, 180));
+
         title.setBackground(new java.awt.Color(10, 23, 82));
 
         titleMain.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleMain.setForeground(new java.awt.Color(255, 255, 255));
         titleMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleMain.setText("Ver cadastros");
+        titleMain.setText("Ver Professores Cadastrados");
 
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
@@ -544,7 +799,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE))
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         backgroundLayout.setVerticalGroup(
@@ -573,29 +828,23 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     private void cadastrarProfessorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_cadastrarProfessorMouseEntered
-
     private void cadastrarProfessorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_cadastrarProfessorMouseExited
-
     private void verProfessoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_verProfessoresMouseEntered
-
     private void verProfessoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_verProfessoresMouseExited
-
     private void cadastrarProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseClicked
         JFrameManager.changeJFrame(evt, new CadastroProfessor());
     }//GEN-LAST:event_cadastrarProfessorMouseClicked
-
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
         JFrameManager.changeJFrame(evt, new ProfessoresCadastrados());
     }//GEN-LAST:event_verProfessoresMouseClicked
 
     private void botaoObterDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObterDescricaoActionPerformed
-        whiteCampos();
         String valor = campoPesquisa.getText();
         String fator = ((String) comboBoxPesquisa.getSelectedItem()).toUpperCase();
          
@@ -613,6 +862,34 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         
         setCampos(professor);
     }//GEN-LAST:event_botaoObterDescricaoActionPerformed
+
+    private void verEstudantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseClicked
+        JFrameManager.changeJFrame(evt, new EstudantesCadastrados());
+    }//GEN-LAST:event_verEstudantesMouseClicked
+    private void cadastrarEstudanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroEstudante());
+    }//GEN-LAST:event_cadastrarEstudanteMouseClicked
+    private void cadastrarEstudanteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_cadastrarEstudanteMouseEntered
+    private void cadastrarEstudanteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_cadastrarEstudanteMouseExited
+    private void verEstudantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_verEstudantesMouseEntered
+    private void verEstudantesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_verEstudantesMouseExited
+    private void cadastrarLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarLoginMouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroLogin());
+    }//GEN-LAST:event_cadastrarLoginMouseClicked
+    private void cadastrarLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarLoginMouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_cadastrarLoginMouseEntered
+    private void cadastrarLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarLoginMouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_cadastrarLoginMouseExited
     
     /**
      * @param args the command line arguments
@@ -653,11 +930,18 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JButton botaoObterDescricao;
+    private javax.swing.JPanel cadastrarEstudante;
+    private javax.swing.JPanel cadastrarLogin;
     private javax.swing.JPanel cadastrarProfessor;
+    private javax.swing.JTextField campoBairro;
     private javax.swing.JTextField campoCPF;
+    private javax.swing.JTextField campoCidade;
     private javax.swing.JTextField campoCorRaca;
+    private javax.swing.JTextField campoDataNascimento;
     private javax.swing.JTextField campoDeficiencia;
     private javax.swing.JTextField campoEmail;
+    private javax.swing.JTextField campoEndereco;
+    private javax.swing.JTextField campoEstado;
     private javax.swing.JTextField campoEstadoCivil;
     private javax.swing.JTextArea campoFormacao;
     private javax.swing.JTextField campoGenero;
@@ -665,6 +949,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     private javax.swing.JTextField campoID;
     private javax.swing.JTextField campoNacionalidade;
     private javax.swing.JTextField campoNome;
+    private javax.swing.JTextField campoNumero;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JTextField campoRG;
     private javax.swing.JTextField campoTelefone;
@@ -672,72 +957,75 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
     private javax.swing.JPanel content;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
+    private javax.swing.JLabel icon2;
+    private javax.swing.JLabel iconEstudante;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel labelBairro;
     private javax.swing.JLabel labelCPF;
+    private javax.swing.JLabel labelCidade;
+    private javax.swing.JLabel labelCidade1;
+    private javax.swing.JLabel labelDataNascimento;
     private javax.swing.JLabel labelDeficiencia;
     private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelEndereco;
     private javax.swing.JLabel labelID;
     private javax.swing.JLabel labelNacionalidade;
     private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelNumero;
     private javax.swing.JLabel labelRG;
     private javax.swing.JLabel labelSection;
     private javax.swing.JLabel labelSection1;
+    private javax.swing.JLabel labelSectionEstudante;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelTituloDescricao;
     private javax.swing.JLabel labelTituloHistoricoProfissional;
+    private javax.swing.JLabel labelVerEstudantes;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JTable tabelaGeral;
     private javax.swing.JPanel title;
     private javax.swing.JLabel titleMain;
+    private javax.swing.JPanel verEstudantes;
     private javax.swing.JPanel verProfessores;
     // End of variables declaration//GEN-END:variables
 
     private void setCampos(Professor professor) {
         try {
+            Titular titular = professor.getTitular();
+            
             campoID.setText(Integer.toString(professor.getIdProfessor()));
-            campoNome.setText(professor.getNome());
-            campoNacionalidade.setText(professor.getNacionalidade());
-
-            campoEmail.setText(professor.getEmail());
-            campoCPF.setText(professor.getCPF());
-            campoRG.setText(professor.getRG());
-            campoTelefone.setText(professor.getTelefone());
+            campoNome.setText(titular.getNome());
+            campoNacionalidade.setText(titular.getNacionalidade());
+            campoDataNascimento.setText(Manager.formatter.format(titular.getDataNascimento()));
+            
+            campoEmail.setText(titular.getEmail());
+            campoCPF.setText(titular.getCPF());
+            campoRG.setText(titular.getRG());
+            campoTelefone.setText(titular.getTelefone());
 
             campoGenero.setText(professor.getGenero().name());
             campoEstadoCivil.setText(professor.getEstadoCivil().name());
             campoCorRaca.setText(professor.getCorRaca().name());
-            campoDeficiencia.setText(professor.getDeficiencia());
+            campoDeficiencia.setText(titular.getDeficiencia());
 
             campoFormacao.setText(professor.getFormacao());
             campoHistoricoProfissional.setText(professor.getHistoricoProfissional());
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }
-    private void whiteCampos(){
-        campoID.setText("");
-        campoNome.setText("");
-        campoNacionalidade.setText("");
-        campoEmail.setText("");
-        campoCPF.setText("");
-        campoRG.setText("");
-        campoTelefone.setText("");
-        campoGenero.setText("");
-        campoEstadoCivil.setText("");
-        campoCorRaca.setText("");
-        campoDeficiencia.setText("");
-        campoFormacao.setText("");
-        campoHistoricoProfissional.setText("");
     }
 }

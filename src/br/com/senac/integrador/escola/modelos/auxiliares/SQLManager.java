@@ -2,9 +2,12 @@ package br.com.senac.integrador.escola.modelos.auxiliares;
 
 import br.com.senac.integrador.escola.modelos.Login;
 import br.com.senac.integrador.escola.modelos.Endereco;
+import br.com.senac.integrador.escola.modelos.Estudante;
 import br.com.senac.integrador.escola.modelos.Pessoa;
 import br.com.senac.integrador.escola.modelos.Professor;
+import br.com.senac.integrador.escola.modelos.Titular;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
+import br.com.senac.integrador.escola.modelos.enums.Escolaridade;
 import br.com.senac.integrador.escola.modelos.enums.Fator;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
@@ -20,14 +23,17 @@ import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * Definição da classe auxiliar abstrata SQLManager para manuseamentos no banco de dados.
@@ -64,16 +70,25 @@ public abstract class SQLManager {
             throw new RuntimeException("idEndereco = -1");
         }
         
+        Titular titular = pessoa.getTitular();
+        
         String sqlstate = String.format(
                 "INSERT INTO pessoa " +
                 "(idEndereco, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, genero, estadoCivil, cor) VALUES " +
                 "(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                idEndereco, pessoa.getNome(), pessoa.getCPF(), pessoa.getRG(), pessoa.getTelefone(), pessoa.getEmail(), pessoa.getDeficiencia(),
-                pessoa.getNacionalidade(),
+                idEndereco, titular.getNome(), titular.getCPF(), titular.getRG(), titular.getTelefone(), titular.getEmail(), titular.getDeficiencia(),
+                titular.getNacionalidade(),
                 pessoa.getGenero().name(), pessoa.getEstadoCivil().name(), pessoa.getCorRaca().name()
         );
         statement.execute(sqlstate);
-        System.out.println("Pessoa cadastrada.");
+        
+        String sql = "SELECT idPessoa FROM pessoa";
+        ResultSet resultId = statement.executeQuery(sql);
+        int idPessoa = -1;
+        while(resultId.next()) {
+            idPessoa = resultId.getInt(Tags.idPessoa.name());
+        }
+        pessoa.setIdPessoa(idPessoa);
     }
     public static void cadastrar(Login login) throws SQLException {
         Statement statement = connection.createStatement();
@@ -85,23 +100,26 @@ public abstract class SQLManager {
                 login.getTipo(), login.getUsuario(), login.getSenha()
         );
         statement.execute(sqlState);
+        
+        ResultSet result = statement.executeQuery("SELECT idLogin FROM login");
+        int idLogin = -1;
+        while(result.next()) {
+            idLogin = result.getInt(Tags.idLogin.name());
+        }
+        login.setIdLogin(idLogin);
+        
+        JOptionPane.showMessageDialog(null, "O código do login é: " + idLogin);
     }
     public static void cadastrar(Professor professor) throws SQLException {
         SQLManager.cadastrar((Pessoa) professor);
         Statement statement = connection.createStatement();
         
-        int idPessoa = -1; //idLogin = 999;
+        int idPessoa = -1;
         
         ResultSet resultPessoa = statement.executeQuery("SELECT idPessoa FROM pessoa");
         while(resultPessoa.next()){
             idPessoa = resultPessoa.getInt(Tags.idPessoa.name());
         }
-        /*
-        ResultSet resultLogin = statement.executeQuery("SELECT idLogin FROM login WHERE tipoLogin='PROFESSOR'");
-        while(resultLogin.next()) {
-            idLogin = resultLogin.getInt(Tags.idLogin.name());
-        }
-        */
         
         try {
             if(idPessoa == -1) {
@@ -119,7 +137,28 @@ public abstract class SQLManager {
                 idPessoa, professor.getFormacao(), professor.getHistoricoProfissional());
         statement.execute(sqlState);
     }
-
+    public static void cadastrar(Estudante estudante) throws SQLException {
+        SQLManager.cadastrar((Pessoa) estudante);
+        Statement statement = connection.createStatement();
+        
+        int trabalha = 0;
+        if(estudante.getTrabalha()) {
+            trabalha = 1;
+        }
+        
+        String sqlState = String.format("INSERT INTO estudante " +
+                "(idPessoa, dataInscricao, nomeResponsavel, trabalha, idLogin) VALUES " +
+                "(%d, '%s', '%s', '%s', %d)", 
+                estudante.getIdPessoa(), estudante.getDataInscricao(), estudante.getNomeResponsavel(), trabalha, estudante.getIdLogin());
+        statement.execute(sqlState);
+        
+    }
+    
+    /**
+     * Inicialização da tabela de professores
+     * @param tabelaGeral
+     * @throws SQLException 
+     */
     public static void initTableProfessoresCadastrados(JTable tabelaGeral) throws SQLException {
         Statement statement = connection.createStatement();
         
@@ -142,27 +181,65 @@ public abstract class SQLManager {
             String estado = result.getString(Tags.ESTADO.name());
             
             Endereco endereco = new Endereco(estado, null, null, -1, null);
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nome, email, null);
+            Professor p = new Professor(idPessoa, idProfessor, titular, endereco, null, null, null, null, null);
             
-            Professor professor = new Professor
-                (idPessoa, idProfessor, nome, cpf, rg, telefone, email, 
-                    null, null, null, endereco, null, null, null, null);
-            professores.add(professor);
+            professores.add(p);
         }
         
         DefaultTableModel model = (DefaultTableModel) tabelaGeral.getModel();
         model.setNumRows(0);
-        
+             
         professores.forEach(professor -> {
+            Titular titular = professor.getTitular();
             model.addRow(new Object[] {
                 professor.getIdProfessor(),
-                professor.getNome(),
-                professor.getEmail(),
-                professor.getCPF(),
-                professor.getRG(),
-                professor.getTelefone()
+                titular.getNome(),
+                titular.getEmail(),
+                titular.getCPF(),
+                titular.getRG(),
+                titular.getTelefone()
             });
         });
     }
+    /**
+     * Inicialização da tabela dos estudantes
+     * @param tabelaGeral
+     * @throws SQLException 
+     */
+    public static void initTableEstudantes(JTable tabelaGeral) throws SQLException {
+        Statement statement = connection.createStatement();
+        
+        ResultSet result = statement.executeQuery(
+                "SELECT DISTINCT est.idEstudante, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email " +
+                "FROM pessoa pe, estudante est, endereco e " +
+                "WHERE pe.idPessoa=est.idPessoa");
+        
+        DefaultTableModel model = (DefaultTableModel) tabelaGeral.getModel();
+        model.setNumRows(0);
+        
+        
+        while(result.next()) {
+            int idEstudante = result.getInt(Tags.idEstudante.name());
+            String nome = result.getString(Tags.NOME.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            Object[] instancia = new Object[]{
+                idEstudante, nome, cpf, rg, telefone, email
+            };
+            model.addRow(instancia);
+        }
+    }
+        
+    
+        
+        
+        
+        
+        
+    
     
     /**
      * Configura a conexão com base no arquivo databaseConfig.csv
@@ -264,8 +341,12 @@ public abstract class SQLManager {
             
             String deficiencia = r.getString(Tags.DEFICIENCIA.name());
             String nacionalidade = r.getString(Tags.NACIONALIDADE.name());
+            java.sql.Date date = r.getDate(Tags.DATANASCIMENTO.name());
+            LocalDate localDate = date.toLocalDate();
             
-            pessoa = new Pessoa(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, endereco, estadoCivil, genero, corRaca);
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
+            
+            pessoa = new Pessoa(titular, endereco, estadoCivil, genero, corRaca);
         }
         if(pessoa == null) {
             throw new NullPointerException();
@@ -274,16 +355,11 @@ public abstract class SQLManager {
     }
     public static Endereco buscarEndereco(Fator fator, String valor) throws SQLException {
         String sql = 
+            String.format(
             "SELECT "+
             "e.estado, e.cidade, e.bairro, e.numero, e.endereco "+
-            "FROM endereco e, pessoa p, professor pr " +
-            "WHERE e.idEndereco=p.idEndereco AND ";
-        
-        if(fator.equals(Fator.IDPROFESSOR)) {
-            sql += String.format("(pr.%s='%s')", fator.name(), valor);
-        } else {
-            sql += String.format("(p.%s='%s')", fator.name(), valor);
-        }
+            "FROM endereco e, pessoa p, professor pr, estudante est " +
+            "WHERE e.idEndereco=p.idEndereco AND %s='%s'", fator.name(), valor);
         
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
@@ -297,7 +373,7 @@ public abstract class SQLManager {
                     result.getString(Tags.ENDERECO.name()));
         }
         if(endereco == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Fator de busca inválido ou inexistente.");
         }
         return endereco;
     }
@@ -336,13 +412,73 @@ public abstract class SQLManager {
             
             String formacao = result.getString(Tags.FORMACAO.name());
             String historicoProfissional = result.getString(Tags.HISTORICOPROFISSIONAL.name());
+            java.sql.Date date = result.getDate(Tags.DATANASCIMENTO.name());
+            LocalDate localDate = date.toLocalDate();
             
-            professor = new Professor( idPessoa, idProfessor,
-                    nome, cpf, rg, telefone, email, deficiencia, nacionalidade, estadoCivil, endereco, genero, corRaca, formacao, historicoProfissional);
+            
+            
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
+            
+            professor = new Professor(idPessoa, idProfessor,
+                    titular, endereco, estadoCivil, genero, corRaca, formacao, historicoProfissional);
         }
         if(professor == null) {
             throw new NullPointerException("DATABASE vazia.");
         } 
         return professor;
+    }
+    public static Estudante buscarEstudante(Fator fator, String valor) throws SQLException {
+        Endereco endereco = buscarEndereco(fator, valor);
+        
+        String sql = String.format(
+                "SELECT * " +
+                "FROM pessoa pe JOIN estudante pr " +
+                "ON pe.idPessoa=pr.idPessoa " +
+                "WHERE %s='%s' ORDER BY idEstudante ASC", fator.name(), valor
+        );
+        
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        Estudante estudante = null;
+        while(result.next()) {
+            int idPessoa = result.getInt(Tags.idPessoa.name());
+            int idEstudante = result.getInt(Tags.idEstudante.name());
+            
+            String nome = result.getString(Tags.NOME.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            
+            String nomeResponsavel = result.getString(Tags.NOMERESPONSAVEL.name());
+            String deficiencia = result.getString(Tags.DEFICIENCIA.name());
+            String nacionalidade = result.getString(Tags.NACIONALIDADE.name());
+            
+            String nomeEstadoCivil = result.getString(Tags.ESTADOCIVIL.name());
+            String nomeGenero = result.getString(Tags.GENERO.name());
+            String nomeCorRaca = result.getString(Tags.COR.name());
+            String nomeEscolaridade = result.getString(Tags.ESCOLARIDADE.name());
+            
+            EstadoCivil estadoCivil = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            Genero genero = Enum.valueOf(Genero.class, nomeGenero);
+            CorRaca corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
+            Escolaridade escolaridade = Enum.valueOf(Escolaridade.class, nomeEscolaridade);
+            
+            java.sql.Date date = result.getDate(Tags.DATANASCIMENTO.name());
+            LocalDate localDate = date.toLocalDate();
+            
+            int trabalhaNum = result.getInt(Tags.trabalha.name());
+            boolean trabalha = false;
+            if(trabalhaNum == 1) {
+                trabalha = true;
+            }
+            
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
+            estudante = new Estudante(idPessoa, idEstudante, titular, endereco, estadoCivil, genero, corRaca, nomeResponsavel, trabalha, escolaridade);
+        }
+        if(estudante == null) {
+            throw new NullPointerException("Busca não encontrada");
+        } 
+        return estudante;
     }
 }

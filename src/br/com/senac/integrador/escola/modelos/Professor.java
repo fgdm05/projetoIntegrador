@@ -15,14 +15,8 @@ public class Professor extends Pessoa {
     protected String historicoProfissional;
 
     /**
-     * 
-     * @param nome
-     * @param cpf
-     * @param rg
-     * @param telefone
-     * @param email
-     * @param deficiencia
-     * @param nacionalidade
+     * Construção de criação
+     * @param titular
      * @param estadoCivil
      * @param endereco
      * @param genero
@@ -30,21 +24,30 @@ public class Professor extends Pessoa {
      * @param formacao
      * @param historicoProfissional 
      */
-    public Professor(String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
-        super(nome, cpf, rg, telefone, email, deficiencia, nacionalidade, endereco, estadoCivil, genero, corRaca);
+    public Professor(Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
+        super(titular, endereco, estadoCivil, genero, corRaca);
         this.formacao = formacao;
         this.historicoProfissional = historicoProfissional;
     }
 
-    public Professor(int idPessoa, int idProfessor, String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
-        super(idPessoa, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, estadoCivil, endereco, genero, corRaca);
+    /**
+     * Construtor de preenchimento
+     * @param idPessoa
+     * @param idProfessor
+     * @param titular
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca
+     * @param formacao
+     * @param historicoProfissional 
+     */
+    public Professor(int idPessoa, int idProfessor, Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String formacao, String historicoProfissional) {
+        super(idPessoa, titular, endereco, estadoCivil, genero, corRaca);
         this.idProfessor = idProfessor;
         this.formacao = formacao;
         this.historicoProfissional = historicoProfissional;
     }
-    
-    
-    
     
     public String getFormacao() {
         return formacao;
