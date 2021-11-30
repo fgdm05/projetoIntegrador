@@ -82,6 +82,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
         campoRG = new javax.swing.JTextField();
         labelDeficiencia = new javax.swing.JLabel();
         campoDeficiencia = new javax.swing.JTextField();
+        labelIdLogin = new javax.swing.JLabel();
+        campoIdLogin = new javax.swing.JTextField();
         jPanelFormacao = new javax.swing.JPanel();
         titleFormacao = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -402,6 +404,13 @@ public class CadastroProfessor extends javax.swing.JFrame {
         campoDeficiencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoDeficiencia.setForeground(new java.awt.Color(0, 0, 0));
 
+        labelIdLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelIdLogin.setForeground(new java.awt.Color(255, 255, 255));
+        labelIdLogin.setText("Código Login:");
+
+        campoIdLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        campoIdLogin.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanelPessoaLayout = new javax.swing.GroupLayout(jPanelPessoa);
         jPanelPessoa.setLayout(jPanelPessoaLayout);
         jPanelPessoaLayout.setHorizontalGroup(
@@ -413,7 +422,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
                     .addComponent(labelTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelCPF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelRG, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelRG, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(labelIdLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(campoNome)
@@ -421,11 +431,16 @@ public class CadastroProfessor extends javax.swing.JFrame {
                     .addComponent(campoTelefone)
                     .addComponent(campoEmail)
                     .addComponent(campoRG)
-                    .addComponent(campoDeficiencia)))
+                    .addComponent(campoDeficiencia)
+                    .addComponent(campoIdLogin)))
         );
         jPanelPessoaLayout.setVerticalGroup(
             jPanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPessoaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPessoaLayout.createSequentialGroup()
+                .addGroup(jPanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoIdLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelIdLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -816,6 +831,17 @@ public class CadastroProfessor extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(19, 16, 89));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel3MouseExited(evt);
+            }
+        });
 
         labelVerEstudantes1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelVerEstudantes1.setForeground(new java.awt.Color(255, 255, 255));
@@ -851,9 +877,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
                     .addComponent(verProfessores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cadastrarProfessor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -930,6 +954,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
         String endereco = campoEndereco.getText();
         String nacionalidade = campoNacionalidade.getText();
         
+        int idLogin = Integer.parseInt(campoIdLogin.getText());
+        
         
         String formacao = campoFormacao.getText();
         String historicoProfissional = campoHistoricoProfissional.getText();
@@ -970,6 +996,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
         
         Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, dataNascimento);
         Professor professor = new Professor(titular, ender, estadoCivil, genero, corRaca, formacao, historicoProfissional);
+        
+        professor.setIdLogin(idLogin);
         
         try {
             SQLManager.cadastrar(professor);
@@ -1067,6 +1095,18 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private void campoDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoDataNascimentoFocusLost
         JFrameManager.campoFocusLost(evt, campoDataNascimento, Placeholder.DATANASCIMENTO);
     }//GEN-LAST:event_campoDataNascimentoFocusLost
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        JFrameManager.changeJFrame(evt, new CadastroLogin());
+    }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void jPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseEntered
+        JFrameManager.sectionMouseEntered(evt);
+    }//GEN-LAST:event_jPanel3MouseEntered
+
+    private void jPanel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseExited
+        JFrameManager.sectionMouseExited(evt);
+    }//GEN-LAST:event_jPanel3MouseExited
     
         
     /**
@@ -1132,6 +1172,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JTextField campoEstado;
     private javax.swing.JTextArea campoFormacao;
     private javax.swing.JTextArea campoHistoricoProfissional;
+    private javax.swing.JTextField campoIdLogin;
     private javax.swing.JTextField campoNacionalidade;
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoNumero;
@@ -1164,6 +1205,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel labelDeficiencia;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelEndereco;
+    private javax.swing.JLabel labelIdLogin;
     private javax.swing.JLabel labelNacionalidade;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;

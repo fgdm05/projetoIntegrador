@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
  * Definição da tela de estudantes cadastrados
  * @author Felipe Godinho Dal Molin
@@ -341,7 +342,7 @@ public class EstudantesCadastrados extends javax.swing.JFrame {
         content.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comboBoxPesquisa.setBackground(new java.awt.Color(10, 23, 82));
-        comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDEstudante", "Nome", "Email", "CPF", "RG", "Telefone" }));
+        comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDPessoa", "Nome", "Email", "CPF", "RG", "Telefone" }));
         content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 100, 30));
         content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 120, 30));
 
@@ -811,45 +812,35 @@ public class EstudantesCadastrados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseClicked
-        JFrameManager.changeJFrame(evt, new CadastroEstudante());
+        JFrameManager.changeJFrame(evt, new CadastroProfessor());
     }//GEN-LAST:event_cadastrarProfessorMouseClicked
-
     private void cadastrarProfessorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_cadastrarProfessorMouseEntered
-
     private void cadastrarProfessorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_cadastrarProfessorMouseExited
-
     private void verProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseClicked
         JFrameManager.changeJFrame(evt, new ProfessoresCadastrados());
     }//GEN-LAST:event_verProfessoresMouseClicked
-
     private void verProfessoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_verProfessoresMouseEntered
-
     private void verProfessoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProfessoresMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_verProfessoresMouseExited
-
     private void cadastrarEstudanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseClicked
         JFrameManager.changeJFrame(evt, new CadastroEstudante());
     }//GEN-LAST:event_cadastrarEstudanteMouseClicked
-
     private void cadastrarEstudanteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_cadastrarEstudanteMouseEntered
-
     private void cadastrarEstudanteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarEstudanteMouseExited
         JFrameManager.sectionMouseExited(evt);
     }//GEN-LAST:event_cadastrarEstudanteMouseExited
-
     private void verEstudantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseClicked
         JFrameManager.changeJFrame(evt, new EstudantesCadastrados());
     }//GEN-LAST:event_verEstudantesMouseClicked
-
     private void verEstudantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verEstudantesMouseEntered
         JFrameManager.sectionMouseEntered(evt);
     }//GEN-LAST:event_verEstudantesMouseEntered
@@ -1003,7 +994,7 @@ public class EstudantesCadastrados extends javax.swing.JFrame {
         Titular titular = estudante.getTitular();
         
         
-        campoID.setText(String.valueOf(estudante.getIdEstudante()));
+        campoID.setText(String.valueOf(estudante.getIdPessoa()));
         campoNome.setText(titular.getNome());
         campoCPF.setText(titular.getCPF());
         campoRG.setText(titular.getRG());

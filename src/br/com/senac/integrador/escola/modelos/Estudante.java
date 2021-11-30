@@ -39,7 +39,8 @@ public class Estudante extends Pessoa {
         this.escolaridade = escolaridade;
     }
     
-    public Estudante(int idPessoa, int idEstudante, Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String nomeResponsavel, boolean trabalha, Escolaridade escolaridade) {
+    public Estudante(
+    int idPessoa, int idEstudante, Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca, String nomeResponsavel, boolean trabalha, Escolaridade escolaridade) {
         super(idPessoa, titular, endereco, estadoCivil, genero, corRaca);
         this.idEstudante = idEstudante;
         
@@ -47,6 +48,10 @@ public class Estudante extends Pessoa {
         this.nomeResponsavel = nomeResponsavel;
         this.trabalha = trabalha;
         this.escolaridade = escolaridade;
+    }
+    
+    public Estudante(int idPessoa, int idEstudante, Pessoa pessoa, String nomeResponsavel, boolean trabalha, Escolaridade escolaridade) {
+        this(idPessoa, idEstudante, pessoa.getTitular(), pessoa.getEndereco(), pessoa.getEstadoCivil(), pessoa.getGenero(), pessoa.getCorRaca(), nomeResponsavel, trabalha, escolaridade);
     }
 
     @Override

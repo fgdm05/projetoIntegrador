@@ -13,6 +13,15 @@ public class Endereco {
     private int numero;
     private String endereco;
 
+    @Override
+    public String toString() {
+        String message = String.format("[%s, %s, %s, %d, %s]",
+                estado, cidade, bairro, numero, endereco);
+        return message;
+    }
+    
+    
+    
     /**
      * 
      * @param estado

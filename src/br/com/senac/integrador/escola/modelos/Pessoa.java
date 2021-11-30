@@ -28,9 +28,6 @@ public class Pessoa {
         return retorno;
     }
     
-    
-    
-    
     private void regexRules(){
         if(!titular.getCPF().matches(Regex.CPF)) {
             throw new IllegalArgumentException("CPF formatado incorretamente.");

@@ -387,7 +387,7 @@ public class CadastroEstudante extends javax.swing.JFrame {
         labelNomeResponsavel.setText("Nome do responsável:");
 
         campoEmailResponsavel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoEmailResponsavel.setForeground(new java.awt.Color(255, 255, 255));
+        campoEmailResponsavel.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -754,7 +754,7 @@ jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }// </editor-fold>//GEN-END:initComponents
    
     private void cadastrarProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseClicked
-        JFrameManager.changeJFrame(evt, new CadastroEstudante());
+        JFrameManager.changeJFrame(evt, new CadastroProfessor());
     }//GEN-LAST:event_cadastrarProfessorMouseClicked
     private void cadastrarProfessorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarProfessorMouseEntered
         JFrameManager.sectionMouseEntered(evt);

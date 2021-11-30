@@ -10,7 +10,8 @@ import br.com.senac.integrador.escola.modelos.enums.Genero;
  */
 public class Professor extends Pessoa {
     
-    private int idProfessor;
+    private int idProfessor = -1;
+    private int idLogin = -1;
     protected String formacao;
     protected String historicoProfissional;
 
@@ -48,6 +49,9 @@ public class Professor extends Pessoa {
         this.formacao = formacao;
         this.historicoProfissional = historicoProfissional;
     }
+    public Professor(int idPessoa, int idProfessor, Pessoa pessoa, String formacao, String historicoProfissional){
+        this(idPessoa, idProfessor, pessoa.getTitular(), pessoa.getEndereco(), pessoa.getEstadoCivil(), pessoa.getGenero(), pessoa.getCorRaca(), formacao, historicoProfissional);
+    }
     
     public String getFormacao() {
         return formacao;
@@ -63,5 +67,11 @@ public class Professor extends Pessoa {
     public int getIdPessoa() {
         return idPessoa;
     }
-    
+
+    public int getIdLogin() {
+        return idLogin;
+    }
+    public void setIdLogin(int idLogin) {
+        this.idLogin = idLogin;
+    }
 }

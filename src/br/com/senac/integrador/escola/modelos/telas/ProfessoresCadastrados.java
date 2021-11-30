@@ -1,5 +1,6 @@
 package br.com.senac.integrador.escola.modelos.telas;
 
+import br.com.senac.integrador.escola.modelos.Endereco;
 import br.com.senac.integrador.escola.modelos.Professor;
 import br.com.senac.integrador.escola.modelos.Titular;
 import br.com.senac.integrador.escola.modelos.auxiliares.JFrameManager;
@@ -372,7 +373,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 580, 160));
 
         comboBoxPesquisa.setBackground(new java.awt.Color(10, 23, 82));
-        comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDProfessor", "Nome", "Email", "CPF", "RG", "Telefone" }));
+        comboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDPessoa", "Nome", "Email", "CPF", "RG", "Telefone" }));
         content.add(comboBoxPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 70, 100, 30));
         content.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 120, 30));
 
@@ -853,11 +854,9 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         
         try {
             professor = SQLManager.buscarProfessor(fatora, valor);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ProfessoresCadastrados.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
         setCampos(professor);
@@ -1007,7 +1006,7 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
         try {
             Titular titular = professor.getTitular();
             
-            campoID.setText(Integer.toString(professor.getIdProfessor()));
+            campoID.setText(Integer.toString(professor.getIdPessoa()));
             campoNome.setText(titular.getNome());
             campoNacionalidade.setText(titular.getNacionalidade());
             campoDataNascimento.setText(Manager.formatter.format(titular.getDataNascimento()));
@@ -1021,7 +1020,14 @@ public class ProfessoresCadastrados extends javax.swing.JFrame {
             campoEstadoCivil.setText(professor.getEstadoCivil().name());
             campoCorRaca.setText(professor.getCorRaca().name());
             campoDeficiencia.setText(titular.getDeficiencia());
-
+            
+            Endereco endereco = professor.getEndereco();
+            campoEstado.setText(endereco.getEstado());
+            campoCidade.setText(endereco.getCidade());
+            campoBairro.setText(endereco.getBairro());
+            campoNumero.setText(String.valueOf(endereco.getNumero()));
+            campoEndereco.setText(endereco.getEndereco());
+            
             campoFormacao.setText(professor.getFormacao());
             campoHistoricoProfissional.setText(professor.getHistoricoProfissional());
         } catch (NullPointerException e) {
