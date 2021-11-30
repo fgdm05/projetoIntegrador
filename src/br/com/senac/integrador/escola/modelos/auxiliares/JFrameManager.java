@@ -16,6 +16,7 @@ public abstract class JFrameManager {
 
     public static void changeJFrame(ComponentEvent evt, JFrame destiny) {
         SwingUtilities.getWindowAncestor(evt.getComponent()).setVisible(false);
+        destiny.setLocationRelativeTo(null);
         destiny.setVisible(true);
     }
     public static void sectionMouseEntered(MouseEvent evt) {
