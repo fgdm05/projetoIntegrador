@@ -1,7 +1,7 @@
 package br.com.senac.integrador.escola.modelos.auxiliares;
 
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -14,7 +14,7 @@ public abstract class JFrameManager {
     private static final Color colorNormal = new Color(19,16,89);
     private static final Color colorEvent = new Color(15,34,61);
 
-    public static void changeJFrame(MouseEvent evt, JFrame destiny) {
+    public static void changeJFrame(ComponentEvent evt, JFrame destiny) {
         SwingUtilities.getWindowAncestor(evt.getComponent()).setVisible(false);
         destiny.setVisible(true);
     }

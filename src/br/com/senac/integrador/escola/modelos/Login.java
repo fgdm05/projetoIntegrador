@@ -13,6 +13,30 @@ public class Login {
     private String senha;
     private TipoLogin tipo;
 
+    @Override
+    public String toString() {
+        return String.format("[Usuario: %s, Senha: %s]", usuario, senha); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Login outro = (Login) obj;
+        
+        boolean usuarioIgual = outro.usuario.equals(this.usuario) ;
+        boolean senhaIgual = outro.senha.equals(this.senha);
+        
+        System.out.println(usuarioIgual);
+        System.out.println(senhaIgual);
+        return usuarioIgual && senhaIgual;
+    }
+    
+    
+    
+    public Login(String usuario, String senha) {
+        this.usuario=usuario;
+        this.senha=senha;
+    }
+    
     public Login(String usuario, String senha, TipoLogin tipo) {
         this.usuario = usuario;
         this.senha = senha;
@@ -38,4 +62,8 @@ public class Login {
     public void setIdLogin(int idLogin) {
         this.idLogin = idLogin;
     }
+    public void setTipo(TipoLogin tipo) {
+        this.tipo = tipo;
+    }
+    
 }

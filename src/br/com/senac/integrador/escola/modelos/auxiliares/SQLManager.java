@@ -11,6 +11,7 @@ import br.com.senac.integrador.escola.modelos.enums.Escolaridade;
 import br.com.senac.integrador.escola.modelos.enums.Fator;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
+import br.com.senac.integrador.escola.modelos.enums.TipoLogin;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,7 +49,7 @@ public abstract class SQLManager {
         
         String sqlStatement = String.format(
             "INSERT INTO endereco " + 
-            "(endereco, estado, bairro, cidade, numero) VALUES " +
+            "(endereco, estado, bairro, cidade, numero) VALUES" +
             "('%s','%s','%s','%s',%d)",
             endereco.getEndereco(), endereco.getEstado(), endereco.getBairro(),
             endereco.getCidade(), endereco.getNumero());
@@ -74,11 +75,11 @@ public abstract class SQLManager {
         
         String sqlstate = String.format(
                 "INSERT INTO pessoa " +
-                "(idEndereco, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, genero, estadoCivil, cor, dataNascimento) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                "(idEndereco, nome, cpf, rg, telefone, email, deficiencia, nacionalidade, genero, estadoCivil, cor) VALUES " +
+                "(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 idEndereco, titular.getNome(), titular.getCPF(), titular.getRG(), titular.getTelefone(), titular.getEmail(), titular.getDeficiencia(),
                 titular.getNacionalidade(),
-                pessoa.getGenero().name(), pessoa.getEstadoCivil().name(), pessoa.getCorRaca().name(), titular.getDataNascimento()
+                pessoa.getGenero().name(), pessoa.getEstadoCivil().name(), pessoa.getCorRaca().name()
         );
         statement.execute(sqlstate);
         
@@ -132,9 +133,9 @@ public abstract class SQLManager {
         
         String sqlState = String.format(
                 "INSERT INTO professor " +
-                "(idLogin, idPessoa, formacao, historicoProfissional) VALUES " +
-                "(%d, %d, '%s', '%s')",
-                professor.getIdLogin(), idPessoa, professor.getFormacao(), professor.getHistoricoProfissional());
+                "(idPessoa, formacao, historicoProfissional) VALUES " +
+                "(%d, '%s', '%s')",
+                idPessoa, professor.getFormacao(), professor.getHistoricoProfissional());
         statement.execute(sqlState);
     }
     public static void cadastrar(Estudante estudante) throws SQLException {
@@ -193,7 +194,7 @@ public abstract class SQLManager {
         professores.forEach(professor -> {
             Titular titular = professor.getTitular();
             model.addRow(new Object[] {
-                professor.getIdPessoa(),
+                professor.getIdProfessor(),
                 titular.getNome(),
                 titular.getEmail(),
                 titular.getCPF(),
@@ -211,7 +212,7 @@ public abstract class SQLManager {
         Statement statement = connection.createStatement();
         
         ResultSet result = statement.executeQuery(
-                "SELECT DISTINCT pe.idPessoa, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email " +
+                "SELECT DISTINCT est.idEstudante, pe.nome, pe.cpf, pe.rg, pe.telefone, pe.email " +
                 "FROM pessoa pe, estudante est, endereco e " +
                 "WHERE pe.idPessoa=est.idPessoa");
         
@@ -220,27 +221,20 @@ public abstract class SQLManager {
         
         
         while(result.next()) {
-            int idPessoa = result.getInt(Tags.idPessoa.name());
+            int idEstudante = result.getInt(Tags.idEstudante.name());
             String nome = result.getString(Tags.NOME.name());
             String cpf = result.getString(Tags.CPF.name());
             String rg = result.getString(Tags.RG.name());
             String telefone = result.getString(Tags.TELEFONE.name());
             String email = result.getString(Tags.EMAIL.name());
             Object[] instancia = new Object[]{
-                idPessoa, nome, cpf, rg, telefone, email
+                idEstudante, nome, cpf, rg, telefone, email
             };
             model.addRow(instancia);
         }
     }
         
-    
-        
-        
-        
-        
-        
-    
-    
+
     /**
      * Configura a conexão com base no arquivo databaseConfig.csv
      * Necessário ser executado em todo construtor de cada tela
@@ -313,20 +307,10 @@ public abstract class SQLManager {
     }
     
     public static Pessoa buscarPessoa(Fator fator, String valor) throws SQLException {
-        System.out.println("buscarPessoa()");
         Endereco endereco = buscarEndereco(fator, valor);
         
-        String sql = 
-            "SELECT * FROM pessoa pe "
-          + "WHERE ";
-        // Qual classe????? nenhuma? é só pessoa
-        
-        if(fator.equals(Fator.IDPESSOA)) {
-            sql+= String.format("pe.%s=%d",fator.name(), Integer.parseInt(valor));
-            // Deu nenhum resultado
-        } else {
-            sql+= String.format("pe.%s='%s'", fator.name(), valor);
-        }
+        String sql = String.format(
+            "SELECT * FROM pessoa, professor WHERE %s='%s'", fator.name(), valor);
         
         Statement s = connection.createStatement();
         ResultSet r = s.executeQuery(sql);
@@ -352,7 +336,6 @@ public abstract class SQLManager {
             String deficiencia = r.getString(Tags.DEFICIENCIA.name());
             String nacionalidade = r.getString(Tags.NACIONALIDADE.name());
             java.sql.Date date = r.getDate(Tags.DATANASCIMENTO.name());
-            System.out.println(date);
             LocalDate localDate = date.toLocalDate();
             
             Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
@@ -360,25 +343,17 @@ public abstract class SQLManager {
             pessoa = new Pessoa(titular, endereco, estadoCivil, genero, corRaca);
         }
         if(pessoa == null) {
-            throw new NullPointerException("pessoa=null");
+            throw new NullPointerException();
         }
         return pessoa;
     }
     public static Endereco buscarEndereco(Fator fator, String valor) throws SQLException {
-        System.out.println(
-                "Método buscarEndereco()" + System.lineSeparator() +
-                "Fator: " + fator.name() + System.lineSeparator() +
-                "Valor: " + valor);
-        String sql = String.format(
-                "SELECT e.estado, e.cidade, e.bairro, e.numero, e.endereco " +
-                "FROM endereco e, pessoa p " +
-                "WHERE e.idEndereco=p.idEndereco AND ");
-        
-        if(fator.equals(Fator.IDPESSOA)) {
-            sql+= String.format("p.%s=%d", fator.name(), Integer.parseInt(valor));
-        } else {
-            sql+= String.format("p.%s='%s'", fator.name(), valor);
-        }
+        String sql = 
+            String.format(
+            "SELECT "+
+            "e.estado, e.cidade, e.bairro, e.numero, e.endereco "+
+            "FROM endereco e, pessoa p, professor pr, estudante est " +
+            "WHERE e.idEndereco=p.idEndereco AND %s='%s'", fator.name(), valor);
         
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
@@ -396,53 +371,64 @@ public abstract class SQLManager {
         }
         return endereco;
     }
-    /**
-     * 
-     * @param fator
-     * @param valor
-     * @return
-     * @throws SQLException 
-     */
     public static Professor buscarProfessor(Fator fator, String valor) throws SQLException {
-        System.out.println("buscarProfessor()");
-        
-        Pessoa pessoa = buscarPessoa(fator, valor);
+        Endereco endereco = buscarEndereco(fator, valor);
         
         String sql = String.format(
                 "SELECT * " +
-                "FROM pessoa pe, professor pr " +
-                "WHERE pe.idPessoa=pr.idPessoa " +
-                "AND pe.%s='%s'", fator.name(), valor
+                "FROM pessoa pe JOIN professor pr " +
+                "ON pe.idPessoa=pr.idPessoa " +
+                "WHERE %s='%s' ORDER BY idProfessor ASC", fator.name(), valor
         );
-        
         
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
-        
         Professor professor = null;
         while(result.next()) {
             int idPessoa = result.getInt(Tags.idPessoa.name());
             int idProfessor = result.getInt(Tags.idProfessor.name());
             
+            String nome = result.getString(Tags.NOME.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            String deficiencia = result.getString(Tags.DEFICIENCIA.name());
+            String nacionalidade = result.getString(Tags.NACIONALIDADE.name());
+            String nomeEstadoCivil = result.getString(Tags.ESTADOCIVIL.name());
+            
+            String nomeGenero = result.getString(Tags.GENERO.name());
+            String nomeCorRaca = result.getString(Tags.COR.name());
+            
+            EstadoCivil estadoCivil = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            Genero genero = Enum.valueOf(Genero.class, nomeGenero);
+            CorRaca corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
+            
             String formacao = result.getString(Tags.FORMACAO.name());
             String historicoProfissional = result.getString(Tags.HISTORICOPROFISSIONAL.name());
+            java.sql.Date date = result.getDate(Tags.DATANASCIMENTO.name());
+            LocalDate localDate = date.toLocalDate();
             
             
-            professor = new Professor(idPessoa, idProfessor, pessoa, formacao, historicoProfissional);
+            
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
+            
+            professor = new Professor(idPessoa, idProfessor,
+                    titular, endereco, estadoCivil, genero, corRaca, formacao, historicoProfissional);
         }
         if(professor == null) {
-            throw new NullPointerException("professor=null");
+            throw new NullPointerException("DATABASE vazia.");
         } 
         return professor;
     }
     public static Estudante buscarEstudante(Fator fator, String valor) throws SQLException {
+        Endereco endereco = buscarEndereco(fator, valor);
         
-        Pessoa pessoa = buscarPessoa(fator, valor);
         String sql = String.format(
                 "SELECT * " +
                 "FROM pessoa pe JOIN estudante pr " +
                 "ON pe.idPessoa=pr.idPessoa " +
-                "WHERE pe.%s='%s'", fator.name(), valor
+                "WHERE %s='%s' ORDER BY idEstudante ASC", fator.name(), valor
         );
         
         Statement statement = connection.createStatement();
@@ -452,10 +438,28 @@ public abstract class SQLManager {
             int idPessoa = result.getInt(Tags.idPessoa.name());
             int idEstudante = result.getInt(Tags.idEstudante.name());
             
+            String nome = result.getString(Tags.NOME.name());
+            String cpf = result.getString(Tags.CPF.name());
+            String rg = result.getString(Tags.RG.name());
+            String telefone = result.getString(Tags.TELEFONE.name());
+            String email = result.getString(Tags.EMAIL.name());
+            
             String nomeResponsavel = result.getString(Tags.NOMERESPONSAVEL.name());
+            String deficiencia = result.getString(Tags.DEFICIENCIA.name());
+            String nacionalidade = result.getString(Tags.NACIONALIDADE.name());
+            
+            String nomeEstadoCivil = result.getString(Tags.ESTADOCIVIL.name());
+            String nomeGenero = result.getString(Tags.GENERO.name());
+            String nomeCorRaca = result.getString(Tags.COR.name());
             String nomeEscolaridade = result.getString(Tags.ESCOLARIDADE.name());
             
+            EstadoCivil estadoCivil = Enum.valueOf(EstadoCivil.class, nomeEstadoCivil);
+            Genero genero = Enum.valueOf(Genero.class, nomeGenero);
+            CorRaca corRaca = Enum.valueOf(CorRaca.class, nomeCorRaca);
             Escolaridade escolaridade = Enum.valueOf(Escolaridade.class, nomeEscolaridade);
+            
+            java.sql.Date date = result.getDate(Tags.DATANASCIMENTO.name());
+            LocalDate localDate = date.toLocalDate();
             
             int trabalhaNum = result.getInt(Tags.trabalha.name());
             boolean trabalha = false;
@@ -463,11 +467,46 @@ public abstract class SQLManager {
                 trabalha = true;
             }
             
-            estudante = new Estudante(idPessoa, idEstudante, pessoa, nomeResponsavel, trabalha, escolaridade);
+            Titular titular = new Titular(nome, cpf, rg, telefone, email, nacionalidade, deficiencia, localDate);
+            estudante = new Estudante(idPessoa, idEstudante, titular, endereco, estadoCivil, genero, corRaca, nomeResponsavel, trabalha, escolaridade);
         }
         if(estudante == null) {
             throw new NullPointerException("Busca não encontrada");
         } 
         return estudante;
+    }
+
+    public static Login getLoginIgual(Login login) {
+        List<Login> logins = null;
+        try {
+            logins = getAllLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(int i = 0; i < logins.size(); i++) {
+            Login loginLista = logins.get(i);
+            if(login.equals(loginLista)){
+                return login;
+            }
+        }
+        throw new IllegalArgumentException("Login indicado não existe.");
+    }
+    
+    private static List<Login> getAllLogin() throws SQLException {
+    
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM login");
+        
+        List<Login> logins = new ArrayList<>();
+        while(rs.next()) {
+            String usuario = rs.getString(Tags.USUARIO.name());
+            String senha = rs.getString(Tags.SENHA.name());
+            String tipoLoginTexto = rs.getString(Tags.TIPOLOGIN.name());
+            TipoLogin tipoLogin = Enum.valueOf(TipoLogin.class, tipoLoginTexto);
+            
+            logins.add(new Login(usuario, senha, tipoLogin));
+        }
+        return logins;
     }
 }
