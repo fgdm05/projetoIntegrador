@@ -106,7 +106,6 @@ public class page_turma extends javax.swing.JInternalFrame {
         
         String endereco_BN = (dados_end.getString("bairro")) + " " + dados_end.getString("numero");
         
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

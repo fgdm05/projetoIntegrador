@@ -51,7 +51,6 @@
                       <Component id="nav_perfil" alignment="0" max="32767" attributes="0"/>
                       <Component id="nav_inicio" alignment="1" max="32767" attributes="0"/>
                       <Component id="nav_material" alignment="1" max="32767" attributes="0"/>
-                      <Component id="nav_turma" alignment="0" max="32767" attributes="0"/>
                       <Component id="nav_carteira" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -66,8 +65,6 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="nav_perfil" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="nav_turma" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="nav_carteira" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="nav_desempenho" min="-2" max="-2" attributes="0"/>
@@ -77,7 +74,7 @@
                   <Component id="nav_ocorrencias" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="nav_contato" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                   <Component id="nav_material" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
@@ -338,7 +335,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_carteira.png"/>
+                  <Image iconType="3" name="/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_perfil.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Perfil"/>
               </Properties>
@@ -445,58 +442,6 @@
                   <Image iconType="3" name="/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_material.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Material"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="nav_turma">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="a4" red="36" type="rgb"/>
-            </Property>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nav_turmaMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nav_turmaMouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nav_turmaMouseExited"/>
-          </Events>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="label_turma" min="-2" pref="86" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="label_turma" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="label_turma">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI Semibold" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_turma.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Turma"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -62,8 +62,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
         label_contato = new javax.swing.JLabel();
         nav_material = new javax.swing.JPanel();
         label_ocorrencias4 = new javax.swing.JLabel();
-        nav_turma = new javax.swing.JPanel();
-        label_turma = new javax.swing.JLabel();
         nav_carteira = new javax.swing.JPanel();
         label_carteira = new javax.swing.JLabel();
         renderer = new javax.swing.JDesktopPane();
@@ -241,7 +239,7 @@ public class Tela_Aluno extends javax.swing.JFrame {
 
         label_perfil.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         label_perfil.setForeground(new java.awt.Color(255, 255, 255));
-        label_perfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_carteira.png"))); // NOI18N
+        label_perfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_perfil.png"))); // NOI18N
         label_perfil.setText("Perfil");
 
         javax.swing.GroupLayout nav_perfilLayout = new javax.swing.GroupLayout(nav_perfil);
@@ -333,42 +331,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        nav_turma.setBackground(new java.awt.Color(54, 164, 255));
-        nav_turma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        nav_turma.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nav_turmaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                nav_turmaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                nav_turmaMouseExited(evt);
-            }
-        });
-
-        label_turma.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        label_turma.setForeground(new java.awt.Color(255, 255, 255));
-        label_turma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_turma.png"))); // NOI18N
-        label_turma.setText("Turma");
-
-        javax.swing.GroupLayout nav_turmaLayout = new javax.swing.GroupLayout(nav_turma);
-        nav_turma.setLayout(nav_turmaLayout);
-        nav_turmaLayout.setHorizontalGroup(
-            nav_turmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nav_turmaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_turma, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        nav_turmaLayout.setVerticalGroup(
-            nav_turmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nav_turmaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(label_turma)
-                .addContainerGap())
-        );
-
         nav_carteira.setBackground(new java.awt.Color(54, 164, 255));
         nav_carteira.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nav_carteira.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -418,7 +380,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
                     .addComponent(nav_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nav_inicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nav_material, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nav_turma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nav_carteira, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -430,8 +391,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nav_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nav_turma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nav_carteira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nav_desempenho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -441,7 +400,7 @@ public class Tela_Aluno extends javax.swing.JFrame {
                 .addComponent(nav_ocorrencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nav_contato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(82, 82, 82)
                 .addComponent(nav_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
@@ -728,18 +687,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
         topBar_perfil.setBorder(null);
     }//GEN-LAST:event_topBar_perfilMouseExited
 
-    private void nav_turmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_turmaMouseClicked
-        open_page(turma);
-    }//GEN-LAST:event_nav_turmaMouseClicked
-
-    private void nav_turmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_turmaMouseEntered
-        setNavColor(nav_turma);
-    }//GEN-LAST:event_nav_turmaMouseEntered
-
-    private void nav_turmaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_turmaMouseExited
-        resetNavColor(nav_turma);
-    }//GEN-LAST:event_nav_turmaMouseExited
-
     private void nav_carteiraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_carteiraMouseClicked
         open_page(carteira);
     }//GEN-LAST:event_nav_carteiraMouseClicked
@@ -804,7 +751,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
     private javax.swing.JLabel label_ocorrencias;
     private javax.swing.JLabel label_ocorrencias4;
     private javax.swing.JLabel label_perfil;
-    private javax.swing.JLabel label_turma;
     private javax.swing.JPanel nav_carteira;
     private javax.swing.JPanel nav_contato;
     private javax.swing.JPanel nav_desempenho;
@@ -813,7 +759,6 @@ public class Tela_Aluno extends javax.swing.JFrame {
     private javax.swing.JPanel nav_material;
     private javax.swing.JPanel nav_ocorrencias;
     private javax.swing.JPanel nav_perfil;
-    private javax.swing.JPanel nav_turma;
     private javax.swing.JPanel navbar;
     private javax.swing.JDesktopPane renderer;
     private javax.swing.JLabel topBar_curso;
