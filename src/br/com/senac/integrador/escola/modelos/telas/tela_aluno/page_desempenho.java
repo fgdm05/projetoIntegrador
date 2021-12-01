@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class page_desempenho extends javax.swing.JInternalFrame {
 
     DefaultTableModel model_disciplina;
+    DefaultTableModel model_desempenho;
     
     /**
      * Creates new form Inicio
@@ -32,11 +33,13 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         initComponents();
         
         model_disciplina = (DefaultTableModel) table_disciplina.getModel();  
+        model_desempenho = (DefaultTableModel) table_desempenho.getModel();  
               
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
+
+        fillDesempenho();
         fillDisciplina(1,1,1);
     }
 
@@ -112,26 +115,26 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         table_desempenho.setFont(new java.awt.Font("Segoe UI Semibold", 1, 10)); // NOI18N
         table_desempenho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Artes", null, null, null, null, null, null, null, null},
-                {"Biologia", null, null, null, null, null, null, null, null},
-                {"Ed. Física", null, null, null, null, null, null, null, null},
-                {"Filosofia", null, null, null, null, null, null, null, null},
-                {"Física", null, null, null, null, null, null, null, null},
-                {"Geografia", null, null, null, null, null, null, null, null},
-                {"História", null, null, null, null, null, null, null, null},
-                {"Inglês", null, null, null, null, null, null, null, null},
-                {"Literatura", null, null, null, null, null, null, null, null},
-                {"Mat", null, null, null, null, null, null, null, null},
-                {"Português", null, null, null, null, null, null, null, null},
-                {"Química", null, null, null, null, null, null, null, null},
-                {"Sociologia", null, null, null, null, null, null, null, null}
+                {"Artes", "", "", "", "", "", "", "", ""},
+                {"Biologia", "", "", "", "", "", "", "", ""},
+                {"Ed. Física", "", "", "", "", "", "", "", ""},
+                {"Filosofia", "", "", "", "", "", "", "", ""},
+                {"Física", "", "", "", "", "", "", "", ""},
+                {"Geografia", "", "", "", "", "", "", "", ""},
+                {"História", "", "", "", "", "", "", "", ""},
+                {"Inglês", "", "", "", "", "", "", "", ""},
+                {"Literatura", "", "", "", "", "", "", "", ""},
+                {"Mat", "", "", "", "", "", "", "", ""},
+                {"Português", "", "", "", "", "", "", "", ""},
+                {"Química", "", "", "", "", "", "", "", ""},
+                {"Sociologia", "", "", "", "", "", "", "", ""}
             },
             new String [] {
-                "", "1º Tri", "F", "2º Tri", "F", "3º Tri", "F", "Avaliação Nº", "F"
+                "", "1º Tri", "F", "2º Tri", "F", "3º Tri", "F", "Avaliação Final", "F"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
@@ -165,15 +168,15 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         table_desempenho.getTableHeader().setOpaque(false);
         table_desempenho.setRowHeight(18);
         if (table_desempenho.getColumnModel().getColumnCount() > 0) {
-            table_desempenho.getColumnModel().getColumn(0).setPreferredWidth(70);
-            table_desempenho.getColumnModel().getColumn(1).setPreferredWidth(60);
+            table_desempenho.getColumnModel().getColumn(0).setPreferredWidth(40);
+            table_desempenho.getColumnModel().getColumn(1).setPreferredWidth(50);
             table_desempenho.getColumnModel().getColumn(2).setPreferredWidth(30);
-            table_desempenho.getColumnModel().getColumn(3).setPreferredWidth(60);
+            table_desempenho.getColumnModel().getColumn(3).setPreferredWidth(50);
             table_desempenho.getColumnModel().getColumn(4).setPreferredWidth(30);
-            table_desempenho.getColumnModel().getColumn(5).setPreferredWidth(60);
+            table_desempenho.getColumnModel().getColumn(5).setPreferredWidth(50);
             table_desempenho.getColumnModel().getColumn(6).setPreferredWidth(30);
             table_desempenho.getColumnModel().getColumn(7).setPreferredWidth(60);
-            table_desempenho.getColumnModel().getColumn(8).setPreferredWidth(60);
+            table_desempenho.getColumnModel().getColumn(8).setPreferredWidth(30);
         }
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -277,8 +280,79 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
-     
-   
+    
+    private void getBoletim(String disciplina, int idEstudante, int row) throws SQLException 
+    {
+        connection = createConnection();
+        Statement stMedia1 = connection.createStatement();
+        Statement stMedia2 = connection.createStatement();
+        Statement stMedia3 = connection.createStatement();
+        Statement stMediaFinal = connection.createStatement();
+        
+        Statement stFaltas1 = connection.createStatement();
+        Statement stFaltas2 = connection.createStatement();
+        Statement stFaltas3 = connection.createStatement();
+        Statement stFaltasFinal = connection.createStatement();
+           
+        ResultSet media1 = stMedia1.executeQuery("SELECT ROUND(AVG(nota)) AS medias1 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 1 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+        ResultSet media2 = stMedia2.executeQuery("SELECT ROUND(AVG(nota)) AS medias2 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 2 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+        ResultSet media3 = stMedia3.executeQuery("SELECT ROUND(AVG(nota)) AS medias3 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 3 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+        ResultSet mediaFinal = stMediaFinal.executeQuery("SELECT ROUND(AVG(nota)) AS mediaFinal FROM nota where disciplinaNota = '" + disciplina + "' and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+        
+        ResultSet faltas1 = stFaltas1.executeQuery("SELECT COUNT(idFalta) AS faltas1 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 1");
+        ResultSet faltas2 = stFaltas2.executeQuery("SELECT COUNT(idFalta) AS faltas2 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 2");
+        ResultSet faltas3 = stFaltas3.executeQuery("SELECT COUNT(idFalta) AS faltas3 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 3");
+        ResultSet faltasFinal = stFaltasFinal.executeQuery("SELECT count(idFalta) AS faltasFinal FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante);
+        
+        media1.next();
+        media2.next();
+        media3.next();
+        mediaFinal.next();
+        
+        faltas1.next();
+        faltas2.next();
+        faltas3.next();
+        faltasFinal.next();
+        
+        String valueFaltas1 = faltas1.getString("faltas1");
+        String valueFaltas2 = faltas2.getString("faltas2");
+        String valueFaltas3 = faltas3.getString("faltas3");
+        String valueFaltasFinal = faltasFinal.getString("faltasFinal");
+        
+        String valueMedia = media1.getString("medias1");
+        String valueMedia2 = media2.getString("medias2");
+        String valueMedia3 = media3.getString("medias3");
+        String valueFinal = mediaFinal.getString("mediaFinal");
+        
+        model_desempenho.setValueAt(valueMedia, row, 1);
+        model_desempenho.setValueAt(valueFaltas1, row, 2);
+        
+        model_desempenho.setValueAt(valueMedia2, row, 3);
+        model_desempenho.setValueAt(valueFaltas2, row, 4);
+        
+        model_desempenho.setValueAt(valueMedia3, row, 5);
+        model_desempenho.setValueAt(valueFaltas3, row, 6);
+        
+        model_desempenho.setValueAt(valueFinal, row, 7);
+        model_desempenho.setValueAt(valueFaltasFinal, row, 8);
+    }
+    
+    private void fillDesempenho() throws SQLException 
+    {
+        getBoletim("Artes", 1, 0);
+        getBoletim("Biologia", 1, 1);
+        getBoletim("Ed. Física", 1, 2);
+        getBoletim("Filosofia", 1, 3);
+        getBoletim("Física", 1, 4);
+        getBoletim("Geografia", 1, 5);
+        getBoletim("História", 1, 6);
+        getBoletim("Inglês", 1, 7);
+        getBoletim("Literatura", 1, 8);
+        getBoletim("Mat", 1, 9);
+        getBoletim("Português", 1, 10);
+        getBoletim("Química", 1, 11);
+        getBoletim("Sociologia", 1, 12);
+    }
     
     
     private void fillDisciplina(int select_disciplina, int idEstudante, int trimestre) throws SQLException 

@@ -5,6 +5,11 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -66,6 +71,43 @@ public class page_turma extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private static boolean isSQLSet = false;
+    private static Connection connection;
+    
+    private static Connection createConnection() throws SQLException {
+        if(isSQLSet) {
+            return connection;
+        }
+        //String username = JOptionPane.showInputDialog("Insira o usuário do banco de dados.");
+        //String password = JOptionPane.showInputDialog("Insira a senha do banco de dados.");
+        
+        String username = "root";
+        String password = "inserida";
+        
+        String url = "jdbc:mysql://localhost/appescola";
+        isSQLSet = true;
+        connection = DriverManager.getConnection(url, username, password);
+        return connection;
+    }
+     
+    private void getInfo(int idPessoa, int idEndereco) throws SQLException {        
+        connection = createConnection();
+        Statement statement_pes = connection.createStatement();
+        Statement statement_est = connection.createStatement();
+        Statement statement_end = connection.createStatement();
+        
+        ResultSet dados = statement_pes.executeQuery("SELECT * from pessoa where idPessoa = " + idPessoa);
+        ResultSet dados_est = statement_est.executeQuery("SELECT * from estudante where idPessoa = " + idPessoa);
+        ResultSet dados_end = statement_end.executeQuery("SELECT * from endereco where idEndereco = " + idEndereco);
+
+        dados.next();
+        dados_est.next();
+        dados_end.next();
+        
+        String endereco_BN = (dados_end.getString("bairro")) + " " + dados_end.getString("numero");
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel tab_inicio;
