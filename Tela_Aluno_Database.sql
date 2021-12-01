@@ -85,9 +85,15 @@ CREATE TABLE turma(
         
 CREATE TABLE ocorrencia(
 	idOcorrencia INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    tipoOcorrencia VARCHAR(255) NOT NULL,
 	idPessoa INT NOT NULL,
     mostrarNome BOOL NOT NULL,
     dataBO DATE NOT NULL,
+    horaBO VARCHAR(50) NOT NULL,
+    dataOcorrencia VARCHAR(255) NOT NULL,
+    localOcorrencia VARCHAR(255) NOT NULL,
+    autorOcorrencia VARCHAR(255) NOT NULL,
+    vitimaOcorrencia VARCHAR(255) NOT NULL,
     descricao VARCHAR(512) NOT NULL,
     FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa));
     
