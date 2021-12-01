@@ -654,11 +654,7 @@ public class Tela_Aluno extends javax.swing.JFrame {
 
         resetNavColor(nav_contato);
     }//GEN-LAST:event_nav_contatoMouseExited
-
-
- 
-    int x, y;
-    
+   
     private void button_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_closeMouseClicked
         int opt = JOptionPane.showConfirmDialog(rootPane, "Deseja sair do aplicativo?", "Sair", 0);
         if (opt == 0) 

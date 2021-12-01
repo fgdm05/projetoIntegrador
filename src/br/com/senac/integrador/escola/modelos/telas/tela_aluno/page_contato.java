@@ -34,6 +34,7 @@ public class page_contato extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         tab_inicio = new javax.swing.JPanel();
+        tab_inicio1 = new javax.swing.JPanel();
 
         setBorder(null);
         setPreferredSize(new java.awt.Dimension(590, 480));
@@ -41,15 +42,29 @@ public class page_contato extends javax.swing.JInternalFrame {
         tab_inicio.setBackground(new java.awt.Color(67, 148, 222));
         tab_inicio.setPreferredSize(new java.awt.Dimension(590, 480));
 
+        tab_inicio1.setBackground(new java.awt.Color(67, 148, 222));
+        tab_inicio1.setPreferredSize(new java.awt.Dimension(590, 480));
+
+        javax.swing.GroupLayout tab_inicio1Layout = new javax.swing.GroupLayout(tab_inicio1);
+        tab_inicio1.setLayout(tab_inicio1Layout);
+        tab_inicio1Layout.setHorizontalGroup(
+            tab_inicio1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+        tab_inicio1Layout.setVerticalGroup(
+            tab_inicio1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 453, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout tab_inicioLayout = new javax.swing.GroupLayout(tab_inicio);
         tab_inicio.setLayout(tab_inicioLayout);
         tab_inicioLayout.setHorizontalGroup(
             tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addComponent(tab_inicio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tab_inicioLayout.setVerticalGroup(
             tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addComponent(tab_inicio1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -60,7 +75,7 @@ public class page_contato extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
         );
 
         pack();
@@ -69,5 +84,6 @@ public class page_contato extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel tab_inicio;
+    private javax.swing.JPanel tab_inicio1;
     // End of variables declaration//GEN-END:variables
 }
