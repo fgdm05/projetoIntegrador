@@ -9,4 +9,6 @@ public abstract class Placeholder {
     public final static String CPF = "XXX.XXX.XXX-XX";
     public final static String RG = "X.XXX.XXX";
     public final static String ESTADO = "RS, SC, PR...";
+    public static String DATANASCIMENTO;
+    public static String EMAIL;
 }

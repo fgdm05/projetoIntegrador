@@ -5,6 +5,7 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
@@ -232,11 +233,11 @@ public class page_ocorrencias extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_enviar_ocorrencia)
+                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(label_charCounter)
-                        .addComponent(charCount)))
+                        .addComponent(charCount))
+                    .addComponent(button_enviar_ocorrencia))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -244,7 +245,7 @@ public class page_ocorrencias extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +336,7 @@ public class page_ocorrencias extends javax.swing.JInternalFrame {
     
     private void button_enviar_ocorrenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_enviar_ocorrenciaMouseClicked
         try {
-            submitOcorrencia(1);
+            submitOcorrencia(LoginSessionAlunos.idPessoa);
         } catch (SQLException ex) {
             Logger.getLogger(page_ocorrencias.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,6 +5,7 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
@@ -40,7 +41,7 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
 
         fillDesempenho();
-        fillDisciplina(1,1,1);
+        fillDisciplina(1,LoginSessionAlunos.idEstudante,1);
     }
 
     /**
@@ -238,7 +239,7 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         if(table_desempenho.getSelectedRow() == 0) 
         {
             try {
-                fillDisciplina(1, 1, combo_trimestre.getSelectedIndex() + 1);
+                fillDisciplina(1, LoginSessionAlunos.idEstudante, combo_trimestre.getSelectedIndex() + 1);
             } catch (SQLException ex) {
                 Logger.getLogger(page_desempenho.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -247,7 +248,7 @@ public class page_desempenho extends javax.swing.JInternalFrame {
         else 
         {
             try {
-                fillDisciplina(table_desempenho.getSelectedRow() + 1, 1, combo_trimestre.getSelectedIndex() + 1);
+                fillDisciplina(table_desempenho.getSelectedRow() + 1, LoginSessionAlunos.idEstudante, combo_trimestre.getSelectedIndex() + 1);
             } catch (SQLException ex) {
                 Logger.getLogger(page_desempenho.class.getName()).log(Level.SEVERE, null, ex);
             }           
@@ -256,7 +257,7 @@ public class page_desempenho extends javax.swing.JInternalFrame {
 
     private void combo_trimestreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_trimestreItemStateChanged
         try {
-            fillDisciplina(table_desempenho.getSelectedRow() + 1, 1, combo_trimestre.getSelectedIndex() + 1);
+            fillDisciplina(table_desempenho.getSelectedRow() + 1, LoginSessionAlunos.idEstudante, combo_trimestre.getSelectedIndex() + 1);
         } catch (SQLException ex) {
             Logger.getLogger(page_desempenho.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -339,19 +340,19 @@ public class page_desempenho extends javax.swing.JInternalFrame {
     
     private void fillDesempenho() throws SQLException 
     {
-        getBoletim("Artes", 1, 0);
-        getBoletim("Biologia", 1, 1);
-        getBoletim("Ed. Física", 1, 2);
-        getBoletim("Filosofia", 1, 3);
-        getBoletim("Física", 1, 4);
-        getBoletim("Geografia", 1, 5);
-        getBoletim("História", 1, 6);
-        getBoletim("Inglês", 1, 7);
-        getBoletim("Literatura", 1, 8);
-        getBoletim("Mat", 1, 9);
-        getBoletim("Português", 1, 10);
-        getBoletim("Química", 1, 11);
-        getBoletim("Sociologia", 1, 12);
+        getBoletim("Artes", LoginSessionAlunos.idEstudante, 0);
+        getBoletim("Biologia", LoginSessionAlunos.idEstudante, 1);
+        getBoletim("Ed. Física", LoginSessionAlunos.idEstudante, 2);
+        getBoletim("Filosofia", LoginSessionAlunos.idEstudante, 3);
+        getBoletim("Física", LoginSessionAlunos.idEstudante, 4);
+        getBoletim("Geografia", LoginSessionAlunos.idEstudante, 5);
+        getBoletim("História", LoginSessionAlunos.idEstudante, 6);
+        getBoletim("Inglês", LoginSessionAlunos.idEstudante, 7);
+        getBoletim("Literatura", LoginSessionAlunos.idEstudante, 8);
+        getBoletim("Mat", LoginSessionAlunos.idEstudante, 9);
+        getBoletim("Português", LoginSessionAlunos.idEstudante, 10);
+        getBoletim("Química", LoginSessionAlunos.idEstudante, 11);
+        getBoletim("Sociologia", LoginSessionAlunos.idEstudante, 12);
     }
     
     

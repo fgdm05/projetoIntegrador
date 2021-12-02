@@ -5,6 +5,7 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Jonathan
  */
 public class page_frequencia extends javax.swing.JInternalFrame {
-
+    
     DefaultTableModel model_frequencia;
     
     /**
@@ -36,7 +37,7 @@ public class page_frequencia extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        fillFrequencia(1, 1);
+        fillFrequencia(LoginSessionAlunos.idEstudante, 1);
     }
 
     /**
@@ -151,7 +152,7 @@ public class page_frequencia extends javax.swing.JInternalFrame {
 
     private void combo_trimestreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_trimestreItemStateChanged
         try {
-            fillFrequencia(1, combo_trimestre.getSelectedIndex() + 1);
+            fillFrequencia(LoginSessionAlunos.idEstudante, combo_trimestre.getSelectedIndex() + 1);
         } catch (SQLException ex) {
             Logger.getLogger(page_frequencia.class.getName()).log(Level.SEVERE, null, ex);
         }

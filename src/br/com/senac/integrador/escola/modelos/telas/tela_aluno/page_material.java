@@ -12,7 +12,10 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author Jonathan
  */
 public class page_material extends javax.swing.JInternalFrame {
-
+    int id_Estudante;
+    int id_Pessoa;
+    int id_Endereco;
+    
     /**
      * Creates new form Inicio
      */

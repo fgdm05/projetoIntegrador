@@ -5,6 +5,7 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,13 +18,13 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author Jonathan
  */
 public class page_carteira extends javax.swing.JInternalFrame {
-
+    
     /**
      * Creates new form Inicio
      */
     public page_carteira() throws SQLException {
         initComponents();
-        getInfoCarteira(1,1);
+        getInfoCarteira(LoginSessionAlunos.idPessoa,LoginSessionAlunos.idEstudante);
         
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -310,7 +311,7 @@ public class page_carteira extends javax.swing.JInternalFrame {
         carteira_tipoCurso_field.setText("Ensino Básico");
         carteira_cpf_field.setText(dados_pes.getString("cpf"));
         carteira_rg_field.setText(dados_pes.getString("rg"));
-        carteira_nasc_field.setText(dados_est.getString("dataNascimento"));
+        carteira_nasc_field.setText(dados_pes.getString("dataNascimento"));
         carteira_matr_field.setText(dados_est.getString("idEstudante"));
         carteira_codigo_field.setText(dados_est.getString("idEstudante"));
     }    

@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_professor/TelaProfessorFrame.java</file>
             <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/Tela_Aluno.java</file>
-            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_ocorrencias.java</file>
-            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_frequencia.java</file>
-            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_contato.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/auxiliares/LoginSessionProfessores.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_professor/page_boletins.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/login/Main_Login.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/auxiliares/LoginSessionAlunos.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/auxiliares/Operations.java</file>
             <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_perfil.java</file>
-            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_turma.java</file>
-            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_aluno/page_desempenho.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/auxiliares/Logout.java</file>
+            <file>file:/C:/Users/Jonathan/Desktop/Trabson%20Remaster/projetoIntegrador/src/br/com/senac/integrador/escola/modelos/telas/tela_professor/page_chamada.java</file>
         </group>
     </open-files>
 </project-private>

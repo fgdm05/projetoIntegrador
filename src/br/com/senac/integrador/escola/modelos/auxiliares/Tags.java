@@ -5,5 +5,16 @@ package br.com.senac.integrador.escola.modelos.auxiliares;
  * @author Felipe Godinho Dal Molin
  */
 public enum Tags {
-    idPessoa, idProfessor, idAluno, idEndereco, idLogin;
+    idPessoa, idProfessor, idEndereco, idLogin, 
+    NOME, EMAIL, CPF, RG, TELEFONE, ID, Nome, Telefone, Email,
+    URL, USERNAME, PASSWORD, DEFICIENCIA, NACIONALIDADE,
+    
+    ESTADO, CIDADE, BAIRRO, NUMERO, ENDERECO,
+    ESTADOCIVIL, GENERO, COR,
+    FORMACAO, HISTORICOPROFISSIONAL, DATANASCIMENTO, idEstudante, NOMERESPONSAVEL, trabalha, ESCOLARIDADE;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

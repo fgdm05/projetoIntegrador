@@ -1,8 +1,10 @@
 package br.com.senac.integrador.escola.modelos;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.Regex;
 import br.com.senac.integrador.escola.modelos.enums.Genero;
 import br.com.senac.integrador.escola.modelos.enums.CorRaca;
-import br.com.senac.integrador.modelos.enums.EstadoCivil;
+import br.com.senac.integrador.escola.modelos.enums.EstadoCivil;
+import javax.swing.JOptionPane;
 
 /**
  * Definicação da classe Pessoa
@@ -10,53 +12,73 @@ import br.com.senac.integrador.modelos.enums.EstadoCivil;
  */
 public class Pessoa {
     
-    private String nome;
-    private String cpf;
-    private String rg;
-    private String telefone;
-    private String email;
-    private String deficiencia;
-    private String nacionalidade;
-    private EstadoCivil estadoCivil;
-    private Endereco endereco;
-    private Genero genero;
-    private CorRaca cor;
+    protected int idPessoa = -1;
+    protected Titular titular;
+    protected Endereco endereco;
     
-    public Pessoa
-        (String nome, String cpf, String rg, String telefone, String email, String deficiencia, String nacionalidade, EstadoCivil estadoCivil, Endereco endereco, Genero genero, CorRaca cor) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.telefone = telefone;
-        this.email = email;
-        this.deficiencia = deficiencia;
-        this.nacionalidade = nacionalidade;
+    protected EstadoCivil estadoCivil;
+    protected Genero genero;
+    protected CorRaca corRaca;
+
+    @Override
+    public String toString() {
+        String retorno = String.format(
+                "[%s, %s, %s, %s, %s]",
+                titular.getNome(), titular.getCPF(), titular.getRG(), titular.getTelefone(), titular.getEmail());
+        return retorno;
+    }
+    
+    private void regexRules(){
+        if(!titular.getCPF().matches(Regex.CPF)) {
+            throw new IllegalArgumentException("CPF formatado incorretamente.");
+        } else if(!titular.getTelefone().matches(Regex.TELEFONE)) {
+            throw new IllegalArgumentException("Telefone formatado incorretamente.");
+        } else if(!titular.getRG().matches(Regex.RG)) {
+            throw new IllegalArgumentException("RG formatado incorretamente.");
+        } else if(!(titular.getEmail().contains("@"))) {
+            System.out.println(titular.getEmail());
+            throw new IllegalArgumentException("Email formatado incorretamente.");
+        }
+    }
+    
+    /**
+     * 
+     * @param titular
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca 
+     */
+    public Pessoa(Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca) {
+        this.titular = titular;
         this.estadoCivil = estadoCivil;
         this.endereco = endereco;
         this.genero = genero;
-        this.cor = cor;
+        this.corRaca = corRaca;
+        
+        try{
+            regexRules();
+        } catch(IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
-    public String getNome() {
-        return nome;
+    /**
+     * 
+     * @param idPessoa
+     * @param titular
+     * @param estadoCivil
+     * @param endereco
+     * @param genero
+     * @param corRaca 
+     */
+    public Pessoa(int idPessoa, Titular titular, Endereco endereco, EstadoCivil estadoCivil, Genero genero, CorRaca corRaca) {
+        this(titular, endereco, estadoCivil, genero, corRaca);
+        this.idPessoa = idPessoa;
     }
-    public String getCpf() {
-        return cpf;
-    }
-    public String getRg() {
-        return rg;
-    }
-    public String getTelefone() {
-        return telefone;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getDeficiencia() {
-        return deficiencia;
-    }
-    public String getNacionalidade() {
-        return nacionalidade;
+
+    public Titular getTitular() {
+        return titular;
     }
     public EstadoCivil getEstadoCivil() {
         return estadoCivil;
@@ -68,6 +90,12 @@ public class Pessoa {
         return genero;
     }
     public CorRaca getCorRaca() {
-        return cor;
-    }   
+        return corRaca;
+    }
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
+    }
 }

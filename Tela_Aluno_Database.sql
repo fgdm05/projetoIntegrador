@@ -17,6 +17,7 @@ CREATE TABLE pessoa(
     rg CHAR(50) NOT NULL UNIQUE, 
     telefone VARCHAR(19) NOT NULL UNIQUE, # XX (XXX) XXXXX-XXXX
     email VARCHAR(255) NOT NULL UNIQUE,
+    dataNascimento DATE NOT NULL,
     deficiencia VARCHAR(255),
     nacionalidade VARCHAR(255) NOT NULL,
 	genero ENUM("MASCULINO", "FEMININO", "OUTRO") NOT NULL,
@@ -29,21 +30,31 @@ CREATE TABLE login(
 	idLogin INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     tipoLogin ENUM("PROFESSOR", "ESTUDANTE", "ADMINISTRADOR") NOT NULL,
     usuario VARCHAR(255) NOT NULL,
-    senha VARCHAR(255) NOT NULL);
+    senha VARCHAR(255) NOT NULL
+    );
+
+CREATE TABLE administrador(
+    idADM INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	idLogin INT NOT NULL,
+    idPessoa INT NOT NULL,
+    FOREIGN KEY (idPessoa) REFERENCES pessoa (idPessoa),
+    FOREIGN KEY (idLogin) REFERENCES login (idLogin)
+);
 
 CREATE TABLE estudante(
 	idLogin INT NOT NULL,
+    idTurma INT NOT NULL,
+    nome varchar(255) NOT NULL,
+    FOREIGN KEY (idTurma) REFERENCES turma (idTurma),
+    FOREIGN KEY (nome) REFERENCES pessoa (nome),
 	idPessoa INT NOT NULL,
     idEndereco INT NOT NULL,
 	idEstudante INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    curso VARCHAR(255) NOT NULL,
     periodo ENUM("MATUTINO", "VESPERTINO", "NOTURNO") NOT NULL,
-    escolaridade ENUM("FUNDAMENTAL", "MEDIO", "SUPERIOR") NOT NULL,
+    escolaridade ENUM("FUNDAMENTAL", "MEDIO") NOT NULL,
     dataInscricao DATE NOT NULL,
-    dataNascimento DATE NOT NULL,
     trabalha BOOL NOT NULL,
     nomeResponsavel VARCHAR(255),
-    frequencia DOUBLE,
     FOREIGN KEY (idPessoa) REFERENCES pessoa (idPessoa),
     FOREIGN KEY (idLogin) REFERENCES login (idLogin),
     FOREIGN KEY (idEndereco) REFERENCES endereco (idEndereco));
@@ -78,9 +89,7 @@ CREATE TABLE professor(
 CREATE TABLE turma(
 	idTurma INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	periodo ENUM("MATUTINO", "VESPERTINO", "NOTURNO") NOT NULL,
-    idProfessor INT NOT NULL,
-    idEstudante INT NOT NULL,
-    FOREIGN KEY (idProfessor) REFERENCES professor (idProfessor),
+    escolaridade ENUM("FUNDAMENTAL", "MEDIO") NOT NULL,
     FOREIGN KEY (idEstudante) REFERENCES estudante (idEstudante));
         
 CREATE TABLE ocorrencia(
@@ -105,6 +114,7 @@ CREATE TABLE solicitacao(
 	idSolicitacao INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     dataSolicitacao DATE NOT NULL,
     idEstudante INT NOT NULL,
+    horaSolicitacao VARCHAR(50) NOT NULL,
 	descricao VARCHAR(512) NOT NULL,
     FOREIGN KEY (idEstudante) REFERENCES estudante(idEstudante));
     
@@ -129,7 +139,7 @@ CREATE TABLE nota (
 
 CREATE TABLE faltas (
 	idFalta int primary key not null auto_increment,
-    idEstudante int,
+    idEstudante int NOT NULL,
     disciplinaFalta ENUM("Artes", "Biologia", "Ed. Física",
 		"Filosofia", "Física", "Geografia", "História", "Inglês",
 		"Literatura", "Mat", "Português", "Química", "Sociologia") NOT NULL,

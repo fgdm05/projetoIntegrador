@@ -5,6 +5,8 @@
  */
 package br.com.senac.integrador.escola.modelos.telas.tela_aluno;
 
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
+import br.com.senac.integrador.escola.modelos.auxiliares.MySQL_Connection;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,15 +20,13 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author Jonathan
  */
 public class page_perfil extends javax.swing.JInternalFrame {
-    int idPessoa;
-    int idEstudante;
     
     /**
      * Creates new form Inicio
      */
     public page_perfil() throws SQLException {
         initComponents();
-        getInfo(1,1);
+        getInfo(LoginSessionAlunos.idPessoa, LoginSessionAlunos.idEndereco);
         
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -45,7 +45,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
         tab_perfil = new javax.swing.JPanel();
         nasc_label = new javax.swing.JLabel();
         nacio_label = new javax.swing.JLabel();
-        esco_label = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -64,7 +63,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
         endereco_field = new javax.swing.JLabel();
         nasc_field = new javax.swing.JLabel();
         nacio_field = new javax.swing.JLabel();
-        esco_field = new javax.swing.JLabel();
         estadoCivil_field = new javax.swing.JLabel();
         genero_field = new javax.swing.JLabel();
         defi_field = new javax.swing.JLabel();
@@ -87,10 +85,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
         nacio_label.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         nacio_label.setForeground(new java.awt.Color(255, 255, 255));
         nacio_label.setText("Nacionalidade:");
-
-        esco_label.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        esco_label.setForeground(new java.awt.Color(255, 255, 255));
-        esco_label.setText("Escolaridade:");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,11 +165,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
         nacio_field.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         nacio_field.setText(" ");
 
-        esco_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        esco_field.setForeground(new java.awt.Color(255, 255, 255));
-        esco_field.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        esco_field.setText(" ");
-
         estadoCivil_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         estadoCivil_field.setForeground(new java.awt.Color(255, 255, 255));
         estadoCivil_field.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -238,7 +227,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
                             .addComponent(jLabel21)
                             .addComponent(nasc_label)
                             .addComponent(nacio_label)
-                            .addComponent(esco_label)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
@@ -254,7 +242,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
                             .addComponent(endereco_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nasc_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nacio_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(esco_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(estadoCivil_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(genero_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(defi_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -304,8 +291,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tab_perfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab_perfilLayout.createSequentialGroup()
-                        .addComponent(esco_label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
@@ -314,8 +299,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14))
                     .addGroup(tab_perfilLayout.createSequentialGroup()
-                        .addComponent(esco_field)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadoCivil_field)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(genero_field)
@@ -327,7 +310,7 @@ public class page_perfil extends javax.swing.JInternalFrame {
                 .addGroup(tab_perfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(resp_field))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -338,35 +321,18 @@ public class page_perfil extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tab_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+            .addComponent(tab_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private static boolean isSQLSet = false;
-    private static Connection connection;
-    
-    private static Connection createConnection() throws SQLException {
-        if(isSQLSet) {
-            return connection;
-        }
-        //String username = JOptionPane.showInputDialog("Insira o usuário do banco de dados.");
-        //String password = JOptionPane.showInputDialog("Insira a senha do banco de dados.");
-        
-        String username = "root";
-        String password = "inserida";
-        
-        String url = "jdbc:mysql://localhost/appescola";
-        isSQLSet = true;
-        connection = DriverManager.getConnection(url, username, password);
-        return connection;
-    }
      
     private void getInfo(int idPessoa, int idEndereco) throws SQLException {        
-        connection = createConnection();
-        Statement statement_pes = connection.createStatement();
-        Statement statement_est = connection.createStatement();
-        Statement statement_end = connection.createStatement();
+        Connection myConn = MySQL_Connection.createConnection();
+        Statement statement_pes = myConn.createStatement();
+        Statement statement_est = myConn.createStatement();
+        Statement statement_end = myConn.createStatement();
         
         ResultSet dados = statement_pes.executeQuery("SELECT * from pessoa where idPessoa = " + idPessoa);
         ResultSet dados_est = statement_est.executeQuery("SELECT * from estudante where idPessoa = " + idPessoa);
@@ -380,14 +346,13 @@ public class page_perfil extends javax.swing.JInternalFrame {
         
         matr_field.setText(dados_est.getString("idEstudante"));
         insc_field.setText(dados_est.getString("dataInscricao"));
+        nasc_field.setText(dados.getString("dataNascimento"));
         email_field.setText(dados.getString("email"));
         fone_field.setText(dados.getString("telefone"));
         estado_field.setText(dados_end.getString("estado"));
         cidade_field.setText(dados_end.getString("cidade"));
         endereco_field.setText(endereco_BN);
-        nasc_field.setText(dados_est.getString("dataNascimento"));
         nacio_field.setText(dados.getString("nacionalidade"));
-        esco_field.setText(dados_est.getString("escolaridade"));
         estadoCivil_field.setText(dados.getString("estadoCivil"));
         genero_field.setText(dados.getString("genero"));
         defi_field.setText(dados.getString("deficiencia"));
@@ -409,8 +374,6 @@ public class page_perfil extends javax.swing.JInternalFrame {
     private javax.swing.JLabel defi_field;
     private javax.swing.JLabel email_field;
     private javax.swing.JLabel endereco_field;
-    private javax.swing.JLabel esco_field;
-    private javax.swing.JLabel esco_label;
     private javax.swing.JLabel estadoCivil_field;
     private javax.swing.JLabel estado_field;
     private javax.swing.JLabel fone_field;
