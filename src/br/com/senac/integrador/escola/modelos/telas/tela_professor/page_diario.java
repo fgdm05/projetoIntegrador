@@ -7,28 +7,41 @@ package br.com.senac.integrador.escola.modelos.telas.tela_professor;
 
 import br.com.senac.integrador.escola.modelos.telas.tela_aluno.*;
 import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
+import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionProfessores;
+import br.com.senac.integrador.escola.modelos.auxiliares.MySQL_Connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Jonathan
  */
 public class page_diario extends javax.swing.JInternalFrame {
-    
+ 
+    DefaultTableModel model_aulas;
+    DefaultTableModel model_atividades;
     /**
      * Creates new form Inicio
      */
     public page_diario() throws SQLException {
         initComponents();
         
+        model_aulas = (DefaultTableModel) table_aulas.getModel();  
+        model_atividades = (DefaultTableModel) table_atividades.getModel();  
+        
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+        getAulas((String) combo_sala_aulas.getSelectedItem());
     }
 
     /**
@@ -41,28 +54,18 @@ public class page_diario extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         tab_inicio = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        carteira_nome_field = new javax.swing.JLabel();
-        carteira_instituicao_field = new javax.swing.JLabel();
-        carteira_tipoCurso_field = new javax.swing.JLabel();
-        carteira_curso_field = new javax.swing.JLabel();
-        carteira_cpf_field = new javax.swing.JLabel();
-        carteira_rg_field = new javax.swing.JLabel();
-        carteira_nasc_field = new javax.swing.JLabel();
-        carteira_matr_field = new javax.swing.JLabel();
-        carteira_codigo_label = new javax.swing.JLabel();
-        carteira_codigo_field = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        combo_curso_aulas = new javax.swing.JComboBox<>();
+        combo_sala_aulas = new javax.swing.JComboBox<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        table_aulas = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        table_atividades = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        carteira_codigo_label1 = new javax.swing.JLabel();
-        carteira_codigo_label2 = new javax.swing.JLabel();
-        carteira_codigo_label3 = new javax.swing.JLabel();
-        carteira_codigo_label4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        aulaSelectButton = new javax.swing.JRadioButton();
+        todas_button = new javax.swing.JRadioButton();
+        button_regAtv = new javax.swing.JButton();
+        button_regAula = new javax.swing.JButton();
 
         setBorder(null);
         setPreferredSize(new java.awt.Dimension(590, 480));
@@ -70,173 +73,150 @@ public class page_diario extends javax.swing.JInternalFrame {
         tab_inicio.setBackground(new java.awt.Color(67, 148, 222));
         tab_inicio.setPreferredSize(new java.awt.Dimension(590, 480));
 
-        jPanel1.setBackground(new java.awt.Color(131, 185, 247));
+        combo_curso_aulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fundamental", "Médio" }));
+        combo_curso_aulas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_curso_aulasItemStateChanged(evt);
+            }
+        });
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/icon_person.png"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        combo_sala_aulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"101", "201", "301", "401", "501", "601", "701", "801", "901", "101EM", "201EM", "301EM"}));
+        combo_sala_aulas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_sala_aulasItemStateChanged(evt);
+            }
+        });
 
-        carteira_nome_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        carteira_nome_field.setText(" ");
+        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        carteira_instituicao_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_instituicao_field.setText(" ");
+        table_aulas.setFont(new java.awt.Font("Segoe UI Semibold", 1, 10)); // NOI18N
+        table_aulas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        carteira_tipoCurso_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_tipoCurso_field.setText(" ");
+            },
+            new String [] {
+                "ID", "Disciplina", "Conteúdo", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        carteira_curso_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_curso_field.setText(" ");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        carteira_cpf_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_cpf_field.setText(" ");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_aulas.setToolTipText("");
+        table_aulas.setFocusable(false);
+        table_aulas.setGridColor(new java.awt.Color(0, 0, 0));
+        table_aulas.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        table_aulas.setPreferredSize(new java.awt.Dimension(278, 287));
+        table_aulas.setRowHeight(18);
+        table_aulas.setSelectionBackground(new java.awt.Color(232, 180, 88));
+        table_aulas.setShowGrid(true);
+        table_aulas.setShowHorizontalLines(false);
+        table_aulas.getTableHeader().setReorderingAllowed(false);
+        table_aulas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_aulasMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(table_aulas);
 
-        carteira_rg_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_rg_field.setText(" ");
+        jScrollPane6.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        carteira_nasc_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_nasc_field.setText(" ");
+        table_atividades.setFont(new java.awt.Font("Segoe UI Semibold", 1, 10)); // NOI18N
+        table_atividades.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        carteira_matr_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_matr_field.setText(" ");
+            },
+            new String [] {
+                "ID", "Disciplina", "Conteúdo", "Descrição", "Data", "Prazo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-        carteira_codigo_label.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_label.setForeground(new java.awt.Color(255, 255, 255));
-        carteira_codigo_label.setText("Código de uso");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        carteira_codigo_field.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_field.setText(" ");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_atividades.setToolTipText("");
+        table_atividades.setFocusable(false);
+        table_atividades.setGridColor(new java.awt.Color(0, 0, 0));
+        table_atividades.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        table_atividades.setPreferredSize(new java.awt.Dimension(278, 287));
+        table_atividades.setRowHeight(18);
+        table_atividades.setSelectionBackground(new java.awt.Color(232, 180, 88));
+        table_atividades.setShowGrid(true);
+        table_atividades.setShowHorizontalLines(false);
+        table_atividades.getTableHeader().setReorderingAllowed(false);
+        table_atividades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_atividadesMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(table_atividades);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/logo_2021.png"))); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setText("Aulas");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/logo_une.png"))); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Atividades");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/logo_ubes.png"))); // NOI18N
+        aulaSelectButton.setBackground(new java.awt.Color(67, 148, 222));
+        aulaSelectButton.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        aulaSelectButton.setForeground(new java.awt.Color(255, 255, 255));
+        aulaSelectButton.setSelected(true);
+        aulaSelectButton.setText("Aula selecionada");
+        aulaSelectButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                aulaSelectButtonStateChanged(evt);
+            }
+        });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/log_anpg.png"))); // NOI18N
+        todas_button.setBackground(new java.awt.Color(67, 148, 222));
+        todas_button.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        todas_button.setForeground(new java.awt.Color(255, 255, 255));
+        todas_button.setText("Todas");
+        todas_button.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                todas_buttonStateChanged(evt);
+            }
+        });
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/modelos/telas/tela_aluno/images/logo_dne.png"))); // NOI18N
+        button_regAtv.setText("Adicionar atividade");
+        button_regAtv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button_regAtvMouseClicked(evt);
+            }
+        });
 
-        carteira_codigo_label1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_label1.setForeground(new java.awt.Color(255, 255, 255));
-        carteira_codigo_label1.setText("CPF");
-
-        carteira_codigo_label2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_label2.setForeground(new java.awt.Color(255, 255, 255));
-        carteira_codigo_label2.setText("RG");
-
-        carteira_codigo_label3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_label3.setForeground(new java.awt.Color(255, 255, 255));
-        carteira_codigo_label3.setText("Data Nasc.");
-
-        carteira_codigo_label4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        carteira_codigo_label4.setForeground(new java.awt.Color(255, 255, 255));
-        carteira_codigo_label4.setText("Matrícula");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(carteira_codigo_field, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 74, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(carteira_codigo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(carteira_codigo_label2)
-                            .addComponent(carteira_codigo_label1)
-                            .addComponent(carteira_codigo_label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carteira_codigo_label4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carteira_cpf_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carteira_nasc_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carteira_rg_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carteira_matr_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(carteira_tipoCurso_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carteira_nome_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carteira_instituicao_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carteira_curso_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(carteira_nome_field)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(carteira_instituicao_field)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(carteira_curso_field)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(carteira_tipoCurso_field)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(carteira_codigo_label1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(carteira_codigo_label2)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(26, 26, 26)
-                                                .addComponent(carteira_codigo_label3)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(carteira_codigo_label4))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(carteira_cpf_field, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(carteira_rg_field, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(carteira_nasc_field, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(carteira_matr_field, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(carteira_codigo_label)
-                                .addGap(1, 1, 1)
-                                .addComponent(carteira_codigo_field))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
-        );
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Carteira de Estudante Virtual");
+        button_regAula.setText("Registrar Aula");
+        button_regAula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button_regAulaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout tab_inicioLayout = new javax.swing.GroupLayout(tab_inicio);
         tab_inicio.setLayout(tab_inicioLayout);
@@ -245,18 +225,51 @@ public class page_diario extends javax.swing.JInternalFrame {
             .addGroup(tab_inicioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                    .addGroup(tab_inicioLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(todas_button)
+                        .addGap(18, 18, 18)
+                        .addComponent(aulaSelectButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_regAtv))
+                    .addGroup(tab_inicioLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(combo_curso_aulas, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(combo_sala_aulas, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_regAula, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         tab_inicioLayout.setVerticalGroup(
             tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab_inicioLayout.createSequentialGroup()
+            .addGroup(tab_inicioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(combo_sala_aulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(combo_curso_aulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_regAula))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tab_inicioLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(aulaSelectButton)
+                            .addComponent(todas_button)
+                            .addComponent(jLabel5)))
+                    .addGroup(tab_inicioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_regAtv)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,50 +287,266 @@ public class page_diario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
-    private static boolean isSQLSet = false;
-    private static Connection connection;
 
-    private static Connection createConnection() throws SQLException {
-        if(isSQLSet) {
-            return connection;
+    private void combo_curso_aulasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_curso_aulasItemStateChanged
+        try {
+            if(table_aulas.getSelectionModel().isSelectionEmpty()) {
+                model_atividades.setRowCount(0);
+                getAulas((String) combo_sala_aulas.getSelectedItem());
+                return;
+            } else {
+                getAulas((String) combo_sala_aulas.getSelectedItem());
+                getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0),  false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //String username = JOptionPane.showInputDialog("Insira o usuário do banco de dados.");
-        //String password = JOptionPane.showInputDialog("Insira a senha do banco de dados.");
-        
-        String username = "root";
-        String password = "inserida";
-        
-        String url = "jdbc:mysql://localhost/appescola";
-        isSQLSet = true;
-        connection = DriverManager.getConnection(url, username, password);
-        return connection;
-    }
+    }//GEN-LAST:event_combo_curso_aulasItemStateChanged
     
+    private void getAulas( String sala) throws SQLException 
+    {
+        Connection myConn = (Connection) MySQL_Connection.createConnection();
+        Statement statement = myConn.createStatement();
+        
+        model_aulas.setRowCount(0);
+        
+        ResultSet aulas = statement.executeQuery("SELECT * from aulas where salaTurma = '" + sala + "' and disciplinaAula = '" + LoginSessionProfessores.disciplina + "' AND idProfessor = '" + LoginSessionProfessores.idProfessor + "' ORDER BY dataAula desc");
+        
+        while(aulas.next())
+        {
+            String id = aulas.getString("idAula");
+            String disciplina = LoginSessionProfessores.disciplina;
+            String conteudo = aulas.getString("conteudo");
+            String data = aulas.getString("dataAula");
+            String salaTurma = aulas.getString("salaTurma");
+            Object dadosAula[] = {id, disciplina, conteudo, data, salaTurma};  
+            
+            model_aulas.addRow(dadosAula);
+        } 
+    }  
 
+    private void getAtividades(String sala, String idAula, boolean option) throws SQLException 
+    {
+        Connection myConn = (Connection) MySQL_Connection.createConnection();
+        Statement statement = myConn.createStatement();
+        
+        String selected = ("SELECT * FROM atividades WHERE idProfessor = " + LoginSessionProfessores.idProfessor + " and disciplinaAtividade = '" + LoginSessionProfessores.disciplina + "' AND salaTurma = '" + sala + "' AND idAula = " + idAula + " ORDER BY dataAtividade desc");
+        String every = ("SELECT * FROM atividades WHERE idProfessor = " + LoginSessionProfessores.idProfessor + " and disciplinaAtividade = '" + LoginSessionProfessores.disciplina + "' AND salaTurma = '" + sala + "' ORDER BY dataAtividade desc");
+        
+        if(option) {
+            ResultSet atividades = statement.executeQuery(every);
+
+            model_atividades.setRowCount(0);
+
+            while(atividades.next())
+            {
+                String id = atividades.getString("idAtividade");
+                String disciplina = LoginSessionProfessores.disciplina;
+                String conteudo = atividades.getString("conteudo");
+                String descricao = atividades.getString("descricao");
+                String data = atividades.getString("dataAtividade");
+                String prazo = atividades.getString("prazoAtividade");
+
+                Object dadosAtividade[] = {id, disciplina, conteudo, descricao, data, prazo};  
+
+                model_atividades.addRow(dadosAtividade);
+            }             
+        } else {
+            ResultSet atividades = statement.executeQuery(selected);
+
+            model_atividades.setRowCount(0);
+
+            while(atividades.next())
+            {
+                String id = atividades.getString("idAtividade");
+                String disciplina = LoginSessionProfessores.disciplina;
+                String conteudo = atividades.getString("conteudo");
+                String descricao = atividades.getString("descricao");
+                String data = atividades.getString("dataAtividade");
+                String prazo = atividades.getString("prazoAtividade");
+
+                Object dadosAtividade[] = {id, disciplina, conteudo, descricao, data, prazo};  
+
+                model_atividades.addRow(dadosAtividade);
+            }            
+        }
+    }  
+    
+    private void combo_sala_aulasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_sala_aulasItemStateChanged
+        try {
+            if(table_aulas.getSelectionModel().isSelectionEmpty()) {
+                getAulas((String) combo_sala_aulas.getSelectedItem());
+                model_atividades.setRowCount(0);
+                return;
+            } else {
+                getAulas((String) combo_sala_aulas.getSelectedItem());
+                getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0), false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_combo_sala_aulasItemStateChanged
+
+    private void table_aulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_aulasMouseClicked
+        if(table_aulas.getSelectionModel().isSelectionEmpty()) {
+            return;
+        } else {
+            try {
+                getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0), false);
+            } catch (SQLException ex) {
+                Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_table_aulasMouseClicked
+
+    private void table_atividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_atividadesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table_atividadesMouseClicked
+
+    private void todas_buttonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_todas_buttonStateChanged
+        if (todas_button.isSelected() == true) {
+            try {
+                aulaSelectButton.setSelected(false);
+                if(table_aulas.getSelectionModel().isSelectionEmpty()) {
+                    return;
+                } else {
+                    getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0), true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(page_diario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else if (todas_button.isSelected() == false) {
+            aulaSelectButton.setSelected(true);
+        }
+    }//GEN-LAST:event_todas_buttonStateChanged
+
+    private void aulaSelectButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_aulaSelectButtonStateChanged
+        if (aulaSelectButton.isSelected() == true) {
+            try {
+                todas_button.setSelected(false);
+                if(table_aulas.getSelectionModel().isSelectionEmpty()) {
+                    return;
+                } else {
+                    getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0), false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(page_diario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else if (aulaSelectButton.isSelected() == false) {
+            todas_button.setSelected(true);
+        }
+    }//GEN-LAST:event_aulaSelectButtonStateChanged
+
+    private void button_regAulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_regAulaMouseClicked
+        try {
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            
+            Statement stFalta = myConn.createStatement();
+            Statement stTurma = myConn.createStatement();
+            
+            ResultSet rs_turma = stTurma.executeQuery("SELECT idTurma from turma WHERE salaTurma = '" + combo_sala_aulas.getSelectedItem() + "'");
+            rs_turma.next();
+            String idTurma = rs_turma.getString("idTurma");
+            String conteudo = JOptionPane.showInputDialog("O que foi lecionado nesta aula?");
+            String data = LocalDate.now().toString();
+            
+            Object[] options = { "Confirmar", "Cancelar" };
+            int decision = JOptionPane.showOptionDialog(null, "Você confirma o registro desta aula:\n" +
+                    "Disciplina: " + LoginSessionProfessores.disciplina +
+                    "\nTurma: " + combo_sala_aulas.getSelectedItem() +
+                    "\nConteudo: " + conteudo + 
+                    "\nData " + data + "?", "Registrar aula", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if (decision == 0) {
+                stFalta.executeUpdate("INSERT INTO aulas (idProfessor, idTurma, disciplinaAula, conteudo, dataAula, salaTurma) values(" +
+                        LoginSessionProfessores.idProfessor +
+                        ", " +
+                        idTurma +        
+                        ", '" +
+                        LoginSessionProfessores.disciplina +
+                        "', '" +
+                        conteudo +        
+                        "', '" +
+                        data +
+                        "','" +
+                        combo_sala_aulas.getSelectedItem() +
+                        "');");
+                getAulas((String) combo_sala_aulas.getSelectedItem());
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_regAulaMouseClicked
+
+    private void button_regAtvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_regAtvMouseClicked
+        try {
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            
+            //Statement stAula = myConn.createStatement();
+            Statement stTurma = myConn.createStatement();
+            String data = LocalDate.now().toString();
+            //ResultSet rs_aula = stAula.executeQuery("SELECT idAula from aulas WHERE salaTurma = '" + combo_sala_aulas.getSelectedItem() + "' AND dataAula = '" + data + "'");
+            ResultSet rs_turma = stTurma.executeQuery("SELECT idTurma from turma WHERE salaTurma = '" + combo_sala_aulas.getSelectedItem() + "'");
+            //rs_aula.next();
+            //String idAula = rs_aula.getString("idAula");
+            rs_turma.next();
+            String idTurma = rs_turma.getString("idTurma");
+            String descricao = JOptionPane.showInputDialog("Descreva a atividade");
+            String conteudo = JOptionPane.showInputDialog("Esta atividade é referente a qual conteúdo?");
+            String prazo = JOptionPane.showInputDialog("Defina um prazo de entrega para esta atividade");
+            
+            Object[] options = { "Confirmar", "Cancelar" };
+            int decision = JOptionPane.showOptionDialog(null, "Você confirma o registro desta atividade:\n" +
+                    "Disciplina: " + LoginSessionProfessores.disciplina +
+                    "\nTurma: " + combo_sala_aulas.getSelectedItem() +
+                    "\nDescrição: " + descricao +
+                    "\nConteudo: " + conteudo + 
+                    "\nPrazo: " + prazo +
+                    "\nData " + data + "?", "Registrar atividade", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if (decision == 0) {
+                Statement insert = myConn.createStatement();
+                insert.executeUpdate("INSERT INTO atividades (idProfessor, idAula, idTurma, disciplinaAtividade, conteudo, descricao, dataAtividade, prazoAtividade, salaTurma) values(" +
+                        LoginSessionProfessores.idProfessor +
+                        ", " +
+                        (model_aulas.getValueAt(table_aulas.getSelectedRow(), 0)) +
+                        ", " +
+                        idTurma +        
+                        ", '" +
+                        LoginSessionProfessores.disciplina +
+                        "', '" +
+                        conteudo +        
+                        "', '" +
+                        descricao +
+                        "', '" +
+                        data +
+                        "', '" +
+                        prazo +
+                        "','" +
+                        combo_sala_aulas.getSelectedItem() +
+                        "');");
+                getAtividades((String) combo_sala_aulas.getSelectedItem(), (String) model_aulas.getValueAt(table_aulas.getSelectedRow(), 0), false);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_regAtvMouseClicked
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel carteira_codigo_field;
-    private javax.swing.JLabel carteira_codigo_label;
-    private javax.swing.JLabel carteira_codigo_label1;
-    private javax.swing.JLabel carteira_codigo_label2;
-    private javax.swing.JLabel carteira_codigo_label3;
-    private javax.swing.JLabel carteira_codigo_label4;
-    private javax.swing.JLabel carteira_cpf_field;
-    private javax.swing.JLabel carteira_curso_field;
-    private javax.swing.JLabel carteira_instituicao_field;
-    private javax.swing.JLabel carteira_matr_field;
-    private javax.swing.JLabel carteira_nasc_field;
-    private javax.swing.JLabel carteira_nome_field;
-    private javax.swing.JLabel carteira_rg_field;
-    private javax.swing.JLabel carteira_tipoCurso_field;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton aulaSelectButton;
+    private javax.swing.JButton button_regAtv;
+    private javax.swing.JButton button_regAula;
+    private javax.swing.JComboBox<String> combo_curso_aulas;
+    private javax.swing.JComboBox<String> combo_sala_aulas;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPanel tab_inicio;
+    private javax.swing.JTable table_atividades;
+    private javax.swing.JTable table_aulas;
+    private javax.swing.JRadioButton todas_button;
     // End of variables declaration//GEN-END:variables
 }

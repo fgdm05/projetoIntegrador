@@ -75,7 +75,6 @@
                           <EmptySpace pref="76" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="1" groupAlignment="2" attributes="0">
-                                  <Component id="txtsenha_alunos" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                   <Component id="txtusuario_alunos" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -83,6 +82,7 @@
                                   <Component id="jLabel5" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtsenha_alunos" alignment="1" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -102,9 +102,9 @@
                                   <Component id="txtusuario_alunos" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtsenha_alunos" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Component id="submit_alunos" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -146,8 +146,6 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtsenha_alunos">
-                </Component>
                 <Component class="javax.swing.JButton" name="submit_alunos">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -168,6 +166,11 @@
                       <Image iconType="3" name="/br/com/senac/integrador/escola/images/chave_verde.png"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="txtsenha_alunos">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtsenha_alunosActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -212,13 +215,13 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="2" attributes="0">
-                                  <Component id="txtsenha_professores" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                   <Component id="txtusuario_professores" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel10" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="submit_professores" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel12" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="txtsenha_professores" alignment="1" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -238,9 +241,9 @@
                                   <Component id="txtusuario_professores" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtsenha_professores" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Component id="submit_professores" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
@@ -282,8 +285,6 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtsenha_professores">
-                </Component>
                 <Component class="javax.swing.JButton" name="submit_professores">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -301,6 +302,11 @@
                       <Image iconType="3" name="/br/com/senac/integrador/escola/images/chave_azul_1.png"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="txtsenha_professores">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtsenha_professoresActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -349,13 +355,16 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="2" attributes="0">
-                                      <Component id="txtsenha_adm" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                       <Component id="txtusuario_adm" alignment="2" min="-2" pref="118" max="-2" attributes="0"/>
                                       <Component id="jLabel17" alignment="2" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel16" alignment="2" min="-2" max="-2" attributes="0"/>
                                       <Component id="submit_adm" alignment="2" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel18" alignment="2" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="txtsenha_adm" min="-2" pref="118" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -376,9 +385,9 @@
                                   <Component id="txtusuario_adm" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtsenha_adm" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Component id="submit_adm" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
@@ -420,8 +429,6 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtsenha_adm">
-                </Component>
                 <Component class="javax.swing.JButton" name="submit_adm">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -439,6 +446,11 @@
                       <Image iconType="3" name="/br/com/senac/integrador/escola/images/CHAVE_ROXA.png"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="txtsenha_adm">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtsenha_admActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

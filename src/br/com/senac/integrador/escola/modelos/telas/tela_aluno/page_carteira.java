@@ -307,7 +307,7 @@ public class page_carteira extends javax.swing.JInternalFrame {
         
         carteira_nome_field.setText(dados_pes.getString("nome"));
         carteira_instituicao_field.setText("Escola...");
-        carteira_curso_field.setText(dados_est.getString("curso"));
+        carteira_curso_field.setText(dados_est.getString("escolaridade"));
         carteira_tipoCurso_field.setText("Ensino Básico");
         carteira_cpf_field.setText(dados_pes.getString("cpf"));
         carteira_rg_field.setText(dados_pes.getString("rg"));

@@ -10,6 +10,7 @@ import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionProfessores
 import br.com.senac.integrador.escola.modelos.auxiliares.Operations;
 import br.com.senac.integrador.escola.modelos.telas.tela_aluno.*;
 import br.com.senac.integrador.escola.modelos.auxiliares.SQLManager;
+import br.com.senac.integrador.escola.modelos.telas.CadastroProfessor;
 import br.com.senac.integrador.escola.modelos.telas.PaginaPrincipalAdministrador;
 import br.com.senac.integrador.escola.modelos.telas.tela_professor.Tela_Professor;
 import java.awt.Color;
@@ -56,9 +57,9 @@ public class Main_Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtusuario_alunos = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtsenha_alunos = new javax.swing.JTextField();
         submit_alunos = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtsenha_alunos = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -66,9 +67,9 @@ public class Main_Login extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtusuario_professores = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtsenha_professores = new javax.swing.JTextField();
         submit_professores = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        txtsenha_professores = new javax.swing.JPasswordField();
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -76,9 +77,9 @@ public class Main_Login extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtusuario_adm = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        txtsenha_adm = new javax.swing.JTextField();
         submit_adm = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        txtsenha_adm = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -106,6 +107,12 @@ public class Main_Login extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/chave_verde.png"))); // NOI18N
 
+        txtsenha_alunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsenha_alunosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -116,13 +123,13 @@ public class Main_Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(txtsenha_alunos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtusuario_alunos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
                         .addComponent(jLabel4)
                         .addComponent(submit_alunos)
                         .addComponent(jLabel5))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtsenha_alunos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -139,9 +146,9 @@ public class Main_Login extends javax.swing.JFrame {
                         .addComponent(txtusuario_alunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtsenha_alunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
+                        .addGap(4, 4, 4)
                         .addComponent(submit_alunos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)))
@@ -181,6 +188,12 @@ public class Main_Login extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/chave_azul_1.png"))); // NOI18N
 
+        txtsenha_professores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsenha_professoresActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -192,12 +205,12 @@ public class Main_Login extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(txtsenha_professores, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtusuario_professores, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11)
                         .addComponent(jLabel10)
                         .addComponent(submit_professores)
-                        .addComponent(jLabel12)))
+                        .addComponent(jLabel12))
+                    .addComponent(txtsenha_professores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -214,9 +227,9 @@ public class Main_Login extends javax.swing.JFrame {
                         .addComponent(txtusuario_professores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtsenha_professores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
+                        .addGap(4, 4, 4)
                         .addComponent(submit_professores)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)))
@@ -256,6 +269,12 @@ public class Main_Login extends javax.swing.JFrame {
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senac/integrador/escola/images/CHAVE_ROXA.png"))); // NOI18N
 
+        txtsenha_adm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsenha_admActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -270,12 +289,14 @@ public class Main_Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txtsenha_adm, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtusuario_adm, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17)
                             .addComponent(jLabel16)
                             .addComponent(submit_adm)
                             .addComponent(jLabel18))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(txtsenha_adm, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         jPanel6Layout.setVerticalGroup(
@@ -292,9 +313,9 @@ public class Main_Login extends javax.swing.JFrame {
                         .addComponent(txtusuario_adm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel17)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtsenha_adm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
+                        .addGap(4, 4, 4)
                         .addComponent(submit_adm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel18)))
@@ -348,7 +369,7 @@ public class Main_Login extends javax.swing.JFrame {
             String passwordStr = txtsenha_adm.getText();
             if(Operations.isLoginADM(userStr, passwordStr, this)) {
                 Operations.getData();
-                new PaginaPrincipalAdministrador().setVisible(true);
+                new CadastroProfessor().setVisible(true);
                 LoginSessionAlunos.isLoggedIn = true;
                 this.dispose();
             } else {
@@ -376,6 +397,18 @@ public class Main_Login extends javax.swing.JFrame {
             Logger.getLogger(Main_Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_submit_professoresMouseClicked
+
+    private void txtsenha_alunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenha_alunosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsenha_alunosActionPerformed
+
+    private void txtsenha_professoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenha_professoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsenha_professoresActionPerformed
+
+    private void txtsenha_admActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenha_admActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsenha_admActionPerformed
       
     /**
      * @param args the command line arguments
@@ -443,9 +476,9 @@ public class Main_Login extends javax.swing.JFrame {
     private javax.swing.JButton submit_alunos;
     private javax.swing.JButton submit_professores;
     private javax.swing.JTabbedPane tabbed_main;
-    private javax.swing.JTextField txtsenha_adm;
-    private javax.swing.JTextField txtsenha_alunos;
-    private javax.swing.JTextField txtsenha_professores;
+    private javax.swing.JPasswordField txtsenha_adm;
+    private javax.swing.JPasswordField txtsenha_alunos;
+    private javax.swing.JPasswordField txtsenha_professores;
     private javax.swing.JTextField txtusuario_adm;
     private javax.swing.JTextField txtusuario_alunos;
     private javax.swing.JTextField txtusuario_professores;

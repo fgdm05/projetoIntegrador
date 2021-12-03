@@ -8,6 +8,7 @@ package br.com.senac.integrador.escola.modelos.telas.tela_professor;
 import br.com.senac.integrador.escola.modelos.telas.tela_aluno.*;
 import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionAlunos;
 import br.com.senac.integrador.escola.modelos.auxiliares.LoginSessionProfessores;
+import br.com.senac.integrador.escola.modelos.auxiliares.MySQL_Connection;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
@@ -15,8 +16,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +32,7 @@ public class page_turmas extends javax.swing.JInternalFrame {
     DefaultTableModel model_disciplina;
     DefaultTableModel model_turma;
     DefaultTableModel model_frequencia;
+    DefaultTableModel model_desempenho;
     
     /**
      * Creates new form Inicio
@@ -39,12 +43,13 @@ public class page_turmas extends javax.swing.JInternalFrame {
         model_disciplina = (DefaultTableModel) table_disciplina.getModel();  
         model_turma = (DefaultTableModel) table_turma.getModel();  
         model_frequencia = (DefaultTableModel) table_frequencia.getModel();  
+        model_desempenho = (DefaultTableModel) table_desempenho.getModel();  
               
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        fillcombos();
         getTurma();
+        //getBoletim(LoginSessionProfessores.disciplina, ((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0)), 0);
     }
 
     /**
@@ -61,19 +66,17 @@ public class page_turmas extends javax.swing.JInternalFrame {
         table_disciplina = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         table_turma = new javax.swing.JTable();
-        combo_trimestre = new javax.swing.JComboBox<>();
-        combo_turma = new javax.swing.JComboBox<>();
+        combo_sala = new javax.swing.JComboBox<>();
         combo_curso = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        notas_button = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         table_desempenho = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_frequencia = new javax.swing.JTable();
-        combo_trimestre_Freq = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        falta_button = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -88,14 +91,14 @@ public class page_turmas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Disciplina", "Tipo", "Data", "Nota"
+                "Disciplina", "Tipo", "Trimestre", "Data", "Nota"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -122,8 +125,8 @@ public class page_turmas extends javax.swing.JInternalFrame {
         table_disciplina.setRowHeight(20);
         if (table_disciplina.getColumnModel().getColumnCount() > 0) {
             table_disciplina.getColumnModel().getColumn(0).setPreferredWidth(60);
-            table_disciplina.getColumnModel().getColumn(2).setPreferredWidth(30);
-            table_disciplina.getColumnModel().getColumn(3).setPreferredWidth(60);
+            table_disciplina.getColumnModel().getColumn(3).setPreferredWidth(30);
+            table_disciplina.getColumnModel().getColumn(4).setPreferredWidth(60);
         }
 
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -172,45 +175,33 @@ public class page_turmas extends javax.swing.JInternalFrame {
         table_turma.getTableHeader().setOpaque(false);
         table_turma.setRowHeight(18);
 
-        combo_trimestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1º Tri", "2º Tri", "3º Tri"}));
-        combo_trimestre.addItemListener(new java.awt.event.ItemListener() {
+        combo_sala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "101", "201", "301", "401", "501", "601", "701", "801", "901", "101EM", "201EM", "301EM"}));
+        combo_sala.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                combo_trimestreItemStateChanged(evt);
+                combo_salaItemStateChanged(evt);
             }
         });
 
-        combo_turma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
-        combo_turma.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                combo_turmaItemStateChanged(evt);
-            }
-        });
-        combo_turma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_turmaActionPerformed(evt);
-            }
-        });
-
-        combo_curso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+        combo_curso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fundamental", "Médio" }));
         combo_curso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 combo_cursoItemStateChanged(evt);
             }
         });
-        combo_curso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_cursoActionPerformed(evt);
+
+        notas_button.setText("Registrar Nota");
+        notas_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                notas_buttonMouseClicked(evt);
             }
         });
-
-        jButton2.setText("Editar Notas");
 
         jScrollPane6.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         table_desempenho.setFont(new java.awt.Font("Segoe UI Semibold", 1, 10)); // NOI18N
         table_desempenho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Biologia", "", "", "", "", "", "", "", ""}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "", "1º Tri", "F", "2º Tri", "F", "3º Tri", "F", "Avaliação Final", "F"
@@ -281,33 +272,31 @@ public class page_turmas extends javax.swing.JInternalFrame {
         table_frequencia.setShowHorizontalLines(false);
         jScrollPane2.setViewportView(table_frequencia);
 
-        combo_trimestre_Freq.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1º Tri", "2º Tri", "3º Tri"}));
-        combo_trimestre_Freq.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                combo_trimestre_FreqItemStateChanged(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Boletim");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Frequência");
+        jLabel3.setText("Faltas");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Alunos");
 
-        jButton3.setText("Editar Frequência");
+        falta_button.setText("Registrar Falta");
+        falta_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                falta_buttonMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Notas (Aluno Selecionado)");
 
         javax.swing.GroupLayout tab_inicioLayout = new javax.swing.GroupLayout(tab_inicio);
@@ -317,37 +306,31 @@ public class page_turmas extends javax.swing.JInternalFrame {
             .addGroup(tab_inicioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(tab_inicioLayout.createSequentialGroup()
-                        .addComponent(combo_trimestre, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(tab_inicioLayout.createSequentialGroup()
-                        .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(tab_inicioLayout.createSequentialGroup()
                                 .addComponent(combo_curso, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)
-                                .addComponent(combo_turma, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(combo_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tab_inicioLayout.createSequentialGroup()
+                                .addComponent(falta_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                .addGap(83, 83, 83))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane6)
+                    .addGroup(tab_inicioLayout.createSequentialGroup()
+                        .addComponent(notas_button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(combo_trimestre_Freq, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel5)))
                 .addContainerGap())
-            .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab_inicioLayout.createSequentialGroup()
-                    .addContainerGap(294, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
         );
         tab_inicioLayout.setVerticalGroup(
             tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,128 +338,313 @@ public class page_turmas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(combo_turma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(combo_sala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(combo_curso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
                         .addComponent(jLabel4)
-                        .addComponent(combo_trimestre_Freq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)))
+                        .addComponent(falta_button))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2)
+                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combo_trimestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
+                .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(notas_button)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(tab_inicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(tab_inicioLayout.createSequentialGroup()
-                    .addGap(40, 40, 40)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(226, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addComponent(tab_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void table_turmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_turmaMouseClicked
-        if(table_turma.getSelectedRow() == 0) 
-        {
-            try {
-                fillDisciplina(1, combo_trimestre.getSelectedIndex() + 1);
-                fillFrequencia(1, combo_trimestre_Freq.getSelectedIndex() + 1);
-            } catch (SQLException ex) {
-                Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        else 
-        {
-            try {
-                fillDisciplina((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0), combo_trimestre.getSelectedIndex() + 1);
-                fillFrequencia((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0), combo_trimestre_Freq.getSelectedIndex() + 1);
-            } catch (SQLException ex) {
-                Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
-            }           
-        }
+            if(table_turma.getSelectionModel().isSelectionEmpty()) {
+                return;
+            } else {  
+                try {
+                    fillFrequencia((String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+                    getBoletim(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0), 0);
+                    fillDisciplina(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+                } catch (SQLException ex) {
+                    Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }    
     }//GEN-LAST:event_table_turmaMouseClicked
 
-    private void combo_trimestreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_trimestreItemStateChanged
+    private void combo_salaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_salaItemStateChanged
         try {
-            fillDisciplina((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0), combo_trimestre.getSelectedIndex() + 1);
+            getTurma();
+            if(table_turma.getSelectionModel().isSelectionEmpty()) {
+                model_frequencia.setRowCount(0);
+                model_disciplina.setRowCount(0);
+                model_desempenho.setRowCount(0);
+                return;
+            } else {            
+                fillFrequencia((String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+                getBoletim(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0), 0);
+                fillDisciplina(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+            }    
         } catch (SQLException ex) {
             Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_combo_trimestreItemStateChanged
-
-    private void combo_turmaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_turmaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_turmaItemStateChanged
-
-    private void combo_turmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_turmaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_turmaActionPerformed
+    }//GEN-LAST:event_combo_salaItemStateChanged
 
     private void combo_cursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_cursoItemStateChanged
-        // TODO add your handling code here:
+        try {
+            getTurma();
+            if(table_turma.getSelectionModel().isSelectionEmpty()) {
+                model_frequencia.setRowCount(0);
+                model_disciplina.setRowCount(0);
+                model_desempenho.setRowCount(0);
+                return;
+            } else {
+                fillFrequencia((String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+                getBoletim(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0), 0);
+                fillDisciplina(LoginSessionProfessores.disciplina, (String) table_turma.getValueAt(table_turma.getSelectedRow(), 0));
+            }    
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_combo_cursoItemStateChanged
 
-    private void combo_cursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_cursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_cursoActionPerformed
-
     private void table_desempenhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_desempenhoMouseClicked
-        if(table_desempenho.getSelectedRow() == 0 )
-        {
-            try {
-                fillDisciplina(1, combo_trimestre.getSelectedIndex() + 1);
-            } catch (SQLException ex) {
-                Logger.getLogger(page_desempenho.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
 
-        else
-        {
-            try {
-                fillDisciplina((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0), combo_trimestre.getSelectedIndex() + 1);
-            } catch (SQLException ex) {
-                Logger.getLogger(page_desempenho.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }//GEN-LAST:event_table_desempenhoMouseClicked
 
-    private void combo_trimestre_FreqItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_trimestre_FreqItemStateChanged
+    private void falta_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_falta_buttonMouseClicked
         try {
-            fillFrequencia((int) table_turma.getValueAt(table_turma.getSelectedRow(), 0), combo_trimestre_Freq.getSelectedIndex() + 1);
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            
+            Statement stInfo = myConn.createStatement();
+            Statement stFalta = myConn.createStatement();
+            
+            ResultSet rs_info = stInfo.executeQuery("SELECT nome,idEstudante, salaTurma FROM estudante WHERE idEstudante = '" + model_turma.getValueAt(table_turma.getSelectedRow(), 0) + "'");
+            
+            String nome = null;
+            String id = null;
+            String turma = null;
+            String data = null;
+            String trimestre = null;
+            
+            while(rs_info.next()) {
+                nome = rs_info.getString("nome");
+                id = rs_info.getString("idEstudante");
+                turma = rs_info.getString("salaTurma");
+                data = LocalDate.now().toString();
+            }
+            
+            int index = data.indexOf("-");
+            String month = data.substring(index + 1, index + 3);
+            int mes = Integer.parseInt(month);
+            if(mes >= 2 && mes <= 4) {
+                trimestre = "1";
+            } else if(mes >= 5 && mes <= 7) {
+                trimestre = "2";
+            } else if(mes >= 8 && mes <= 10) {
+                trimestre = "3";
+            } else if (mes >= 11 && mes <= 12) {
+                trimestre = "3";
+            }
+            
+            Object[] options = { "Confirmar", "Cancelar" };
+            int decision = JOptionPane.showOptionDialog(null, "Você confirma o registro de uma falta para:\n" +
+                    "Nome: " + nome +
+                    "\nID: " + id +
+                    "\nTurma: " + turma +
+                    "\nNo dia " + data + "?", "Registrar falta", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if (decision == 0) {
+                stFalta.executeUpdate("INSERT INTO faltas (idEstudante, disciplinaFalta, dataFalta, trimestre) values('" + id + "', '" + LoginSessionProfessores.disciplina + "', '" + data + "'," + trimestre + ");");
+                fillFrequencia(id);
+            }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(page_frequencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_combo_trimestre_FreqItemStateChanged
+    }//GEN-LAST:event_falta_buttonMouseClicked
+
+    private void notas_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notas_buttonMouseClicked
+        try {
+            Object[] options = { "Trabalho", "Avaliação", "Recuperação", "Bônus" };
+            int tipo = JOptionPane.showOptionDialog(null, "Selecione o tipo de nota", "Registrar Nota", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+            double nota = Double.parseDouble(JOptionPane.showInputDialog("Insira a nota"));
+            
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            
+            Statement stInfo = myConn.createStatement();
+            Statement stNota = myConn.createStatement();
+            
+            ResultSet rs_info = stInfo.executeQuery("SELECT nome,idEstudante, salaTurma FROM estudante WHERE idEstudante = '" + model_turma.getValueAt(table_turma.getSelectedRow(), 0) + "'");
+            
+            String nome = null;
+            String id = null;
+            String turma = null;
+            String data = null;
+            String trimestre = null;
+            
+            while(rs_info.next()) {
+                nome = rs_info.getString("nome");
+                id = rs_info.getString("idEstudante");
+                turma = rs_info.getString("salaTurma");
+                data = LocalDate.now().toString();
+            }
+            
+            int index = data.indexOf("-");
+            String month = data.substring(index + 1, index + 3);
+            int mes = Integer.parseInt(month);
+            if(mes >= 2 && mes <= 4) {
+                trimestre = "1";
+            } else if(mes >= 5 && mes <= 7) {
+                trimestre = "2";
+            } else if(mes >= 8 && mes <= 10) {
+                trimestre = "3";
+            } else if (mes >= 11 && mes <= 12) {
+                trimestre = "3";
+            }
+            
+            Object[] options1 = { "Confirmar", "Cancelar" }; 
+            int decision = JOptionPane.showOptionDialog(null, "Você confirma o registro de uma nota para:\n" +
+                    "Nome: " + nome +
+                    "\nID: " + id +
+                    "\nTurma: " + turma +
+                    "\nNota: " + nota +
+                    "\nNo dia " + data + "?", "Registrar Nota", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
+            if (decision == 0) {
+                stNota.executeUpdate("INSERT INTO nota (idEstudante, disciplinaNota, tipoNota, dataNota, trimestre, nota) values('" +
+                        id +
+                        "', '" +
+                        LoginSessionProfessores.disciplina +
+                        "', " +
+                        (tipo + 1) +
+                        ", '" +
+                        data +
+                        "', " +
+                        trimestre +
+                        ", " +
+                        nota +
+                        ");");
+                getBoletim(LoginSessionProfessores.disciplina, id, 0);
+                fillDisciplina(LoginSessionProfessores.disciplina, id);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_notas_buttonMouseClicked
     
-    private void fillFrequencia(int idEstudante, int trimestre) throws SQLException 
-    {
-        connection = createConnection();
-        Statement statement = connection.createStatement();
+    private void getBoletim(String disciplina, String idEstudante, int row) {
+        try {
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            
+            Statement stMedia1 = myConn.createStatement();
+            Statement stMedia2 = myConn.createStatement();
+            Statement stMedia3 = myConn.createStatement();
+            Statement stMediaFinal = myConn.createStatement();
         
-        ResultSet faltas = statement.executeQuery("SELECT * from faltas where idEstudante = " + idEstudante + " and disciplinaFalta = '" + LoginSessionProfessores.disciplina + "' and trimestre = " + trimestre);
+            Statement stFaltas1 = myConn.createStatement();
+            Statement stFaltas2 = myConn.createStatement();
+            Statement stFaltas3 = myConn.createStatement();
+            Statement stFaltasFinal = myConn.createStatement();
+           
+            ResultSet media1 = stMedia1.executeQuery("SELECT TRUNCATE(AVG(nota), 2) AS medias1 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 1 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+            ResultSet media2 = stMedia2.executeQuery("SELECT TRUNCATE(AVG(nota), 2) AS medias2 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 2 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+            ResultSet media3 = stMedia3.executeQuery("SELECT TRUNCATE(AVG(nota), 2) AS medias3 FROM nota where disciplinaNota = '" + disciplina + "' and trimestre = 3 and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+            ResultSet mediaFinal = stMediaFinal.executeQuery("SELECT TRUNCATE(AVG(nota), 2) AS mediaFinal FROM nota where disciplinaNota = '" + disciplina + "' and tipoNota != 'Recuperação' and idEstudante = " + idEstudante);
+        
+            ResultSet faltas1 = stFaltas1.executeQuery("SELECT COUNT(idFalta) AS faltas1 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 1");
+            ResultSet faltas2 = stFaltas2.executeQuery("SELECT COUNT(idFalta) AS faltas2 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 2");
+            ResultSet faltas3 = stFaltas3.executeQuery("SELECT COUNT(idFalta) AS faltas3 FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante + " and trimestre = 3");
+            ResultSet faltasFinal = stFaltasFinal.executeQuery("SELECT count(idFalta) AS faltasFinal FROM faltas WHERE disciplinaFalta = '" + disciplina + "' and idEstudante = " + idEstudante);
+        
+            media1.next();
+            media2.next();
+            media3.next();
+            mediaFinal.next();
+        
+            faltas1.next();
+            faltas2.next();
+            faltas3.next();
+            faltasFinal.next();
+        
+            String valueFaltas1 = faltas1.getString("faltas1");
+            String valueFaltas2 = faltas2.getString("faltas2");
+            String valueFaltas3 = faltas3.getString("faltas3");
+            String valueFaltasFinal = faltasFinal.getString("faltasFinal");
+        
+            String valueMedia = media1.getString("medias1");
+            String valueMedia2 = media2.getString("medias2");
+            String valueMedia3 = media3.getString("medias3");
+            String valueFinal = mediaFinal.getString("mediaFinal");
+            
+            model_desempenho.addRow(new Object[]{null, null, null, null, null, null, null, null, null});
+            model_desempenho.setValueAt(disciplina, row, 0);
+            
+            model_desempenho.setValueAt(valueMedia, row, 1);
+            model_desempenho.setValueAt(valueFaltas1, row, 2);
+
+            model_desempenho.setValueAt(valueMedia2, row, 3);
+            model_desempenho.setValueAt(valueFaltas2, row, 4);
+
+            model_desempenho.setValueAt(valueMedia3, row, 5);
+            model_desempenho.setValueAt(valueFaltas3, row, 6);
+
+            model_desempenho.setValueAt(valueFinal, row, 7);
+            model_desempenho.setValueAt(valueFaltasFinal, row, 8);
+        }            
+        catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void fillDisciplina(String select_disciplina, String idEstudante) {
+        try {
+            Connection myConn = (Connection) MySQL_Connection.createConnection();
+            Statement statement = myConn.createStatement();
+            
+            ResultSet notas = statement.executeQuery("SELECT * from nota where idEstudante = '" + idEstudante + "' and disciplinaNota = '" + select_disciplina + "' ORDER BY dataNota desc");  
+            
+            model_disciplina.setRowCount(0);
+                     
+            while(notas.next())
+            {
+                String disciplina = notas.getString("disciplinaNota");
+                String tipo = notas.getString("tipoNota");
+                String data = notas.getString("dataNota");
+                double nota = notas.getDouble("nota");
+                String trimestre = notas.getString("trimestre");
+                
+                Object dadosNota[] = {disciplina, tipo, trimestre, data, nota};
+                
+                model_disciplina.addRow(dadosNota);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void fillFrequencia(String idEstudante) throws SQLException 
+    {
+        Connection myConn = (Connection) MySQL_Connection.createConnection();
+        Statement statement = myConn.createStatement();
+        
+        ResultSet faltas = statement.executeQuery("SELECT * from faltas where idEstudante = '" + idEstudante + "' and disciplinaFalta = '" + LoginSessionProfessores.disciplina + "' ORDER BY dataFalta desc");
 
         model_frequencia.setRowCount(0);
         
@@ -485,94 +653,31 @@ public class page_turmas extends javax.swing.JInternalFrame {
             String disciplina = LoginSessionProfessores.disciplina;
             String data = faltas.getString("dataFalta");
             
-            Object dadosFalta[] = {data, disciplina};  
+            Object dadosFalta[] = {disciplina, data};  
             
             model_frequencia.addRow(dadosFalta);
         } 
     }    
     
-    private static boolean isSQLSet = false;
-    private static Connection connection;
-    
-    private static Connection createConnection() throws SQLException {
-        if(isSQLSet) {
-            return connection;
-        }
-        //String username = JOptionPane.showInputDialog("Insira o usuário do banco de dados.");
-        //String password = JOptionPane.showInputDialog("Insira a senha do banco de dados.");
-        
-        String username = "root";
-        String password = "inserida";
-        
-        String url = "jdbc:mysql://localhost/appescola";
-        isSQLSet = true;
-        connection = DriverManager.getConnection(url, username, password);
-        return connection;
-    }
-    
-    private void fillcombos() {
-        try {
-            connection = createConnection();
-            Statement st_combo = connection.createStatement();
-            Statement st_comboTurma = connection.createStatement();
-            
-            ResultSet rs_combo = st_combo.executeQuery("SELECT escolaridade FROM turma");
-            ResultSet rs_turma = st_comboTurma.executeQuery("SELECT idTurma FROM turma");
-            
-            while(rs_turma.next()) {
-                combo_turma.addItem(rs_turma.getString("idTurma"));
-            }
-            
-            while(rs_combo.next()) {
-                combo_curso.addItem(rs_combo.getString("escolaridade"));
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(page_turmas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     private void getTurma() throws SQLException 
     {
-        connection = createConnection();
-        Statement st_alunos = connection.createStatement();
-           
-        ResultSet rs_alunos = st_alunos.executeQuery("SELECT nome, idEstudante FROM estudante WHERE idTurma = " + combo_turma.getSelectedItem() + " AND escolaridade = '" + combo_curso.getSelectedItem() + "'");        
+        Connection myConn = (Connection) MySQL_Connection.createConnection();
+        
+        Statement st_alunos = myConn.createStatement();
+        
+        model_turma.setRowCount(0);
+        
+        ResultSet rs_alunos = st_alunos.executeQuery("SELECT nome, idEstudante FROM estudante WHERE salaTurma = '" + combo_sala.getSelectedItem() + "' AND escolaridade = '" + combo_curso.getSelectedItem() + "'");        
         while (rs_alunos.next()) {
             Object nome[] = {rs_alunos.getString("idEstudante"), rs_alunos.getString("nome")};
             model_turma.addRow(nome);
         }
     }
-    
-    private void fillDisciplina(int idEstudante, int trimestre) throws SQLException 
-    {
-        connection = createConnection();
-        Statement statement = connection.createStatement();
-        
-        ResultSet notas = statement.executeQuery("SELECT * from nota where idEstudante = " + idEstudante + " and disciplinaNota = '" + LoginSessionProfessores.disciplina + "' and trimestre = " + trimestre);
-
-        model_disciplina.setRowCount(0);
-        
-        while(notas.next())
-        {
-            String disciplina = notas.getString("disciplinaNota");
-            String tipo = notas.getString("tipoNota");
-            String data = notas.getString("dataNota");
-            double nota = notas.getDouble("nota");
-            
-            Object dadosNota[] = {disciplina, tipo, data, nota};  
-            
-            model_disciplina.addRow(dadosNota);
-        } 
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> combo_curso;
-    private javax.swing.JComboBox<String> combo_trimestre;
-    private javax.swing.JComboBox<String> combo_trimestre_Freq;
-    private javax.swing.JComboBox<String> combo_turma;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> combo_sala;
+    private javax.swing.JButton falta_button;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -581,6 +686,7 @@ public class page_turmas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JButton notas_button;
     private javax.swing.JPanel tab_inicio;
     private javax.swing.JTable table_desempenho;
     private javax.swing.JTable table_disciplina;

@@ -49,6 +49,7 @@ CREATE TABLE estudante(
     FOREIGN KEY (nome) REFERENCES pessoa (nome),
 	idPessoa INT NOT NULL,
     idEndereco INT NOT NULL,
+    salaTurma VARCHAR(5),
 	idEstudante INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     periodo ENUM("MATUTINO", "VESPERTINO", "NOTURNO") NOT NULL,
     escolaridade ENUM("FUNDAMENTAL", "MEDIO") NOT NULL,
@@ -88,6 +89,7 @@ CREATE TABLE professor(
 
 CREATE TABLE turma(
 	idTurma INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    salaTurma VARCHAR(5),
 	periodo ENUM("MATUTINO", "VESPERTINO", "NOTURNO") NOT NULL,
     escolaridade ENUM("FUNDAMENTAL", "MEDIO") NOT NULL,
     FOREIGN KEY (idEstudante) REFERENCES estudante (idEstudante));
@@ -145,4 +147,36 @@ CREATE TABLE faltas (
 		"Literatura", "Mat", "Português", "Química", "Sociologia") NOT NULL,
     dataFalta DATE NOT NULL,
     trimestre ENUM ("1º Tri", "2º Tri", "3º Tri")
+);
+
+CREATE TABLE aulas (
+	idAula INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	idProfessor INT NOT NULL,
+    FOREIGN KEY (idProfessor) REFERENCES professor(idProfessor),
+	salaTurma VARCHAR(5),
+    idTurma INT NOT NULL,
+    FOREIGN KEY (idTurma) REFERENCES turma(idTurma),
+    disciplinaAula ENUM("Artes", "Biologia", "Ed. Física",
+		"Filosofia", "Física", "Geografia", "História", "Inglês",
+		"Literatura", "Mat", "Português", "Química", "Sociologia") NOT NULL,
+	conteudo VARCHAR(255),
+    dataAula DATE NOT NULL
+);
+
+CREATE TABLE atividades (
+	idAtividade INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	idProfessor INT NOT NULL,
+    FOREIGN KEY (idProfessor) REFERENCES professor(idProfessor),
+	salaTurma VARCHAR(5),
+    idAula INT NOT NULL,
+    FOREIGN KEY (idAula) REFERENCES aulas(idAula),
+    idTurma INT NOT NULL,
+    FOREIGN KEY (idTurma) REFERENCES turma(idTurma),
+    disciplinaAtividade ENUM("Artes", "Biologia", "Ed. Física",
+		"Filosofia", "Física", "Geografia", "História", "Inglês",
+		"Literatura", "Mat", "Português", "Química", "Sociologia") NOT NULL,
+	conteudo VARCHAR(255),
+    descricao VARCHAR(512),
+    dataAtividade DATE NOT NULL,
+    prazoAtividade VARCHAR (20)
 );
